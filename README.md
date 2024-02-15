@@ -4,7 +4,7 @@
 | Name              | Number    | E-Mail             |
 | ----------------  | --------- | ------------------ |
 | António Azevedo   | 202108689 | up202108689@up.pt  |
-| Francisco Cardoso | 201908793 | up202108793@up.pt  |
+| Francisco Cardoso | 202108793 | up202108793@up.pt  |
 
 ----
 
