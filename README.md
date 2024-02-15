@@ -1,10 +1,10 @@
 # CG 2023/2024
 
-## Group T0xG0y
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+## Group T07G07
+| Name              | Number    | E-Mail             |
+| ----------------  | --------- | ------------------ |
+| António Azevedo   | 202108689 | up202108689@up.pt  |
+| Francisco Cardoso | 201908793 | up202108793@up.pt  |
 
 ----
 
