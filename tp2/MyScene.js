@@ -1,9 +1,5 @@
 import { CGFscene, CGFcamera, CGFaxis } from "../lib/CGF.js";
-import { MyDiamond } from "./MyDiamond.js";
-import { MyTriangle } from "./MyTriangle.js";
-import { MyParallelogram } from "./MyParallelogram.js";
-import { MyTriangleSmall } from "./MyTriangleSmall.js";
-import { MyTriangleBig } from "./MyTriangleBig.js";
+import { MyTangram } from "./MyTangram.js";
 
 /**
     * MyScene
@@ -29,21 +25,11 @@ import { MyTriangleBig } from "./MyTriangleBig.js";
 
             //Initialize scene objects
             this.axis = new CGFaxis(this);
-            this.diamond = new MyDiamond(this);
-            this.triangle = new MyTriangle(this);
-            this.parallelogram = new MyParallelogram(this);
-            this.triangleBig = new MyTriangleBig(this);
-            this.triangleBig2 = new MyTriangleBig(this);
-            this.triangleSmall = new MyTriangleSmall(this);
-            this.triangleSmall2 = new MyTriangleSmall(this);
+            this.tangram = new MyTangram(this)
 
             //Objects connected to MyInterface
             this.displayAxis = true;
-            this.displayDiamond = true;
-            this.displayTriangle = true;
-            this.displayParallelogram = true;
-            this.displayTriangleSmall = true;
-            this.displayTriangleBig = true;
+            this.displayTangram = true;
             this.scaleFactor = 1;
         }
         initLights() {
@@ -103,45 +89,7 @@ import { MyTriangleBig } from "./MyTriangleBig.js";
                 ];
 
             this.multMatrix(sca);
-            this.pushMatrix();
-            // ---- BEGIN Primitive drawing section
-            this.multMatrix([
-                1,0,0,0,
-                0,1,0,0,
-                0,0,1,0,
-                -1,1,0,1
-            ]);
-            if (this.displayDiamond) this.diamond.display();
-            this.popMatrix();
-            this.pushMatrix();
-            this.translate(1,0,0);
-            this.rotate(Math.PI, 0, 0, 1);
-            if (this.displayTriangle) this.triangle.display();
-            this.popMatrix();
-            this.pushMatrix();
-            this.translate(-1,2,0);
-            this.scale(1,-1,1);
-            if (this.displayParallelogram) this.parallelogram.display();
-            this.popMatrix();
-            this.pushMatrix();
-            this.translate(0,-1,0);
-            if (this.displayTriangleBig) this.triangleBig.display();
-            this.popMatrix();
-            this.pushMatrix();
-            this.translate(-2,0,0);
-            this.rotate(-Math.PI / 2,0,0,1); 
-            if (this.displayTriangleSmall) this.triangleSmall.display();
-            this.popMatrix();
-            this.pushMatrix();
-            this.translate(0,-1,0);
-            this.scale(1,-1,1);
-            this.triangleBig2.display();
-            this.popMatrix();
-            this.pushMatrix();
-            this.translate(0,2,0);
-            this.rotate(-Math.PI/4, 0,0,1);
-            this.translate(-1,0,0);
-            this.triangleSmall2.display();
+            if ( this.displayTangram) this.tangram.display()
 
 
             // ---- END Primitive drawing section
