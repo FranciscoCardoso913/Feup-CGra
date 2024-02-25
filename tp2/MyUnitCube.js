@@ -12,7 +12,6 @@ export class MyUnitCube extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
-            
 			0.5, 0.5, 0.5,    // Vertice A - idx 0
             0.5, 0.5,-0.5,    // Vertice B - idx 1
             -0.5, 0.5, -0.5,  // Vertice C - idx 2
@@ -62,5 +61,23 @@ export class MyUnitCube extends CGFobject {
 
 		this.initGLBuffers();
 	}
+    changeColor() {
+        this.scene.setAmbient(0.7, 0.25, 0, 1);         // Maroon has RGB values (128, 0, 0), but normalized to (0.5, 0, 0)
+        this.scene.setDiffuse(0.3, 0.2, 0.2, 1);  // Adjusted to a slightly reddish hue for maroon
+        this.scene.setSpecular(0.5, 0, 0, 1);        // Same as ambient for maroon
+        this.scene.setShininess(10.0);
+    }
+    display(){
+        this.changeColor()
+        this.scene.pushMatrix()
+        this.scene.scale(7,7,1)
+        this.scene.translate(0,0,-0.5)
+        super.display()
+        this.scene.setDefaultAppearance()
+        this.scene.popMatrix()
+    }
+
+
+    
 }
 

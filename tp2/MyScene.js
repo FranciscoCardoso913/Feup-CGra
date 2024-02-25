@@ -31,7 +31,7 @@ import { MyUnitCube } from "./MyUnitCube.js";
 
             //Objects connected to MyInterface
             this.displayAxis = true;
-            this.displayTangram = false;
+            this.displayTangram = true;
             this.scaleFactor = 1;
         }
         initLights() {
@@ -92,8 +92,11 @@ import { MyUnitCube } from "./MyUnitCube.js";
                 ];
 
             this.multMatrix(sca);
+            this.pushMatrix()
             this.cube.display()
             if ( this.displayTangram) this.tangram.display()
+            
+            
 
             
 

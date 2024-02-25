@@ -66,6 +66,7 @@ export class MyTangram extends CGFobject {
         this.scene.rotate(-Math.PI/4, 0,0,1);
         this.scene.translate(-1,0,0);
         this.triangleSmall2.display();
+        this.scene.popMatrix()
 
 
         // ---- END Primitive drawing section
