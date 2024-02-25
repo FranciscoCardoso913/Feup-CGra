@@ -92,9 +92,12 @@ import { MyUnitCube } from "./MyUnitCube.js";
                 ];
 
             this.multMatrix(sca);
-            this.pushMatrix()
-            this.cube.display()
-            if ( this.displayTangram) this.tangram.display()
+            this.pushMatrix();
+            this.translate(0,0,7);
+            this.rotate(-Math.PI/2, 1,0,0);
+            this.translate(3.5,3.5,0);
+            this.cube.display();
+            if ( this.displayTangram) this.tangram.display();
             
             
 
