@@ -18,4 +18,4 @@ We began by analyzing the code and understanding how the library worked, as well
 
 - For Exercise 2, leveraging our understanding from Exercise 1, we created two classes: MyTriangleSmall and MyTriangleBig. These classes represent two double-sided triangles, with the small triangle having vertices (-1,0,0),(0,1,0),(1,0,0) and the large triangle having vertices (-2,0,0),(0,2,0),(2,0,0).
 
-![Screenshot 1](screenshots/cg-t07g07-tp1-1.png)
+![Screenshot 1](tp1/screenshots/cg-t07g07-tp1-1.png)
