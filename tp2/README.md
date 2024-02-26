@@ -10,6 +10,7 @@
 - As restantes peças foram posicionadas usando transformações geométricas e as funções CGFscene.pushMatrix() e CGFscene.popMatrix().
 - Criamos a classe MyTangram para englobar os objetos e ajustamos o código para a figura final.
 
+![Screenshot 1](tp2/screenshots/cg-t07g07-tp2-1.png)
 <br>
 
 2. Cubo Unitário:
@@ -18,6 +19,7 @@
 - Importamos MyUnitCube.js na classe MyScene e adicionamos um novo objeto MyUnitCube.
 - Apliquamos transformações geométricas para posicionar o cubo atrás da figura Tangram.
 
+![Screenshot 2](tp2/screenshots/cg-t07g07-tp2-2.png)
 <br>
 
 3. Cubo composto por planos:
@@ -25,3 +27,5 @@
 - Criamos a classe MyQuad para representar um quadrado unitário.
 - Criamos a classe MyUnitCubeQuad composta por um objeto MyQuad e utilizamos transformações geométricas para desenhar as samoss faces do cubo.
 - Substituí o cubo do exercício anterior por este novo cubo na cena.
+
+![Screenshot 3](tp2/screenshots/cg-t07g07-tp2-3.png)
