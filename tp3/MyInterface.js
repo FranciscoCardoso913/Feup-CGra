@@ -25,6 +25,7 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'selectedObject', this.scene.objectIDs).name('Selected Object').onChange(this.scene.updateObjectComplexity.bind(this.scene));
 
         this.gui.add(this.scene, 'scaleFactor', 0.1, 10.0).name('Scale');
+        this.gui.add(this.scene, 'ambientLight', 0.1, 1).name('Ambient Light').onChange(this.scene.updateAmbientLight.bind(this.scene));
         this.gui.add(this.scene, 'objectComplexity', 0.01, 1.0).onChange(this.scene.updateObjectComplexity.bind(this.scene));
 
         this.gui.add(this.scene, 'selectedMaterial', this.scene.materialIDs).name('Selected Material');
@@ -32,6 +33,7 @@ export class MyInterface extends CGFinterface {
         // a folder for grouping parameters for one of the lights
         var f0 = this.gui.addFolder('Light 0 ');
         f0.add(this.scene.lights[0], 'enabled').name("Enabled");
+
         // a subfolder for grouping only the three coordinates of the light
         var sf0 = f0.addFolder('Light 0 Position');
         sf0.add(this.scene.lights[0].position, '0', -5.0, 5.0).name("X Position");
