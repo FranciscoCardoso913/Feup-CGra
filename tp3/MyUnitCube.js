@@ -12,15 +12,41 @@ export class MyUnitCube extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
-			0.5, 0.5, 0.5,    // Vertice A - idx 0
-            0.5, 0.5,-0.5,    // Vertice B - idx 1
-            -0.5, 0.5, -0.5,  // Vertice C - idx 2
-            -0.5, 0.5,0.5,    // Vertice D - idx 3
+            //Face 1 - ABCD
+			0.5, 0.5, 0.5,
+            0.5, 0.5,-0.5,
+            -0.5, 0.5, -0.5,
+            -0.5, 0.5,0.5, 
+
+            //Face 2 - EFGH
 			0.5, -0.5, 0.5,   // Vertice E - idx 4
             0.5, -0.5,-0.5,   // Vertice F - idx 5
             -0.5, -0.5, -0.5, // Vertice G - idx 6
             -0.5, -0.5,0.5,   // Vertice H - idx 7
+            
+            //Face 3 - ABFE
+			0.5, 0.5, 0.5,
+            0.5, 0.5,-0.5,
+            0.5, -0.5,-0.5,   // Vertice F - idx 5
+			0.5, -0.5, 0.5,   // Vertice E - idx 4
 
+            //Face 4 - DCHG 
+            -0.5, 0.5,0.5, 
+            -0.5, 0.5, -0.5,
+            -0.5, -0.5,0.5,   // Vertice H - idx 7
+            -0.5, -0.5, -0.5, // Vertice G - idx 6
+
+            //Face 5 - ADHE 
+			0.5, 0.5, 0.5,
+            -0.5, 0.5,0.5, 
+            -0.5, -0.5,0.5,   // Vertice H - idx 7
+			0.5, -0.5, 0.5,   // Vertice E - idx 4
+
+            //Face 6 - BCGF 
+            0.5, 0.5,-0.5,
+            -0.5, 0.5, -0.5,
+            -0.5, -0.5, -0.5, // Vertice G - idx 6
+            0.5, -0.5,-0.5,   // Vertice F - idx 5
 		];
 
 		
@@ -37,23 +63,62 @@ export class MyUnitCube extends CGFobject {
             4, 7, 6,
 
             // Positive face parallel to yz (A, B, F, E)
-            0, 4, 5,
-            5, 1, 0,
+            10, 9, 8,
+            8, 11, 10,
 
             // Negative face parallel to yz (D, C, H, G)
-            6, 7, 3,
-            3, 2, 6,
+            12, 13, 14,
+            13, 15, 14,
 
             // Positive face parallel to xy (A, D, H, E)
-            0, 3, 7,
-            7, 4, 0,
+            16, 17, 18,
+            18, 19, 16,
             
             // Negative face parallel to xy (B, C, G, F)
-            6, 2, 1,
-            1, 5, 6
+            22, 21, 20,
+            20, 23, 22,
 
 
 		];
+
+        this.normals = [
+            //Face 1 - ABCD
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
+
+            //Face 2 - EFGH
+            0, -1, 0, 
+            0, -1, 0, 
+            0, -1, 0, 
+            0, -1, 0, 
+
+            //Face 3 - ABFE
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+
+            //Face 4 - DCHG 
+            -1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
+
+            //Face 5 - ADHE 
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+
+            //Face 6 - BCGF 
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1
+        ]
+
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
@@ -68,13 +133,15 @@ export class MyUnitCube extends CGFobject {
         this.scene.setShininess(10);
     }
     display(){
-        this.changeColor()
+ //       this.changeColor()
+        super.display()
+        /*
         this.scene.pushMatrix()
         this.scene.scale(7,7,1)
         this.scene.translate(0,0,-0.51)
-        super.display()
         this.scene.setDefaultAppearance()
         this.scene.popMatrix()
+        */
     }
 
 

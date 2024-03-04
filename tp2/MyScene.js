@@ -33,8 +33,8 @@ import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
 
             //Objects connected to MyInterface
             this.displayAxis = true;
-            this.displayTangram = true;
-            this.displayCube = true;
+            this.displaytangram = true;
+            this.displaycube = true;
             this.displayCubequad = true;
             this.scaleFactor = 1;
         }
