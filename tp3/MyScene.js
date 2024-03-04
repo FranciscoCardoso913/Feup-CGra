@@ -138,6 +138,7 @@ export class MyScene extends CGFscene {
         this.material4.setDiffuse(0.3, 0.2, 0.2, 1);  // Adjusted to a slightly reddish hue for maroon
         this.material4.setSpecular(0.2, 0, 0);        // Same as ambient for maroon
         this.material4.setShininess(10);
+
         // Custom material (can be changed in the interface)
         // initially midrange values on ambient, diffuse and specular, on R, G and B respectively
 
@@ -154,7 +155,7 @@ export class MyScene extends CGFscene {
         this.materials = [this.material1, this.material2, this.material3, this.customMaterial, this.material4];
 
         // Labels and ID's for object selection on MyInterface
-        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 4, 'Wood': 4};
+        this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3, 'Wood': 4};
     }
     display() {
         // ---- BEGIN Background, camera and axis setup

@@ -1,9 +1,9 @@
 import {CGFobject} from '../lib/CGF.js';
-import { MyDiamond } from "../tp2/MyDiamond.js";
-import { MyTriangle } from "../tp2/MyTriangle.js";
-import { MyParallelogram } from "../tp2/MyParallelogram.js";
-import { MyTriangleSmall } from "../tp2/MyTriangleSmall.js";
-import { MyTriangleBig } from "../tp2/MyTriangleBig.js";
+import { MyDiamond } from "./MyDiamond.js";
+import { MyTriangle } from "./MyTriangle.js";
+import { MyParallelogram } from "./MyParallelogram.js";
+import { MyTriangleSmall } from "./MyTriangleSmall.js";
+import { MyTriangleBig } from "./MyTriangleBig.js";
 /**
  * MyDiamond
  * @constructor
@@ -20,9 +20,7 @@ export class MyTangram extends CGFobject {
         this.triangle = new MyTriangle(this.scene);
         this.parallelogram = new MyParallelogram(this.scene);
         this.triangleBig = new MyTriangleBig(this.scene);
-        this.triangleBig2 = new MyTriangleBig(this.scene);
         this.triangleSmall = new MyTriangleSmall(this.scene);
-        this.triangleSmall2 = new MyTriangleSmall(this.scene);
 	}
 
     display() {
@@ -59,17 +57,33 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0,-1,0);
         this.scene.scale(1,-1,1);
-        this.triangleBig2.display();
+        this.triangleBig.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
         this.scene.translate(0,2,0);
         this.scene.rotate(-Math.PI/4, 0,0,1);
         this.scene.translate(-1,0,0);
-        this.triangleSmall2.display();
+        this.triangleSmall.display();
         this.scene.popMatrix()
 
 
         // ---- END Primitive drawing section
     }
+
+   enableNormalViz(){
+       this.diamond.enableNormalViz();
+       this.triangle.enableNormalViz();
+       this.parallelogram.enableNormalViz();
+       this.triangleBig.enableNormalViz();
+       this.triangleSmall.enableNormalViz();
+   }
+
+   disableNormalViz(){
+       this.diamond.disableNormalViz();
+       this.triangle.disableNormalViz();
+       this.parallelogram.disableNormalViz();
+       this.triangleBig.disableNormalViz();
+       this.triangleSmall.disableNormalViz();
+   }
 }
 
