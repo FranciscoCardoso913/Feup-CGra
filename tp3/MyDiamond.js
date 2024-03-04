@@ -24,21 +24,22 @@ export class MyDiamond extends CGFobject {
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
-			0, 1, 2,
-			1, 3, 2,
-            6, 5, 4,
-            6, 7, 5
+			2, 1, 0,
+			2, 3, 1,
+            4, 5, 6,
+            5, 7, 6
 		];
 
         this.normals = [
+			0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
             0, 0, 1,
             0, 0, 1,
             0, 0, 1,
             0, 0, 1,
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
+
         ]
 
 		//The defined indices (and corresponding vertices)
