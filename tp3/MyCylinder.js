@@ -6,7 +6,7 @@ import {CGFobject} from '../lib/CGF.js';
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions along the Y axis
 */
-export class MyPrism extends CGFobject {
+export class MyCylinder extends CGFobject {
 
     constructor(scene, slices, stacks) {
         super(scene);
@@ -37,29 +37,33 @@ export class MyPrism extends CGFobject {
                 var caa=Math.cos(ang+alphaAng);
 
                 this.vertices.push(ca, -sa, 0.5); // A
+                this.vertices.push(ca, -sa, 0.5-d*(j+1)); // C
                 this.vertices.push(caa, -saa, 0.5); //B
 
 
-                this.vertices.push(ca, -sa, 0.5-d*(j+1)); // C
+                
                 this.vertices.push(caa, -saa, 0.5-d*(j+1) ); // D
 
 
 
                 // triangle normal computed by cross product of two edges
                 var normal= [
-                    saa-sa,
-                    caa-ca,
+                    ca,
+                    -sa,
                     0
                 ];
 
+               
+
                 this.normals.push(...normal);
                 this.normals.push(...normal);
-                this.normals.push(...normal);
-                this.normals.push(...normal);
+                this.normals.push(...[0,0,0]);
+                this.normals.push(...[0,0,0]);
+       
                 
                 let s = j*4*this.slices ;
-                this.indices.push( (4*i) +s , (4*i+1)+s , (4*i+2)+s);
-                this.indices.push( (4*i+1)+s , (4*i+3)+s , (4*i+2)+s);
+                this.indices.push( (4*i) +s , (4*i+2)+s , (4*i+1)+s);
+                this.indices.push( (4*i+2)+s , (4*i+3)+s , (4*i+1)+s);
 
                 ang+=alphaAng;
             }
@@ -79,7 +83,8 @@ export class MyPrism extends CGFobject {
         this.initBuffers();
         this.initNormalVizBuffers();
     }
-    display(){
+
+        display(){
         this.scene.pushMatrix()
         this.scene.rotate(Math.PI/2, 1, 0, 0);
         super.display();
