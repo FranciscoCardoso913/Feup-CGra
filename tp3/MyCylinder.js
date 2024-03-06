@@ -32,18 +32,10 @@ export class MyCylinder extends CGFobject {
                 // in each face will be different
 
                 var sa=Math.sin(ang);
-                var saa=Math.sin(ang+alphaAng);
                 var ca=Math.cos(ang);
-                var caa=Math.cos(ang+alphaAng);
 
                 this.vertices.push(ca, -sa, 0.5); // A
                 this.vertices.push(ca, -sa, 0.5-d*(j+1)); // C
-                this.vertices.push(caa, -saa, 0.5); //B
-
-
-                
-                this.vertices.push(caa, -saa, 0.5-d*(j+1) ); // D
-
 
 
                 // triangle normal computed by cross product of two edges
@@ -53,17 +45,14 @@ export class MyCylinder extends CGFobject {
                     0
                 ];
 
-               
-
                 this.normals.push(...normal);
                 this.normals.push(...normal);
-                this.normals.push(...[0,0,0]);
-                this.normals.push(...[0,0,0]);
        
-                
-                let s = j*4*this.slices ;
-                this.indices.push( (4*i) +s , (4*i+2)+s , (4*i+1)+s);
-                this.indices.push( (4*i+2)+s , (4*i+3)+s , (4*i+1)+s);
+                let s = j*2*this.slices ;
+                let m = this.slices * 2;
+                this.indices.push( (2*i)%m +s , (2*i+2)%m+s , (2*i+1)%m+s);
+                this.indices.push( (2*i+2)%m+s , (2*i+3)%m+s , (2*i+1)%m+s);
+
 
                 ang+=alphaAng;
             }
@@ -76,13 +65,6 @@ export class MyCylinder extends CGFobject {
      * Called when user interacts with GUI to change object's complexity.
      * @param {integer} complexity - changes number of slices
      */
-    updateBuffers(complexity){
-        this.slices = 3 + Math.round(9 * complexity); //complexity varies 0-1, so slices varies 3-12
-
-        // reinitialize buffers
-        this.initBuffers();
-        this.initNormalVizBuffers();
-    }
 
         display(){
         this.scene.pushMatrix()
