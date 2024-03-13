@@ -1,4 +1,4 @@
-import {CGFobject,CGFappearance} from '../lib/CGF.js';
+import {CGFobject,CGFappearance, CGFtexture} from '../lib/CGF.js';
 import { MyDiamond } from "./MyDiamond.js";
 import { MyTriangle } from "./MyTriangle.js";
 import { MyParallelogram } from "./MyParallelogram.js";
@@ -24,15 +24,14 @@ export class MyTangram extends CGFobject {
         this.triangleSmall = new MyTriangleSmall(this.scene);
 	}
     initMaterials (){
-
+        this.texture = new CGFtexture(this.scene, 'images/tangram.png');
         //Green Color
         this.material = new CGFappearance(this.scene)
         this.material.setAmbient(0.1, 0.1, 0.1, 1);
         this.material.setDiffuse(0.9, 0.9, 0.9, 1);
         this.material.setSpecular(0.1, 0.1, 0.1, 1);
         this.material.setShininess(10.0)
-        this.material.loadTexture('images/tangram.png');
-
+        this.material.setTexture(this.texture)
         
     }
 
@@ -69,6 +68,16 @@ export class MyTangram extends CGFobject {
         // Red triangle
         this.scene.translate(-2,0,0);
         this.scene.rotate(-Math.PI / 2,0,0,1); 
+        this.triangleSmall.texCoords = [
+            0.25, 0.75,
+            0.75, 0.75,
+            0.5,0.5,
+            0.25, 0.75,
+            0.75, 0.75,
+            0.5,0.5,
+    
+        ]
+        this.triangleSmall.initGLBuffers()
         this.triangleSmall.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
@@ -76,6 +85,17 @@ export class MyTangram extends CGFobject {
         // Orange triangle
         this.scene.translate(0,-1,0);
         this.scene.rotate(-Math.PI, 0, 0, 1 );
+
+		this.triangleBig.texCoords = [
+			1,1,
+			0.5, 0.5,
+			1,0,
+			1,1,
+			0.5, 0.5,
+			1,0,
+		]
+        this.triangleBig.initGLBuffers()
+
         this.triangleBig.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
@@ -83,21 +103,35 @@ export class MyTangram extends CGFobject {
         // Blue triangle
         this.scene.translate(0,-1,0);
         this.triangleBig.texCoords = [
-            0,0,
+            1, 0,
             0.5, 0.5,
-            0, 1,
             0,0,
+            1, 0,
             0.5, 0.5,
-            0, 1,
+            0,0,
+    
         ]
+        this.triangleBig.initGLBuffers()
+        
         this.triangleBig.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
-
         // Purple triangle
         this.scene.translate(0,2,0);
         this.scene.rotate(-Math.PI/4, 0,0,1);
         this.scene.translate(-1,0,0);
+
+        this.triangleSmall.texCoords = [
+            0.0, 0.0,
+            0.0, 0.5,
+            0.25,0.25,
+            0.0, 0.0,
+            0.0, 0.5,
+            0.25,0.25,
+    
+        ]
+        this.triangleSmall.initGLBuffers()
+
         this.triangleSmall.display();
         this.scene.popMatrix()
 
