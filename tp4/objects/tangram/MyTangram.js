@@ -1,9 +1,9 @@
-import {CGFobject,CGFappearance, CGFtexture} from '../lib/CGF.js';
-import { MyDiamond } from "./MyDiamond.js";
-import { MyTriangle } from "./MyTriangle.js";
-import { MyParallelogram } from "./MyParallelogram.js";
-import { MyTriangleSmall } from "./MyTriangleSmall.js";
-import { MyTriangleBig } from "./MyTriangleBig.js";
+import {CGFobject,CGFappearance, CGFtexture} from '../../../lib/CGF.js';
+import { MyDiamond } from "./pieces/MyDiamond.js";
+import { MyTriangle } from "./pieces/MyTriangle.js";
+import { MyParallelogram } from "./pieces/MyParallelogram.js";
+import { MyTriangleSmall } from "./pieces/MyTriangleSmall.js";
+import { MyTriangleBig } from "./pieces/MyTriangleBig.js";
 /**
  * MyDiamond
  * @constructor

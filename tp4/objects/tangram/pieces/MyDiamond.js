@@ -1,11 +1,10 @@
-import {CGFobject, CGFappearance} from '../lib/CGF.js';
-
+import {CGFobject} from '../../../../lib/CGF.js';
 /**
- * MyTriangle 
+ * MyDiamond
  * @constructor
  * @param scene - Reference to MyScene object
  */
-export class MyTriangle extends CGFobject {
+export class MyDiamond extends CGFobject {
 	constructor(scene) {
 		super(scene);
 		this.initBuffers();
@@ -13,36 +12,44 @@ export class MyTriangle extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
-			-1, -1, 0,	//0
-			1, -1, 0,	//1
-			-1, 1, 0,	//2
-			-1, -1, 0,	//0
-			1, -1, 0,	//1
-			-1, 1, 0,	//2
+			-1, 0, 0,	//0
+			0, -1, 0,	//1
+			0, 1, 0,	//2
+			1, 0, 0,		//3
+			-1, 0, 0,	//0
+			0, -1, 0,	//1
+			0, 1, 0,	//2
+			1, 0, 0		//3
 		];
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
 			2, 1, 0,
-            3, 4, 5,
+			2, 3, 1,
+            4, 5, 6,
+            5, 7, 6
 		];
 
         this.normals = [
 			0, 0, -1,
             0, 0, -1,
             0, 0, -1,
+            0, 0, -1,
+            0, 0, 1,
             0, 0, 1,
             0, 0, 1,
             0, 0, 1,
 
         ]
 		this.texCoords = [
-			0, 1,
-			0.5, 1,
 			0, 0.5,
-			0, 1,
-			0.5, 1,
+			0.25, 0.75,
+			0.25, 0.25,
+			0.5, 0.5,
 			0, 0.5,
+			0.25, 0.75,
+			0.25, 0.25,
+			0.5, 0.5,
 		]
 
 		//The defined indices (and corresponding vertices)
@@ -51,6 +58,5 @@ export class MyTriangle extends CGFobject {
 
 		this.initGLBuffers();
 	}
-
-	
 }
+
