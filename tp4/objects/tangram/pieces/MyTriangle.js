@@ -6,8 +6,9 @@ import {CGFobject, CGFappearance} from '../../../../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MyTriangle extends CGFobject {
-	constructor(scene) {
+	constructor(scene, texCoords ) {
 		super(scene);
+		this.texCoords = texCoords
 		this.initBuffers();
 	}
 	
@@ -36,14 +37,6 @@ export class MyTriangle extends CGFobject {
             0, 0, 1,
 
         ]
-		this.texCoords = [
-			0, 1,
-			0.5, 1,
-			0, 0.5,
-			0, 1,
-			0.5, 1,
-			0, 0.5,
-		]
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles

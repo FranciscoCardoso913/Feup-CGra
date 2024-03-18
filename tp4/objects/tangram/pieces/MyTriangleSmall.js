@@ -5,8 +5,9 @@ import {CGFobject , CGFappearance} from '../../../../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MyTriangleSmall extends CGFobject {
-	constructor(scene) {
+	constructor(scene, texCoords ) {
 		super(scene);
+		this.texCoords = texCoords
 		this.initBuffers();
 	}
 	

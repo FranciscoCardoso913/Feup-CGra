@@ -12,16 +12,19 @@ import { MyTriangleBig } from "./pieces/MyTriangleBig.js";
 export class MyTangram extends CGFobject {
 	constructor(scene) {
 		super(scene);
+        this.initTextures();
 		this.initPieces();
         this.initMaterials();
 	}
 	
 	initPieces() {
-        this.diamond = new MyDiamond(this.scene);
-        this.triangle = new MyTriangle(this.scene);
-        this.parallelogram = new MyParallelogram(this.scene);
-        this.triangleBig = new MyTriangleBig(this.scene);
-        this.triangleSmall = new MyTriangleSmall(this.scene);
+        this.diamond = new MyDiamond(this.scene, this.diamondText);
+        this.triangle = new MyTriangle(this.scene, this.triangletext);
+        this.parallelogram = new MyParallelogram(this.scene, this.parallelogramText);
+        this.topTriangleBig = new MyTriangleBig(this.scene, this.topTriangleBigText);
+        this.bottomTriangleBig = new MyTriangleBig(this.scene, this.bottomTriangleBigText);
+        this.topTriangleSmall = new MyTriangleSmall(this.scene, this.topTriangleSmallText);
+        this.bottomTriangleSmall = new MyTriangleSmall(this.scene, this.bottomTriangleSmallText);
 	}
     initMaterials (){
         this.texture = new CGFtexture(this.scene, 'images/tangram.png');
@@ -33,6 +36,71 @@ export class MyTangram extends CGFobject {
         this.material.setShininess(10.0)
         this.material.setTexture(this.texture)
         
+    }
+    initTextures(){
+        this.diamondText =  [
+            0, 0.5,
+            0.25, 0.75,
+            0.25, 0.25,
+            0.5, 0.5,
+            0, 0.5,
+            0.25, 0.75,
+            0.25, 0.25,
+            0.5, 0.5,
+        ];
+
+        this.triangletext =  [
+            0, 1,
+            0.5, 1,
+            0, 0.5,
+            0, 1,
+            0.5, 1,
+            0, 0.5,
+        ];
+
+        this.parallelogramText = [
+			1,1,
+			0.75, 0.75,
+			0.5, 1,
+			0.25, 0.75,
+			1,1,
+			0.75, 0.75,
+			0.5, 1,
+			0.25, 0.75
+		];
+        this.bottomTriangleBigText = [
+			1,1,
+			0.5, 0.5,
+			1,0,
+			1,1,
+			0.5, 0.5,
+			1,0,
+		];
+        this.topTriangleBigText = [
+            1, 0,
+            0.5, 0.5,
+            0,0,
+            1, 0,
+            0.5, 0.5,
+            0,0,
+        ];
+        this.bottomTriangleSmallText = [
+            0.25, 0.75,
+            0.75, 0.75,
+            0.5,0.5,
+            0.25, 0.75,
+            0.75, 0.75,
+            0.5,0.5,
+        ];
+        this.topTriangleSmallText = [
+                0.0, 0.0,
+                0.0, 0.5,
+                0.25,0.25,
+                0.0, 0.0,
+                0.0, 0.5,
+                0.25,0.25,
+        ];
+
     }
 
     display() {
@@ -68,17 +136,7 @@ export class MyTangram extends CGFobject {
         // Red triangle
         this.scene.translate(-2,0,0);
         this.scene.rotate(-Math.PI / 2,0,0,1); 
-        this.triangleSmall.texCoords = [
-            0.25, 0.75,
-            0.75, 0.75,
-            0.5,0.5,
-            0.25, 0.75,
-            0.75, 0.75,
-            0.5,0.5,
-    
-        ]
-        this.triangleSmall.initGLBuffers()
-        this.triangleSmall.display();
+        this.bottomTriangleSmall.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
@@ -86,34 +144,15 @@ export class MyTangram extends CGFobject {
         this.scene.translate(0,-1,0);
         this.scene.rotate(-Math.PI, 0, 0, 1 );
 
-		this.triangleBig.texCoords = [
-			1,1,
-			0.5, 0.5,
-			1,0,
-			1,1,
-			0.5, 0.5,
-			1,0,
-		]
-        this.triangleBig.initGLBuffers()
 
-        this.triangleBig.display();
+        this.bottomTriangleBig.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
         // Blue triangle
         this.scene.translate(0,-1,0);
-        this.triangleBig.texCoords = [
-            1, 0,
-            0.5, 0.5,
-            0,0,
-            1, 0,
-            0.5, 0.5,
-            0,0,
-    
-        ]
-        this.triangleBig.initGLBuffers()
         
-        this.triangleBig.display();
+        this.topTriangleBig.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();
         // Purple triangle
@@ -121,18 +160,7 @@ export class MyTangram extends CGFobject {
         this.scene.rotate(-Math.PI/4, 0,0,1);
         this.scene.translate(-1,0,0);
 
-        this.triangleSmall.texCoords = [
-            0.0, 0.0,
-            0.0, 0.5,
-            0.25,0.25,
-            0.0, 0.0,
-            0.0, 0.5,
-            0.25,0.25,
-    
-        ]
-        this.triangleSmall.initGLBuffers()
-
-        this.triangleSmall.display();
+        this.topTriangleSmall.display();
         this.scene.popMatrix()
 
 
