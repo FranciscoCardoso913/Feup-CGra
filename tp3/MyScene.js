@@ -1,11 +1,11 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
-import { MyPyramid } from "./MyPyramid.js";
-import { MyCone } from "./MyCone.js";
-import { MyPlane } from "./MyPlane.js";
-import { MyTangram } from "./MyTangram.js";
-import { MyUnitCube } from "./MyUnitCube.js";
-import { MyPrism } from "./MyPrism.js";
-import { MyCylinder } from "./MyCylinder.js";
+import { MyPyramid } from "./objects/MyPyramid.js";
+import { MyCone } from "./objects/MyCone.js";
+import { MyPlane } from "./objects/MyPlane.js";
+import { MyTangram } from "./objects/tangram/MyTangram.js";
+import { MyUnitCube } from "./objects/MyUnitCube.js";
+import { MyPrism } from "./objects/MyPrism.js";
+import { MyCylinder } from "./objects/MyCylinder.js";
 
 /**
 * MyScene
