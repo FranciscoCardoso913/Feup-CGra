@@ -30,7 +30,21 @@ export class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.quad = new MyQuad(this);
         this.tangram = new MyTangram(this);
-        this.unitCube = new MyUnitCubeQuad(this);
+
+
+        //--- Block textures
+        this.blockTopText = new CGFtexture(this, 'images/mineTop.png');
+        this.blockBottomText = new CGFtexture(this, 'images/mineBottom.png');
+        this.blockSideText = new CGFtexture(this, 'images/mineSide.png');
+        //-------
+        this.unitCube = new MyUnitCubeQuad(this,
+                this.blockTopText,
+                this.blockSideText,
+                this.blockSideText,
+                this.blockSideText,
+                this.blockSideText,
+                this.blockBottomText
+        );
 
         this.objects = [this.quad, this.tangram, this.unitCube];
 
@@ -53,7 +67,8 @@ export class MyScene extends CGFscene {
         this.texture1 = new CGFtexture(this, 'images/board.jpg');
         this.texture2 = new CGFtexture(this, 'images/floor.png');
         this.texture3 = new CGFtexture(this, 'images/window.jpg');
-        //-------
+
+
 
         //-------Objects connected to MyInterface
         this.selectedObject = 0;
