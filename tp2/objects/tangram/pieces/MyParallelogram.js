@@ -1,11 +1,10 @@
-import {CGFobject, CGFappearance} from '../lib/CGF.js';
-
+import {CGFobject, CGFappearance} from '../../../../lib/CGF.js';
 /**
- * MyTriangle 
+ * MyParallelogram 
  * @constructor
  * @param scene - Reference to MyScene object
  */
-export class MyTriangle extends CGFobject {
+export class MyParallelogram extends CGFobject {
 	constructor(scene) {
 		super(scene);
 		this.initBuffers();
@@ -14,14 +13,19 @@ export class MyTriangle extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
-			-1, -1, 0,	//0
-			1, -1, 0,	//1
-			-1, 1, 0,	//2
+			0, 0, 0,	//0
+			1, 1, 0,	//1
+			2, 0, 0,	//2
+			3, 1, 0,	//3
 		];
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
-			0, 1, 2,
+			0, 2, 1,
+			1, 2, 3,
+
+            0, 1, 2,
+            1, 3, 2
 		];
 
 		//The defined indices (and corresponding vertices)
@@ -33,9 +37,9 @@ export class MyTriangle extends CGFobject {
 
 	initMaterials() {
 		this.material = new CGFappearance(this.scene);
-		this.material.setAmbient(0.5, 0, 0.5, 1);     
-		this.material.setDiffuse(0.8, 0.2, 0.8, 1);    
-		this.material.setSpecular(0.5, 0, 0.5, 1);    
+		this.material.setAmbient(0.5, 0.5, 0, 1);      // Set ambient color to yellow
+		this.material.setDiffuse(0.8, 0.8, 0, 1);      // Set diffuse color to yellow
+		this.material.setSpecular(0.5, 0.5, 0, 1);     // Set specular color to yellow (you can adjust this if needed)
 		this.material.setShininess(10.0);
 	}
 
@@ -45,3 +49,4 @@ export class MyTriangle extends CGFobject {
     }
 	
 }
+

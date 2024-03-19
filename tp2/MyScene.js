@@ -1,7 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis } from "../lib/CGF.js";
-import { MyTangram } from "./MyTangram.js";
-import { MyUnitCube } from "./MyUnitCube.js";
-import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
+import { MyTangram } from "./objects/tangram/MyTangram.js";
+import { MyUnitCube } from "./objects/MyUnitCube.js";
+import { MyUnitCubeQuad } from "./objects/MyUnitCubeQuad.js";
 
 /**
     * MyScene
@@ -30,13 +30,14 @@ import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
             this.tangram = new MyTangram(this);
             this.cube  = new MyUnitCube(this);
             this.cubequad = new MyUnitCubeQuad(this);
-
+            
             //Objects connected to MyInterface
             this.displayAxis = true;
-            this.displaytangram = true;
-            this.displaycube = true;
+            this.displayTangram = true;
+            this.displayCube = true;
             this.displayCubequad = true;
             this.scaleFactor = 1;
+            
         }
         initLights() {
             this.lights[0].setPosition(15, 2, 5, 1);
@@ -60,6 +61,7 @@ import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
             this.setShininess(10.0);
         }
         display() {
+            
             // ---- BEGIN Background, camera and axis setup
             // Clear image and depth buffer everytime we update the scene
             this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -102,6 +104,7 @@ import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
             this.translate(3.5,3.5,0);
             if ( this.displayCubequad) this.cubequad.display();
             if ( this.displayCube) this.cube.display();
+            
             if ( this.displayTangram) this.tangram.display();
             
             
