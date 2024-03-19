@@ -32,59 +32,49 @@ export class MyUnitCubeQuad extends CGFobject {
         this.material.setSpecular(0.1, 0.1, 0.1, 1);
         this.material.setShininess(10.0);
     }
+    displayPhase(){
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.quad.display()
+        this.scene.popMatrix(); 
+        this.scene.pushMatrix();
+    }
     display(){
         this.material.apply();
 
         this.scene.pushMatrix()
-        this.scene.pushMatrix()
 
         this.scene.translate(0,0,0.5)
         if(this.frontText) this.material.setTexture(this.frontText);
-        this.material.apply();
-        this.quad.display()
-        this.scene.popMatrix(); 
-        this.scene.pushMatrix();
+        this.displayPhase();
 
         this.scene.translate(0,0,-0.5)
         this.scene.rotate(Math.PI, 0,1,0);
         if(this.backtext) this.material.setTexture(this.backtext);
-        this.material.apply();
-        this.quad.display();
-        this.scene.popMatrix(); 
-        this.scene.pushMatrix();
+        this.displayPhase();
 
         this.scene.translate(0,0.5,0);
         this.scene.rotate(-Math.PI/2, 1,0,0)
         if(this.topText) this.material.setTexture(this.topText);
-        this.material.apply();
-        this.quad.display();
-        this.scene.popMatrix(); 
-        this.scene.pushMatrix();
+        this.displayPhase();
 
         this.scene.translate(0,-0.5,0);
         this.scene.rotate(Math.PI/2, 1,0,0)
         if(this.bottomText) this.material.setTexture(this.bottomText);
-        this.material.apply();
-        this.quad.display();
-        this.scene.popMatrix(); 
-        this.scene.pushMatrix();
+        this.displayPhase();
 
         this.scene.translate(0.5,0,0);
         this.scene.rotate(Math.PI/2, 0,1,0)
         if(this.rightText) this.material.setTexture(this.rightText);
-        this.material.apply();
-        this.quad.display();
-        this.scene.popMatrix(); 
-        this.scene.pushMatrix();
+        this.displayPhase();
 
         this.scene.translate(-0.5,0,0);
         this.scene.rotate(-Math.PI/2, 0,1,0)
         if(this.leftText) this.material.setTexture(this.leftText);
-        this.material.apply();
-        this.quad.display();
-        this.scene.popMatrix(); 
-        this.scene.popMatrix();
+        this.displayPhase();
 
+        this.scene.popMatrix();
+        
         this.scene.setDefaultAppearance()
     }
 
