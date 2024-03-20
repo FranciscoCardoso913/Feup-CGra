@@ -13,6 +13,6 @@ Exercícios
 3. Texturas no Cubo:
 - Criamos a classe MyUnitCubeQuad que utiliza seis texturas.
 - Definimos as texturas para as faces do cubo.
-- Ativamos o filtro LINEAR para melhorar a qualidade das texturas.
+- Ativamos o filtro TEXTURE_MAG_FILTER para melhorar a qualidade das texturas.
 
 ![Screenshot 2](tp4/screenshots/cg-t07g07-tp4-2.png)
