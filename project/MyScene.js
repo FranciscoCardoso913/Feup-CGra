@@ -42,14 +42,15 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
   }
   initLights() {
-    this.lights[0].setPosition(15, 0, 5, 1);
+    this.lights[0].setPosition(15, 5, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
   }
   initCameras() {
     this.camera = new CGFcamera(
-      1.0,
+      1.8,
       0.1,
       1000,
       vec3.fromValues(50, 10, 15),
@@ -85,8 +86,9 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
-    this.scale(20,20,20);
+    this.scale(2,2,2);
     this.sphere.display()
+    this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
   }
 }
