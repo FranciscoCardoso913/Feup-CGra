@@ -3,8 +3,8 @@ import {CGFobject} from '../../../lib/CGF.js';
 export class MySphere extends CGFobject {
 	constructor(scene, stacks, slices) {
 		super(scene);
-		this.stacks = stacks;
-        this.slices = slices;
+		this.stacks = stacks ;
+        this.slices = slices ;
 		this.initBuffers();
 	}
 	initBuffers() {
@@ -15,28 +15,28 @@ export class MySphere extends CGFobject {
 		const beta = (Math.PI*2) / this.slices; 
         const alfa = (Math.PI/2) / this.stacks;
         let ang2 =0
-        for (let i=0; i < this.slices;i++){
+        for (let i=0; i <= this.stacks;i++){
             let height = Math.sin(ang2);
             let radius = Math.cos(ang2);
             let ang = 0;
-            for(let j =0; j< this.stacks; j++){
+            for(let j =0; j< this.slices; j++){
                 this.vertices.push(...[radius*Math.cos(ang),height,radius*Math.sin(ang)]);
                 ang += beta;
             }
             ang2 += alfa;
         }
 		ang2 = 0;
-        for (let i=0; i < this.slices;i++){
+        for (let i=0; i <= this.stacks;i++){
             let height = Math.sin(ang2);
             let radius = Math.cos(ang2);
             let ang = 0;
-            for(let j =0; j< this.stacks; j++){
+            for(let j =0; j< this.slices; j++){
                 this.vertices.push(...[radius*Math.cos(ang),height,radius*Math.sin(ang)]);
-                ang += beta
+                ang -= beta
             }
             ang2 -= alfa;
         }
-
+		
         console.log(this.vertices);
 
 
@@ -45,16 +45,34 @@ export class MySphere extends CGFobject {
 		// Generating indices
 		this.indices = [];
 
-		for (let i=0; i < this.stacks;i++){
+		for (let i=0; i <= this.stacks;i++){
 
 			for (let j=0; j < this.slices;j++){
 				this.indices.push(i*this.slices + j);
-				this.indices.push(i*this.slices + ((j+1)%this.slices));
-				this.indices.push(((i+1)%this.stacks)*this.slices + j);
+				this.indices.push(((i+1)%(this.stacks+1))*this.slices + j);
+				this.indices.push(i*this.slices + ((j+1)%(this.slices)));
 				
-				this.indices.push(i*this.slices + ((j+1)%this.slices));
-				this.indices.push(((i+1)%this.stacks)*this.slices + j);
-				this.indices.push(((i+1)%this.stacks)*this.slices + ((j+1)%this.slices));
+				
+				this.indices.push(i*this.slices + ((j+1)%(this.slices)));
+				this.indices.push(((i+1)%(this.stacks+1))*this.slices + ((j+1)%(this.slices)));
+				this.indices.push(((i+1)%(this.stacks+1))*this.slices + j);
+				
+				
+			}
+		}
+
+		for (let i=this.stacks; i <= this.stacks*2;i++){
+
+			for (let j=0; j < this.slices;j++){
+				this.indices.push(i*this.slices + j);
+				this.indices.push(((i+1)%(this.stacks*2+2))*this.slices + j);
+				this.indices.push(i*this.slices + ((j+1)%(this.slices)));
+				
+				
+				this.indices.push(i*this.slices + ((j+1)%(this.slices)));
+				this.indices.push(((i+1)%(this.stacks*2+2))*this.slices + ((j+1)%(this.slices)));
+				this.indices.push(((i+1)%(this.stacks*2+2))*this.slices + j);
+				
 				
 			}
 		}
