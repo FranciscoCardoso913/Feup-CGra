@@ -27,7 +27,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.sphere = new MySphere(this, 20,20);
+    this.sphere = new MySphere(this, 30,60, true);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -44,7 +44,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
   initLights() {
     this.lights[0].setPosition(15, 5, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-    this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
+    this.lights[0].setAmbient(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
   }
@@ -88,7 +88,7 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.popMatrix();
     this.scale(2,2,2);
     this.sphere.display()
-    this.sphere.enableNormalViz()
+    //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
   }
 }
