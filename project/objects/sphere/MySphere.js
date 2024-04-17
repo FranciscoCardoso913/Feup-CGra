@@ -1,11 +1,12 @@
 import {CGFobject} from '../../../lib/CGF.js';
 
 export class MySphere extends CGFobject {
-	constructor(scene, stacks, slices, isSemiSphere = false) {
+	constructor(scene, stacks, slices, isSemiSphere = false, isInverted = false) {
 		super(scene);
 		this.stacks = stacks ;
         this.slices = slices ;
 		this.isSemiSphere = isSemiSphere;
+		this.isInverted = isInverted;
 		this.initBuffers();
 	}
 	initBuffers() {
@@ -24,7 +25,10 @@ export class MySphere extends CGFobject {
 				let ang2 =  i*alfa;
                 this.vertices.push(Math.sin(ang)*Math.sin(ang2),Math.cos(ang2),Math.cos(ang)*Math.sin(ang2));
 				this.texCoords.push( j/(this.slices +1 ), i/(this.stacks*2 +1));
-				this.normals.push(Math.sin(ang)*Math.sin(ang2),Math.cos(ang2),Math.cos(ang)*Math.sin(ang2))
+				if(this.isInverted)
+					this.normals.push(-Math.sin(ang)*Math.sin(ang2),-Math.cos(ang2),-Math.cos(ang)*Math.sin(ang2));
+				else
+					this.normals.push(Math.sin(ang)*Math.sin(ang2),Math.cos(ang2),Math.cos(ang)*Math.sin(ang2));
             }
 
         }
@@ -41,13 +45,26 @@ export class MySphere extends CGFobject {
 			for (let j=0; j < this.slices;j++){
 				this.indices.push(i*(this.slices+1) + j); // Bottom left
 				
-				this.indices.push(((i+1))*(this.slices+1) + j); // Top
-				this.indices.push(i*(this.slices+1) + ((j+1))); // Bottom Right
-				
-				
+				if(this.isInverted){
+					this.indices.push(i*(this.slices+1) + ((j+1))); // Bottom Right
+					this.indices.push(((i+1))*(this.slices+1) + j); // Top
+				}else {
+					this.indices.push(((i+1))*(this.slices+1) + j); // Top
+					this.indices.push(i*(this.slices+1) + ((j+1))); // Bottom Right
+				}
+
 				this.indices.push(i*(this.slices +1) + ((j+1)));
-				this.indices.push(((i+1))*(this.slices +1) + j);
-				this.indices.push(((i+1))*(this.slices +1) + ((j+1)));
+
+				if(this.isInverted){
+					this.indices.push(((i+1))*(this.slices +1) + ((j+1)));
+					this.indices.push(((i+1))*(this.slices +1) + j);
+				}
+				else{
+					this.indices.push(((i+1))*(this.slices +1) + j);
+					this.indices.push(((i+1))*(this.slices +1) + ((j+1)));
+				}
+				
+
 				
 				
 				
@@ -56,12 +73,25 @@ export class MySphere extends CGFobject {
 
 		for (let j=0; j < this.slices;j++){
 			this.indices.push(j); // Bottom left
-			this.indices.push((this.slices+1) + j); // Top
-			this.indices.push((this.slices+1) + j+1); // Bottom Right
+			if(this.isInverted){
+				this.indices.push((this.slices+1) + j+1); // Bottom Right
+				this.indices.push((this.slices+1) + j); // Top
+			}else{
+				this.indices.push((this.slices+1) + j); // Top
+				this.indices.push((this.slices+1) + j+1); // Bottom Right
+			}
 
 			this.indices.push((this.slices+1)*this.stacks*2 -j); // Bottom left
-			this.indices.push((this.slices+1)*(this.stacks*2 -1) + j+1); // Bottom Right
-			this.indices.push((this.slices+1)*(this.stacks*2 -1) + j); // Top
+
+			if(this.isInverted){
+				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j); // Top
+				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j+1); // Bottom Right
+			}else{
+				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j+1); // Bottom Right
+				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j); // Top
+			}
+	
+
 
 		}
 
