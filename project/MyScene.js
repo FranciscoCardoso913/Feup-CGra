@@ -1,6 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MyFlower } from "./flower/MyFlower.js";
+import { MyFlower } from "./objects/flower/MyFlower.js";
+import { MySphere } from "./objects/sphere/MySphere.js";
 
 /**
  * MyScene
@@ -28,6 +29,8 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.flower = new MyFlower(this);
+    this.sphere = new MySphere(this, 30,60, true);
+
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -41,14 +44,15 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
   }
   initLights() {
-    this.lights[0].setPosition(15, 0, 5, 1);
+    this.lights[0].setPosition(15, 5, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[0].setAmbient(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
   }
   initCameras() {
     this.camera = new CGFcamera(
-      1.0,
+      1.8,
       0.1,
       1000,
       vec3.fromValues(50, 10, 15),
@@ -85,8 +89,11 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.plane.display();
     this.popMatrix();
     this.flower.display();
-    
-
+    this.pushMatrix();
+    this.scale(2,2,2);
+    this.sphere.display()
+    this.popMatrix();
+    //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
   }
 }

@@ -1,4 +1,4 @@
-import { CGFobject } from "../../lib/CGF.js";
+import { CGFobject } from "../../../lib/CGF.js";
 import { MyPetal } from "./MyPetal.js";
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyStem } from "./MyStem.js";
@@ -19,7 +19,7 @@ export class MyFlower extends CGFobject {
 	this.indices = []
 
     this.petal = new MyPetal(this.scene);
-    this.receptacle = new MyReceptacle(this.scene, 30);
+    this.receptacle = new MyReceptacle(this.scene, 100);
     this.stem = new MyStem(this.scene, 1, 30);
     this.n_petals = 10;
     //The defined indices (and corresponding vertices)
