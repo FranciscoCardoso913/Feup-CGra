@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyFlower } from "./objects/flower/MyFlower.js";
 import { MySphere } from "./objects/sphere/MySphere.js";
 
 /**
@@ -76,9 +77,9 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
     // Draw axis
     if (this.displayAxis) this.axis.display();
-
+    
     // ---- BEGIN Primitive drawing section
-
+    
     this.pushMatrix();
     this.appearance.apply();
     this.translate(0,-100,0);
@@ -86,8 +87,11 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
+    this.flower.display();
+    this.pushMatrix();
     this.scale(2,2,2);
     this.sphere.display()
+    this.popMatrix();
     //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
   }
