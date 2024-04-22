@@ -25,15 +25,18 @@ export class MyStem extends CGFobject {
     
 
     for (let j = 0; j <= this.stacks; j++){
+      let random_angle_x = j != this.stacks ? Math.random() * Math.PI / 4 : 0;
+      let random_angle_z = j != this.stacks ? Math.random() * Math.PI / 4 : 0;
       for (let i = 0; i < this.smoothness; i++) {
         let ang = i * alphaang;
-        let x = Math.cos(ang);
-        let z = Math.sin(ang);
+        let x = Math.cos(ang) + random_angle_x ;
+        let z = Math.sin(ang) + random_angle_z;
 
         this.vertices.push(x, d*j, z);
 
         this.normals.push(x, 0, z);
       }
+      //TODO: add leaves on different cylinders' connection points
     }
 
     for (let i = 0; i < this.smoothness * this.stacks; i++){
