@@ -1,56 +1,57 @@
-import {CGFobject} from '../../../lib/CGF.js';
+import { CGFobject } from "../../../lib/CGF.js";
 /**
-* MyPyramid
-* @constructor
+ * MyPyramid
+ * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions along the Y axis
-*/
+ */
 export class MyStem extends CGFobject {
+  constructor(scene, height, smoothness, stacks) {
+    super(scene);
+    this.height = height;
+    this.smoothness = smoothness;
+    this.stacks = stacks;
+    this.initBuffers();
+  }
 
-    constructor(scene, height, smoothness) {
-        super(scene);
-        this.height = height;
-        this.smoothness = smoothness;
-        this.initBuffers();
+  initBuffers() {
+    this.vertices = [];
+    this.indices = [];
+    this.normals = [];
+
+    let alphaang = (2 * Math.PI) / this.smoothness;
+    let d = this.height / this.stacks;
+    
+
+    for (let j = 0; j <= this.stacks; j++){
+      for (let i = 0; i < this.smoothness; i++) {
+        let ang = i * alphaang;
+        let x = Math.cos(ang);
+        let z = Math.sin(ang);
+
+        this.vertices.push(x, d*j, z);
+
+        this.normals.push(x, 0, z);
+      }
     }
 
-    initBuffers() {
-        this.vertices = [];
-        this.indices = [];
-        this.normals = [];
-
-        let alphaang = (2 * Math.PI) / this.smoothness;
-
-        for (let i = 0; i < this.smoothness; i++) {
-            let ang = i * alphaang;
-            let x = Math.cos(ang);
-            let z = Math.sin(ang);
-
-            this.vertices.push(x, 0, z);
-            this.vertices.push(x, this.height, z);
-
-            let m = this.smoothness * 2;
-            this.indices.push( (2*i)%m , (2*i+1)%m, (2*i+2)%m);
-            this.indices.push( (2*i+1)%m, (2*i+3)%m, (2*i+2)%m);
-
-            this.normals.push(x, 0, z);
-            this.normals.push(x, 0, z);
-        }
-
-
-        this.primitiveType = this.scene.gl.TRIANGLES;
-        this.initGLBuffers();
+    for (let i = 0; i < this.smoothness * this.stacks; i++){
+        this.indices.push(i + this.smoothness + 1, i+1, i);
+        this.indices.push(i , i + this.smoothness, i+ this.smoothness+1);
     }
-    /**
-     * Called when user interacts with GUI to change object's complexity.
-     * @param {integer} complexity - changes number of slices
-     */
+    this.indices.push(this.smoothness, 0, this.smoothness - 1);
+    this.indices.push(this.smoothness * this.stacks + this.smoothness, this.smoothness * this.stacks + this.smoothness - 1, this.smoothness * this.stacks);
 
-    display(){
-        super.display();
-    }
+    this.primitiveType = this.scene.gl.TRIANGLES;
+    this.initGLBuffers();
+  }
+  /**
+   * Called when user interacts with GUI to change object's complexity.
+   * @param {integer} complexity - changes number of slices
+   */
 
+  display() {
+    super.display();
+  }
 }
-
-

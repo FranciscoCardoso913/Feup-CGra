@@ -28,7 +28,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.flower = new MyFlower(this);
+    this.flower = new MyFlower(this, 2.5, 0.5, 8, 0.2, 3,[0, 255, 0, 255], [255, 0, 0, 255], Math.PI/14, -Math.PI/14);
     this.sphere = new MySphere(this, 30,60, true);
 
     //Objects connected to MyInterface
@@ -88,10 +88,14 @@ this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
+
+    //FLOWER
     this.flower.display();
+
+    //SPHERE
     this.pushMatrix();
     this.scale(2,2,2);
-    this.sphere.display()
+    //this.sphere.display()
     this.popMatrix();
     //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
