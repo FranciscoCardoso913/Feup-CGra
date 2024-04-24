@@ -23,6 +23,8 @@ export class MyInterface extends CGFinterface {
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
 
+        this.gui.add(this.scene, 'fov', 0.1, 3).name('Fov Factor').onChange(this.scene.updateFov.bind(this.scene));
+
         return true;
     }
 }
