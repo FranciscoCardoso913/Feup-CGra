@@ -3,7 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MySphere } from "./objects/MySphere.js";
 import { MyFlower } from "./objects/flower/MyFlower.js";
-
+import { MyRock } from "./objects/MyRock.js";
 /**
  * MyScene
  * @constructor
@@ -26,11 +26,17 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
+    this.panorameTexture = new CGFtexture(this, "images/panorama4.jpg");
+    this.groundTexture = new CGFtexture(this, "images/terrain.jpg");
+    this.rockTexture =  new CGFtexture(this, "images/rock-texture.png"); 
+
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.flower = new MyFlower(this);
-
+    this.rock = new MyRock(this, this.rockTexture);
+    this.sphere = new MySphere(this, 20, 20);
+    this.panorama = new MyPanorama(this, this.panorameTexture);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -38,11 +44,11 @@ export class MyScene extends CGFscene {
 
     this.enableTextures(true);
 
-    this.texture = new CGFtexture(this, "images/panorama4.jpg");
+
+    
     this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
+    this.appearance.setTexture(this.groundTexture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.panorama = new MyPanorama(this, this.texture);
     this.fov=1.8;
 
   }
@@ -66,6 +72,8 @@ export class MyScene extends CGFscene {
     this.camera.fov = this.fov;
   }
   setDefaultAppearance() {
+    this.appearance.setTexture(this.groundTexture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
@@ -86,12 +94,20 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
     
     // ---- BEGIN Primitive drawing section
+    this.setDefaultAppearance();
 
+    this.pushMatrix();
+    this.appearance.apply();
+    this.translate(0,-100,0);
+    this.scale(400,400,400);
+    this.rotate(-Math.PI/2.0,1,0,0);
+    this.plane.display();
+    this.popMatrix();
 
-    // this.scale(2,2,2);
     this.panorama.display()
+    this.rock.display();
+    //this.flower.display();
     
-    this.flower.display();
     //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
   }
