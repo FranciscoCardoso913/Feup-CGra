@@ -2,6 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPlane } from "./MyPlane.js";
 import { MyFlower } from "./objects/flower/MyFlower.js";
 import { MySphere } from "./objects/sphere/MySphere.js";
+import { MyLeaf } from "./objects/flower/MyLeaf.js";
 
 /**
  * MyScene
@@ -28,7 +29,8 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.flower = new MyFlower(this, 2.5, 0.5, 8, 0.2, 3,[0, 255, 0, 255], [255, 0, 0, 255], Math.PI/14, -Math.PI/14);
+    this.flower = new MyFlower(this, 0, 0, 8, 0.15, 5, 5, [0, 255, 0, 255], [255, 0, 0, 255], 0.05, -0.1);
+    this.leaf = new MyLeaf(this, 1);
     this.sphere = new MySphere(this, 30,60, true);
 
     //Objects connected to MyInterface

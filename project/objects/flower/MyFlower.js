@@ -10,11 +10,12 @@ import { MyStem } from "./MyStem.js";
 export class MyFlower extends CGFobject {
   constructor(
     scene,
-    outer_radius,
+    outer_radius=0,
     inner_radius,
     n_petals,
     stem_radius,
     stem_height,
+    stem_stacks,
     stem_color,
     petal_color,
     petal_angle_min,
@@ -22,10 +23,18 @@ export class MyFlower extends CGFobject {
   ) {
     super(scene);
     this.outer_radius = outer_radius;
+
+    // random between 1.5 and 3.5 inclusive
+    if (this.outer_radius == 0) this.outer_radius = Math.random() * 2 + 1.5;
+
     this.inner_radius = inner_radius;
+
+    if (this.inner_radius == 0) this.inner_radius = this.outer_radius * 1.0 / 5;
+
     this.n_petals = n_petals;
     this.stem_radius = stem_radius;
     this.stem_height = stem_height;
+    this.stem_stacks = stem_stacks;
     this.stem_color = stem_color;
     this.petal_color = petal_color;
     this.petal_angle_min = petal_angle_min;
@@ -53,7 +62,7 @@ export class MyFlower extends CGFobject {
 
     this.petal = new MyPetal(this.scene, 10);
     this.receptacle = new MyReceptacle(this.scene, 100);
-    this.stem = new MyStem(this.scene, this.stem_height, 30, 5);
+    this.stem = new MyStem(this.scene, this.stem_height, 30, this.stem_stacks);
     //The defined indices (and corresponding vertices)
     //will be read in groups of three to draw triangles
     this.primitiveType = this.scene.gl.TRIANGLES;

@@ -1,4 +1,5 @@
 import { CGFobject } from "../../../lib/CGF.js";
+import { MyLeaf } from "./MyLeaf.js";
 /**
  * MyPyramid
  * @constructor
@@ -12,6 +13,10 @@ export class MyStem extends CGFobject {
     this.height = height;
     this.smoothness = smoothness;
     this.stacks = stacks;
+    this.leaf_scale_factor = ((this.height * 1.0 / 2) * 0.7) / this.height;
+    this.connection_points = [];
+    this.leaf_angles = [];
+    this.leaf = new MyLeaf(scene, 1);
     this.initBuffers();
   }
 
@@ -27,24 +32,36 @@ export class MyStem extends CGFobject {
     for (let j = 0; j <= this.stacks; j++){
       let random_angle_x = j != this.stacks ? Math.random() * Math.PI / 4 : 0;
       let random_angle_z = j != this.stacks ? Math.random() * Math.PI / 4 : 0;
+      let middle_x = 0;
+      let middle_z = 0;
       for (let i = 0; i < this.smoothness; i++) {
         let ang = i * alphaang;
-        let x = Math.cos(ang) + random_angle_x ;
+        let x = Math.cos(ang) + random_angle_x;
         let z = Math.sin(ang) + random_angle_z;
+        middle_x += x;
+        middle_z += z;
 
         this.vertices.push(x, d*j, z);
-
+        
         this.normals.push(x, 0, z);
       }
-      //TODO: add leaves on different cylinders' connection points
+      middle_x /= this.smoothness;
+      middle_z /= this.smoothness;
+
+       if (j != 0 && j != this.stacks) this.connection_points.push(j * d);
+      
     }
 
-    for (let i = 0; i < this.smoothness * this.stacks; i++){
+    for (let i = 0; i < this.smoothness * this.stacks - 1; i++){
         this.indices.push(i + this.smoothness + 1, i+1, i);
         this.indices.push(i , i + this.smoothness, i+ this.smoothness+1);
     }
     this.indices.push(this.smoothness, 0, this.smoothness - 1);
-    this.indices.push(this.smoothness * this.stacks + this.smoothness, this.smoothness * this.stacks + this.smoothness - 1, this.smoothness * this.stacks);
+    this.indices.push(this.smoothness * this.stacks - 1, this.smoothness * (this.stacks + 1) - 1, this.smoothness * this.stacks);
+    
+    for (let i = 0; i < this.connection_points.length; i++){
+      this.leaf_angles.push(Math.random() * Math.PI * 2);
+    }
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
@@ -56,5 +73,18 @@ export class MyStem extends CGFobject {
 
   display() {
     super.display();
+    this.scene.popMatrix();    
+
+    for (let i = 0; i < this.connection_points.length; i++){
+      this.scene.pushMatrix();
+      this.scene.translate(0, -(this.height-this.connection_points[i]), 0);
+      this.scene.rotate(this.leaf_angles[i], 0, 1, 0);
+      this.scene.rotate(Math.PI/7, 0, 0, 1);
+      this.scene.scale(this.leaf_scale_factor, this.leaf_scale_factor, this.leaf_scale_factor);
+      this.leaf.display();
+      this.scene.popMatrix();
+    }
+
+    this.scene.pushMatrix();
   }
 }
