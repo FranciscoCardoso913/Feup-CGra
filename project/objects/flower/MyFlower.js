@@ -10,7 +10,7 @@ import { MyStem } from "./MyStem.js";
 export class MyFlower extends CGFobject {
   constructor(
     scene,
-    outer_radius=0,
+    outer_radius,
     inner_radius,
     n_petals,
     stem_radius,
