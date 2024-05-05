@@ -1,8 +1,8 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MySphere } from "./objects/MySphere.js";
-import { MyFlower } from "./objects/flower/MyFlower.js";
 
 /**
  * MyScene
@@ -29,8 +29,8 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.flower = new MyFlower(this);
-
+    this.garden = new MyGarden(this, 7, 7);
+    this.sphere = new MySphere(this, 30,60, true);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -44,6 +44,7 @@ export class MyScene extends CGFscene {
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.texture);
     this.fov=1.8;
+
 
   }
   initLights() {
@@ -91,7 +92,17 @@ export class MyScene extends CGFscene {
     // this.scale(2,2,2);
     this.panorama.display()
     
-    this.flower.display();
+    // this.pushMatrix();
+    // this.appearance.apply();
+    // this.translate(0,-100,0);
+    // this.scale(400,400,400);
+    // this.rotate(-Math.PI/2.0,1,0,0);
+    // this.plane.display();
+    // this.popMatrix();
+
+    //GARDEN
+    this.garden.display();
+
     //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
   }
