@@ -1,8 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MyFlower } from "./objects/flower/MyFlower.js";
 import { MySphere } from "./objects/sphere/MySphere.js";
-import { MyLeaf } from "./objects/flower/MyLeaf.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 
 /**
@@ -30,7 +28,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.garden = new MyGarden(this, 5, 5);
+    this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30,60, true);
 
     //Objects connected to MyInterface
@@ -43,6 +41,7 @@ this.texture = new CGFtexture(this, "images/terrain.jpg");
 this.appearance = new CGFappearance(this);
 this.appearance.setTexture(this.texture);
 this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
 
   }
   initLights() {

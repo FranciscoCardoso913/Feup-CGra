@@ -17,6 +17,7 @@ export class MyLeaf extends CGFobject {
     this.vertices = [];
     this.indices = [];
     this.normals = [];
+    this.texCoords = [];
 
     let alphaang = (2 * Math.PI) / this.smoothness;
     let d = this.height;
@@ -28,6 +29,8 @@ export class MyLeaf extends CGFobject {
         let z = Math.sin(ang) * 0.1;
 
         this.vertices.push(x, d * j, z);
+
+        this.texCoords.push(0.5, i / this.smoothness);
 
         this.normals.push(x, 0, z);
       }
@@ -41,17 +44,21 @@ export class MyLeaf extends CGFobject {
     this.indices.push(this.smoothness + this.smoothness - 1 , this.smoothness, this.smoothness - 1);
 
     this.vertices.push(0, d, 0);
+    this.texCoords.push(0,0);
     for (let i = 0; i < this.smoothness; i++) {
       this.indices.push(this.smoothness + i, this.vertices.length/3 - 1, this.smoothness + i + 1);
     }
     this.indices.push(this.smoothness * 2 - 1, this.vertices.length/3 - 1, this.smoothness);
 
-
-   
     this.vertices.push(0,0,0);
     this.vertices.push(0.4*d, 1.5*d, 0);
     this.vertices.push(-0.4*d, 1.5*d, 0);
     this.vertices.push(0,3*d,0);
+
+    this.texCoords.push(0.5,1);
+    this.texCoords.push(1, 0.5);
+    this.texCoords.push(0, 0.5);
+    this.texCoords.push(0,0);
     
     let l = this.vertices.length / 3;
     console.log(l)

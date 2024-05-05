@@ -1,7 +1,8 @@
-import { CGFappearance, CGFobject } from "../../../lib/CGF.js";
+import { CGFappearance, CGFobject, CGFtexture } from "../../../lib/CGF.js";
 import { MyPetal } from "./MyPetal.js";
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyStem } from "./MyStem.js";
+import { MyScene } from "../../MyScene.js";
 /**
  * MyQuad
  * @constructor
@@ -29,7 +30,8 @@ export class MyFlower extends CGFobject {
 
     this.inner_radius = inner_radius;
 
-    if (this.inner_radius == 0) this.inner_radius = this.outer_radius * 1.0 / 5;
+    if (this.inner_radius == 0)
+      this.inner_radius = (this.outer_radius * 1.0) / 5;
 
     this.n_petals = n_petals;
     this.stem_radius = stem_radius;
@@ -41,17 +43,31 @@ export class MyFlower extends CGFobject {
     this.petal_angle_max = petal_angle_max;
 
     this.stem_material = new CGFappearance(this.scene);
-    this.stem_material.setColor(stem_color[0]/255, stem_color[1]/255, stem_color[2]/255, stem_color[3]/255);
+    this.stem_texture = new CGFtexture(this.scene, "images/stem.jpg");
+    this.stem_material.setColor(
+      stem_color[0] / 255,
+      stem_color[1] / 255,
+      stem_color[2] / 255,
+      stem_color[3] / 255
+    );
 
     this.petal_material = new CGFappearance(this.scene);
-    this.petal_material.setColor(petal_color[0]/255,petal_color[1]/255,petal_color[2]/255,petal_color[3]/255);
+    this.petal_texture = new CGFtexture(this.scene, "images/petal.jpg");
+    this.petal_material.setColor(
+      petal_color[0] / 255,
+      petal_color[1] / 255,
+      petal_color[2] / 255,
+      petal_color[3] / 255
+    );
 
     this.receptacle_material = new CGFappearance(this.scene);
-    this.receptacle_material.setColor(1,1,0,1);
+    this.receptacle_material.setColor(1, 1, 0, 1);
 
     this.random_petal_rotations = new Array(this.n_petals);
     for (let i = 0; i < this.n_petals; i++)
-        this.random_petal_rotations[i] = Math.random() * (this.petal_angle_max - this.petal_angle_min) + this.petal_angle_min;
+      this.random_petal_rotations[i] =
+        Math.random() * (this.petal_angle_max - this.petal_angle_min) +
+        this.petal_angle_min;
 
     this.initBuffers();
   }
@@ -76,14 +92,16 @@ export class MyFlower extends CGFobject {
 
     for (let i = 0; i < this.n_petals; i++) {
       this.scene.pushMatrix();
-      
+
       this.scene.rotate(i * angle, 0, 1, 0);
       this.scene.rotate(this.random_petal_rotations[i], 0, 0, 1);
       this.scene.translate(this.inner_radius, 0, 0);
-      
+
       let outerScaleFactor = (this.outer_radius - this.inner_radius) / 2;
       this.scene.scale(outerScaleFactor, 1, outerScaleFactor / 1.4);
 
+      this.petal_material.setTexture(this.petal_texture);
+      this.petal_material.setTextureWrap("REPEAT", "REPEAT");
       this.petal_material.apply();
       this.petal.display();
       this.scene.popMatrix();
@@ -101,7 +119,7 @@ export class MyFlower extends CGFobject {
     this.receptacle.display();
 
     this.scene.rotate(-Math.PI, 0, 0, 1);
-    this.scene.scale(0.5,1,1);
+    this.scene.scale(0.5, 1, 1);
 
     this.receptacle_material.apply();
     this.receptacle.display();
@@ -113,8 +131,10 @@ export class MyFlower extends CGFobject {
     this.scene.pushMatrix();
 
     this.scene.translate(0, -this.stem_height, 0);
-    this.scene.scale(this.stem_radius,1,this.stem_radius);
+    this.scene.scale(this.stem_radius, 1, this.stem_radius);
 
+    this.stem_material.setTexture(this.stem_texture);
+    this.stem_material.setTextureWrap("MIRROR", "MIRROR");
     this.stem_material.apply();
 
     this.stem.display();
@@ -123,8 +143,6 @@ export class MyFlower extends CGFobject {
 
   //2.5 outer radius, n_petals, 0.5 inner radius, 0.2 cylinder radius, 1 cylinder, 1 cylinder height, default color
   display() {
-
-
     this.draw_petals();
     this.draw_receptacle();
     this.draw_stem();
