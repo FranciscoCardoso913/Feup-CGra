@@ -2,7 +2,6 @@ import { CGFappearance, CGFobject, CGFtexture } from "../../../lib/CGF.js";
 import { MyPetal } from "./MyPetal.js";
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyStem } from "./MyStem.js";
-import { MyScene } from "../../MyScene.js";
 /**
  * MyQuad
  * @constructor
@@ -61,7 +60,8 @@ export class MyFlower extends CGFobject {
     );
 
     this.receptacle_material = new CGFappearance(this.scene);
-    this.receptacle_material.setColor(1, 1, 0, 1);
+    this.receptacle_texture = new CGFtexture(this.scene, "images/receptacle.png");
+    this.receptacle_material.setColor(1, 1, 1, 1);
 
     this.random_petal_rotations = new Array(this.n_petals);
     for (let i = 0; i < this.n_petals; i++)
@@ -115,6 +115,8 @@ export class MyFlower extends CGFobject {
     this.scene.scale(this.inner_radius, 0.4, this.inner_radius);
     this.scene.rotate(Math.PI / 2, 0, 0, 1);
 
+    this.receptacle_material.setTexture(this.receptacle_texture);
+    this.receptacle_material.setTextureWrap("REPEAT", "REPEAT");
     this.receptacle_material.apply();
     this.receptacle.display();
 

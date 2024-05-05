@@ -1,5 +1,5 @@
 import { CGFobject } from "../../../lib/CGF.js";
-import { MySphere } from "../sphere/MySphere.js";
+import { MySphere } from "../MySphere.js";
 /**
  * MyPyramid
  * @constructor

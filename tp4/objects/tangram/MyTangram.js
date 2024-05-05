@@ -33,7 +33,7 @@ export class MyTangram extends CGFobject {
         this.material.setAmbient(0.1, 0.1, 0.1, 1);
         this.material.setDiffuse(0.9, 0.9, 0.9, 1);
         this.material.setSpecular(0.1, 0.1, 0.1, 1);
-        this.material.setShininess(10.0)
+        this.material.setShininess(10.0);
         this.material.setTexture(this.texture)
         
     }
