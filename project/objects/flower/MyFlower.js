@@ -1,4 +1,5 @@
 import { CGFappearance, CGFobject, CGFtexture } from "../../../lib/CGF.js";
+import { MyPollen } from "../MyPollen.js";
 import { MyPetal } from "./MyPetal.js";
 import { MyReceptacle } from "./MyReceptacle.js";
 import { MyStem } from "./MyStem.js";
@@ -69,6 +70,8 @@ export class MyFlower extends CGFobject {
         Math.random() * (this.petal_angle_max - this.petal_angle_min) +
         this.petal_angle_min;
 
+    this.pollen_angle = Math.random() * Math.PI;
+
     this.initBuffers();
   }
 
@@ -79,6 +82,7 @@ export class MyFlower extends CGFobject {
     this.petal = new MyPetal(this.scene, 10);
     this.receptacle = new MyReceptacle(this.scene, 100);
     this.stem = new MyStem(this.scene, this.stem_height, 30, this.stem_stacks);
+    this.pollen = new MyPollen(this.scene);
     //The defined indices (and corresponding vertices)
     //will be read in groups of three to draw triangles
     this.primitiveType = this.scene.gl.TRIANGLES;
@@ -128,6 +132,14 @@ export class MyFlower extends CGFobject {
     this.scene.popMatrix();
   }
 
+  draw_pollen(){
+    this.scene.pushMatrix();
+    this.scene.translate(0, 0.4, 0);
+    this.scene.rotate(this.pollen_angle, 0, 1, 0);
+    this.pollen.display();
+    this.scene.popMatrix();
+  }
+
   draw_stem() {
     //STEM
     this.scene.pushMatrix();
@@ -147,6 +159,7 @@ export class MyFlower extends CGFobject {
   display() {
     this.draw_petals();
     this.draw_receptacle();
+    this.draw_pollen();
     this.draw_stem();
   }
 }

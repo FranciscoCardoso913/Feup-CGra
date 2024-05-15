@@ -1,7 +1,9 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyFlower } from "./objects/flower/MyFlower.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
+import { MyPollen } from "./objects/MyPollen.js";
 import { MySphere } from "./objects/MySphere.js";
 
 /**
@@ -31,6 +33,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30,60, true);
+    this.pollen = new MyPollen(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -102,6 +105,9 @@ export class MyScene extends CGFscene {
 
     //GARDEN
     this.garden.display();
+
+    //POLLEN
+    //this.pollen.display();
 
     //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
