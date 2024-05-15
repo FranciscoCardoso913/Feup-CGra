@@ -12,7 +12,7 @@ export class MyBee extends CGFobject {
         this.y=0;
         this.z=0;
         this.direction= 0;
-        this.maxV = 50;
+        this.maxV = 60;
         this.norm= 0;
         this.v=[0,0,0];//(x,y,z)
         this.lastUpdate =Date.now();
@@ -32,11 +32,14 @@ export class MyBee extends CGFobject {
 
     accelerate(x){
         this.norm+=x*((Date.now()- this.lastUpdate)/ 1000.0);
+        if( this.norm > this.maxV) this.norm = this.maxV;
+        if(this.norm<0) this.norm= 0;
         this.v[0] = this.norm* Math.cos(this.direction);
-        this.v[2] = this.norm* Math.sin(this.direction);
+        this.v[2] = -this.norm* Math.sin(this.direction);
     }
     turn(x){
         this.direction+=x;
+        this.accelerate(1);
     }
     calcPos(){
         this.x+= this.v[0]*((Date.now()- this.lastUpdate)/ 1000.0);
@@ -91,8 +94,9 @@ export class MyBee extends CGFobject {
 
     display(){
         this.calcPos();
-        this.scene.rotate(this.direction, 0,1,0)
+        
         this.scene.translate(this.x,this.y,this.z)
+        this.scene.rotate(this.direction, 0,1,0)
 
         this.scene.rotate(Math.PI,0,1,0)
 
