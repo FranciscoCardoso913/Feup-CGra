@@ -131,6 +131,12 @@ export class MyScene extends CGFscene {
 
     }
 
+    if (this.gui.isKeyPressed("KeyR")) {
+
+      this.bee.reset()
+
+    }
+
   }
 
   display() {

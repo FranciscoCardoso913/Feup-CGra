@@ -27,8 +27,14 @@ export class MyBee extends CGFobject {
         this.time = 0;
 	};
 
-    scaleBee(x){
-        this.scaleBeeFactor =x;
+    reset(x){
+        this.x=0;
+        this.z=0;
+        this.v=[0,0,0];
+        this.lastUpdate= Date.now();
+        this.direction=0;
+        this.norm=0;
+
     }
 
     update(time){
