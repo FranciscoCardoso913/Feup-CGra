@@ -2,6 +2,7 @@ import {CGFobject} from '../../../lib/CGF.js';
 import { MySphere } from '../MySphere.js';
 import { MyCone } from '../geometric/MyCone.js';
 import { Antenna } from './Antenna.js';
+import { Wing } from './Wing.js';
 
 export class MyBee extends CGFobject {
 	constructor(scene, textures) {
@@ -13,8 +14,13 @@ export class MyBee extends CGFobject {
 		this.spere = new MySphere(this.scene, 20,20);
         this.antenna = new Antenna(this.scene);
         this.cone = new MyCone(this.scene, 20, 20);
-
+        this.wing = new Wing(this.scene, this.textures[4]);
+        this.time = 0;
 	};
+
+    update(time){
+        this.time = time;
+    }
 
     displayHead(){
         this.scene.pushMatrix();
@@ -58,20 +64,14 @@ export class MyBee extends CGFobject {
         this.antenna.display();
         this.scene.popMatrix();
     }
-    displayWing(){
-        this.scene.pushMatrix();
-        this.textures[4].apply()
-        this.scene.scale(0.4,0.05,0.8);
-        this.spere.display();
-        this.scene.popMatrix();
-    }
+
 
     display(){
-        
+        let ang = (Math.PI/4 )* Math.sin(this.time*Math.PI*8);
+
         this.scene.pushMatrix();
         this.scene.rotate(-Math.PI/6.0,0,0,1);
         this.scene.scale(0.7,1,1);
-        
         this.displayHead();
         this.scene.popMatrix();
 
@@ -166,23 +166,18 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix()
-        this.scene.translate(1,0.6,1.3)
-        this.displayWing();
+        this.scene.translate(1,0.6,0.5)
+        this.scene.rotate(ang, 1,0,0)
+        this.wing.display()
         this.scene.popMatrix()
-        this.scene.pushMatrix()
-        this.scene.translate(1.2,0.6,0.8)
-        this.displayWing();
-        this.scene.popMatrix();
-
 
         this.scene.pushMatrix()
-        this.scene.translate(1,0.6,-1.3)
-        this.displayWing();
+        this.scene.translate(1,0.6,-0.5)
+        this.scene.scale(1,1,-1)
+        this.scene.rotate(ang, 1,0,0)
+        this.wing.display()
         this.scene.popMatrix()
-        this.scene.pushMatrix()
-        this.scene.translate(1.2,0.6,-0.8)
-        this.displayWing();
-        this.scene.popMatrix();
+
     }
 }
 

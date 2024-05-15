@@ -25,6 +25,9 @@ export class MyScene extends CGFscene {
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
+    this.setUpdatePeriod(50); // **at least** 50 ms between animations
+
+    this.appStartTime=Date.now(); // current time in milisecs
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
@@ -91,6 +94,17 @@ export class MyScene extends CGFscene {
     this.setShininess(10.0);
   
   }
+
+  update(t)
+  {
+      //#region Ex.2 
+      // Continuous animation based on current time and app start time 
+      var timeSinceAppStart=(t-this.appStartTime)/1000.0;
+      
+      this.yBee= 0//3+Math.sin(timeSinceAppStart*Math.PI*2);
+      this.bee.update(0);
+  }
+
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -112,15 +126,40 @@ export class MyScene extends CGFscene {
     this.panorama.display()
     this.setDefaultAppearance()
 
-    this.bee.display()
+    this.pushMatrix();
+    this.translate(0, this.yBee, 0);
+    this.bee.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.translate(2,0,0);
+    this.sphere.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.translate(-0.5,0,0);
+    this.sphere.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.translate(0,0,0.5);
+    this.sphere.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.translate(0,0,-0.5);
+    this.sphere.display();
+    this.popMatrix();
     
-    // this.pushMatrix();
-    // this.appearance.apply();
-    // this.translate(0,-100,0);
-    // this.scale(400,400,400);
-    // this.rotate(-Math.PI/2.0,1,0,0);
-    // this.plane.display();
-    // this.popMatrix();
+    /*
+    this.pushMatrix();
+    this.appearance.apply();
+    this.translate(0,-100,0);
+    this.scale(400,400,400);
+    this.rotate(-Math.PI/2.0,1,0,0);
+    this.plane.display();
+    this.popMatrix();
+    */
 
     //GARDEN
     //this.garden.display();
