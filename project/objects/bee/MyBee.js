@@ -112,6 +112,42 @@ export class MyBee extends CGFobject {
         this.scene.rotate(-Math.PI/4, 0,1,0)
         this.displayAntenna();
         this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(1.2,-0.8,0.4);
+        this.scene.rotate(Math.PI, -0.1,0,1)
+        this.displayAntenna();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(1.2,-0.8,-0.4);
+        this.scene.rotate(Math.PI, 0.1,0,1)
+        this.displayAntenna();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0.5,-0.4,0.3);
+        this.scene.rotate(Math.PI, -0.1,0,1)
+        this.displayAntenna();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0.5,-0.4,-0.3);
+        this.scene.rotate(Math.PI, 0.1,0,1)
+        this.displayAntenna();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(1.7,-0.7,0.3);
+        this.scene.rotate(Math.PI, -0.1,0,1)
+        this.displayAntenna();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(1.7,-0.7,-0.3);
+        this.scene.rotate(Math.PI, 0.1,0,1)
+        this.displayAntenna();
+        this.scene.popMatrix();
     }
 }
 
