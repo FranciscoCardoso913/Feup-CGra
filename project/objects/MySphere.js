@@ -24,7 +24,7 @@ export class MySphere extends CGFobject {
 				let ang = j*beta;
 				let ang2 =  i*alfa;
                 this.vertices.push(Math.sin(ang)*Math.sin(ang2),Math.cos(ang2),Math.cos(ang)*Math.sin(ang2));
-				this.texCoords.push( j/(this.slices +1 ), i/(this.stacks*2 +1));
+				this.texCoords.push( j/(this.slices  ), i/(this.stacks*2 ));
 				if(this.isInverted)
 					this.normals.push(-Math.sin(ang)*Math.sin(ang2),-Math.cos(ang2),-Math.cos(ang)*Math.sin(ang2));
 				else

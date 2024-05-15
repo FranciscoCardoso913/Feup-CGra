@@ -1,5 +1,6 @@
 import {CGFobject} from '../../../lib/CGF.js';
 import { MySphere } from '../MySphere.js';
+import { MyCone } from '../geometric/MyCone.js';
 import { Antenna } from './Antenna.js';
 
 export class MyBee extends CGFobject {
@@ -11,6 +12,7 @@ export class MyBee extends CGFobject {
 	initBuffers() {
 		this.spere = new MySphere(this.scene, 20,20);
         this.antenna = new Antenna(this.scene);
+        this.cone = new MyCone(this.scene, 20, 20);
 
 	};
 
@@ -59,7 +61,6 @@ export class MyBee extends CGFobject {
     displayWing(){
         this.scene.pushMatrix();
         this.textures[4].apply()
-        
         this.scene.scale(0.4,0.05,0.8);
         this.spere.display();
         this.scene.popMatrix();
@@ -157,6 +158,13 @@ export class MyBee extends CGFobject {
         this.displayAntenna();
         this.scene.popMatrix();
 
+        this.scene.pushMatrix();
+        this.scene.translate(3.5,-1.05,0);
+        this.scene.rotate(-4*Math.PI/6.0,0,0,1);
+        this.scene.scale(0.1,0.5,0.1);
+        this.cone.display();
+        this.scene.popMatrix();
+
         this.scene.pushMatrix()
         this.scene.translate(1,0.6,1.3)
         this.displayWing();
@@ -164,7 +172,8 @@ export class MyBee extends CGFobject {
         this.scene.pushMatrix()
         this.scene.translate(1.2,0.6,0.8)
         this.displayWing();
-        this.scene.popMatrix()
+        this.scene.popMatrix();
+
 
         this.scene.pushMatrix()
         this.scene.translate(1,0.6,-1.3)
@@ -173,7 +182,7 @@ export class MyBee extends CGFobject {
         this.scene.pushMatrix()
         this.scene.translate(1.2,0.6,-0.8)
         this.displayWing();
-        this.scene.popMatrix()
+        this.scene.popMatrix();
     }
 }
 
