@@ -8,6 +8,14 @@ export class MyBee extends CGFobject {
 	constructor(scene, textures) {
 		super(scene);
         this.textures = textures;
+        this.x=0;
+        this.y=0;
+        this.z=0;
+        this.direction= 0;
+        this.maxV = 50;
+        this.norm= 0;
+        this.v=[0,0,0];//(x,y,z)
+        this.lastUpdate =Date.now();
 		this.initBuffers();
 	}
 	initBuffers() {
@@ -21,6 +29,21 @@ export class MyBee extends CGFobject {
     update(time){
         this.time = time;
     }
+
+    accelerate(x){
+        this.norm+=x*((Date.now()- this.lastUpdate)/ 1000.0);
+        this.v[0] = this.norm* Math.cos(this.direction);
+        this.v[2] = this.norm* Math.sin(this.direction);
+    }
+    turn(x){
+        this.direction+=x;
+    }
+    calcPos(){
+        this.x+= this.v[0]*((Date.now()- this.lastUpdate)/ 1000.0);
+        this.z+= this.v[2]*((Date.now()- this.lastUpdate)/ 1000.0);
+        this.lastUpdate = Date.now();
+    }
+
 
     displayHead(){
         this.scene.pushMatrix();
@@ -67,6 +90,13 @@ export class MyBee extends CGFobject {
 
 
     display(){
+        this.calcPos();
+        this.scene.rotate(this.direction, 0,1,0)
+        this.scene.translate(this.x,this.y,this.z)
+
+        this.scene.rotate(Math.PI,0,1,0)
+
+
         let ang = (Math.PI/4 )* Math.sin(this.time*Math.PI*8);
 
         this.scene.pushMatrix();
@@ -129,7 +159,7 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0.6,-0.4,-0.2);
+        this.scene.translate(0.25,-0.2,-0.15);
         this.scene.rotate(Math.PI, 0.05,0,0.5)
         this.displayAntenna();
         this.scene.popMatrix();
@@ -141,7 +171,7 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0.5,-0.4,-0.3);
+        this.scene.translate(0.5,-0.4,-0.2);
         this.scene.rotate(Math.PI, 0.1,0,1)
         this.displayAntenna();
         this.scene.popMatrix();

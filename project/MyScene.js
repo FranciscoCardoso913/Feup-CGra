@@ -114,7 +114,7 @@ export class MyScene extends CGFscene {
 
     if (this.gui.isKeyPressed("KeyW")) {
 
-      text += " W ";
+      this.bee.accelerate(10)
 
       keysPressed = true;
 
@@ -122,7 +122,7 @@ export class MyScene extends CGFscene {
 
     if (this.gui.isKeyPressed("KeyS")) {
 
-      text += " S ";
+      this.bee.accelerate(-10)
 
       keysPressed = true;
 
