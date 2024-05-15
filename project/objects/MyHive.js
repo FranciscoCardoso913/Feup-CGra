@@ -1,7 +1,7 @@
 import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 
-export class MyPollen extends CGFobject {
+export class MyHive extends CGFobject {
 	constructor(scene) {
         super(scene);
         this.scene = scene;
@@ -10,7 +10,7 @@ export class MyPollen extends CGFobject {
 		this.initBuffers();
 	}
 	initBuffers() {
-        this.texture = new CGFtexture(this.scene, "images/pollen.jpg");
+        this.texture = new CGFtexture(this.scene, "images/hive.jpg");
         this.appearance = new CGFappearance(this.scene);
         this.appearance.setAmbient(0.5, 0.5, 0.5, 1);
         this.appearance.setTexture(this.texture);
@@ -21,7 +21,6 @@ export class MyPollen extends CGFobject {
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI/2, 0, 0, 1);  
         this.scene.scale(1.0,1.5,1.0);
-        this.scene.scale(0.1, 0.1, 0.1);
         this.appearance.apply();
         this.sphere.display();
         this.scene.popMatrix();

@@ -5,6 +5,7 @@ import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MyPollen } from "./objects/MyPollen.js";
 import { MySphere } from "./objects/MySphere.js";
+import { MyLeaf } from "./objects/flower/MyLeaf.js";
 
 /**
  * MyScene

@@ -81,7 +81,7 @@ export class MyFlower extends CGFobject {
 
     this.petal = new MyPetal(this.scene, 10);
     this.receptacle = new MyReceptacle(this.scene, 100);
-    this.stem = new MyStem(this.scene, this.stem_height, 30, this.stem_stacks);
+    this.stem = new MyStem(this.scene, this.stem_height, 30, this.stem_stacks, this.stem_radius);
     this.pollen = new MyPollen(this.scene);
     //The defined indices (and corresponding vertices)
     //will be read in groups of three to draw triangles
