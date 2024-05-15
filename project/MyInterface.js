@@ -25,6 +25,10 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'fov', 0.1, 3).name('Fov Factor').onChange(this.scene.updateFov.bind(this.scene));
 
+        this.gui.add(this.scene, 'beeScaleFactor', 0.5, 5).name('Bee Scale Factor');
+
+        this.gui.add(this.scene, 'speedFactor', 0.1, 0.3).name('Speed Factor');
+
 
         this.initKeys()
         return true;

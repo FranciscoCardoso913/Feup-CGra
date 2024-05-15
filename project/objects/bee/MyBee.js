@@ -7,6 +7,7 @@ import { Wing } from './Wing.js';
 export class MyBee extends CGFobject {
 	constructor(scene, textures) {
 		super(scene);
+        this.scaleBeeFactor=1;
         this.textures = textures;
         this.x=0;
         this.y=0;
@@ -25,6 +26,10 @@ export class MyBee extends CGFobject {
         this.wing = new Wing(this.scene, this.textures[4]);
         this.time = 0;
 	};
+
+    scaleBee(x){
+        this.scaleBeeFactor =x;
+    }
 
     update(time){
         this.time = time;
@@ -93,12 +98,17 @@ export class MyBee extends CGFobject {
 
 
     display(){
+
+
         this.calcPos();
         
+        this.scene.pushMatrix()
         this.scene.translate(this.x,this.y,this.z)
         this.scene.rotate(this.direction, 0,1,0)
 
         this.scene.rotate(Math.PI,0,1,0)
+    
+        this.scene.scale(this.scene.beeScaleFactor,this.scene.beeScaleFactor,this.scene.beeScaleFactor);
 
 
         let ang = (Math.PI/4 )* Math.sin(this.time*Math.PI*8);
@@ -210,6 +220,9 @@ export class MyBee extends CGFobject {
         this.scene.scale(1,1,-1)
         this.scene.rotate(ang, 1,0,0)
         this.wing.display()
+        this.scene.popMatrix()
+
+
         this.scene.popMatrix()
 
     }

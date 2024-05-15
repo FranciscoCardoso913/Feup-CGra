@@ -35,7 +35,8 @@ export class MyScene extends CGFscene {
     this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30, 60, true);
 
-
+    this.speedFactor= 0.1;
+    this.beeScaleFactor = 1;
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -106,25 +107,15 @@ export class MyScene extends CGFscene {
   }
   checkKeys() {
 
-    var text = "Keys pressed: ";
-
-    var keysPressed = false;
-
-    // Check for key codes e.g. in https://keycode.info/
-
     if (this.gui.isKeyPressed("KeyW")) {
 
-      this.bee.accelerate(10)
-
-      keysPressed = true;
+      this.bee.accelerate(100*this.speedFactor)
 
     }
 
     if (this.gui.isKeyPressed("KeyS")) {
 
-      this.bee.accelerate(-100)
-
-      keysPressed = true;
+      this.bee.accelerate(-60)
 
     }
 
@@ -132,15 +123,11 @@ export class MyScene extends CGFscene {
 
       this.bee.turn(Math.PI/16)
 
-      keysPressed = true;
-
     }
 
     if (this.gui.isKeyPressed("KeyD")) {
 
       this.bee.turn(-Math.PI/16)
-
-      keysPressed = true;
 
     }
 
@@ -169,6 +156,7 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.translate(0, this.yBee, 0);
+    //this.bee.scaleBee(this.beeScaleFactor);
     this.bee.display();
     this.popMatrix();
 
