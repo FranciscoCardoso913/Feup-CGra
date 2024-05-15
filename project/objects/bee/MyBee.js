@@ -71,72 +71,72 @@ export class MyBee extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.rotate(-Math.PI/6.0,0,0,1);
-        this.scene.scale(0.7,1,1);
+        this.scene.scale(0.35,0.5,0.5);
         this.displayHead();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(1.2,0,0)
-        this.scene.scale(0.9,0.9,1);
+        this.scene.translate(0.6,0,0)
+        this.scene.scale(0.45,0.45,0.5);
         this.displayAbdomen();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(2.5,-0.5,0)
+        this.scene.translate(1.25,-0.25,0)
         this.scene.rotate(-Math.PI/6.0,0,0,1);
         
-        this.scene.scale(1.3,0.8,0.8);
+        this.scene.scale(0.65,0.4,0.4);
         this.displayTorso();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0.4,0.3,0.7);
+        this.scene.translate(-0.2,0.15,0.35);
         this.scene.rotate(Math.PI/6,0,1,0);
         this.scene.rotate(Math.PI/6.0,1,0,0);
         this.scene.rotate(-Math.PI/6.0,0,0,1);
-        this.scene.scale(0.1,0.4,0.3);
+        this.scene.scale(0.05,0.2,0.15);
         this.displayEye();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0.4,0.3,-0.7)
+        this.scene.translate(-0.2,0.15,-0.35)
         this.scene.rotate(-Math.PI/6,0,1,0);
         this.scene.rotate(-Math.PI/6.0,1,0,0);
         this.scene.rotate(-Math.PI/6.0,0,0,1);
         
-        this.scene.scale(0.1,0.4,0.3);
+        this.scene.scale(0.05,0.2,0.15);
         this.displayEye();
         this.scene.popMatrix();
         
 
         this.scene.pushMatrix();
-        this.scene.translate(-0,0.8,0.4);
+        this.scene.translate(-0,0.4,0.2);
         this.scene.rotate(Math.PI/4, 0,1,1)
         this.displayAntenna();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0,0.8,-0.4);
+        this.scene.translate(-0,0.4,-0.2);
         this.scene.rotate(Math.PI/4, 0,0,1)
         this.scene.rotate(-Math.PI/4, 0,1,0)
         this.displayAntenna();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(1.2,-0.8,0.4);
-        this.scene.rotate(Math.PI, -0.1,0,1)
+        this.scene.translate(0.6,-0.4,0.2);
+        this.scene.rotate(Math.PI, -0.05,0,0.5)
         this.displayAntenna();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(1.2,-0.8,-0.4);
-        this.scene.rotate(Math.PI, 0.1,0,1)
+        this.scene.translate(0.6,-0.4,-0.2);
+        this.scene.rotate(Math.PI, 0.05,0,0.5)
         this.displayAntenna();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0.5,-0.4,0.3);
-        this.scene.rotate(Math.PI, -0.1,0,1)
+        this.scene.translate(0.25,-0.2,0.15);
+        this.scene.rotate(Math.PI, -0.05,0,0.5)
         this.displayAntenna();
         this.scene.popMatrix();
 
@@ -147,32 +147,32 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(1.7,-0.7,0.3);
-        this.scene.rotate(Math.PI, -0.1,0,1)
+        this.scene.translate(0.85,-0.35,0.15);
+        this.scene.rotate(Math.PI, -0.05,0,0.5)
         this.displayAntenna();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(1.7,-0.7,-0.3);
-        this.scene.rotate(Math.PI, 0.1,0,1)
+        this.scene.translate(0.85,-0.35,-0.15);
+        this.scene.rotate(Math.PI, 0.05,0,0.5)
         this.displayAntenna();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(3.5,-1.05,0);
+        this.scene.translate(1.75,-0.525,0);
         this.scene.rotate(-4*Math.PI/6.0,0,0,1);
-        this.scene.scale(0.1,0.5,0.1);
+        this.scene.scale(0.05,0.25,0.05);
         this.cone.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix()
-        this.scene.translate(1,0.6,0.5)
+        this.scene.translate(0.5,0.3,0.4)
         this.scene.rotate(ang, 1,0,0)
         this.wing.display()
         this.scene.popMatrix()
 
         this.scene.pushMatrix()
-        this.scene.translate(1,0.6,-0.5)
+        this.scene.translate(0.5,0.3,-0.4)
         this.scene.scale(1,1,-1)
         this.scene.rotate(ang, 1,0,0)
         this.wing.display()

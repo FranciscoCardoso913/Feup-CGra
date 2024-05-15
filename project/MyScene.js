@@ -101,8 +101,8 @@ export class MyScene extends CGFscene {
       // Continuous animation based on current time and app start time 
       var timeSinceAppStart=(t-this.appStartTime)/1000.0;
       
-      this.yBee= 0//3+Math.sin(timeSinceAppStart*Math.PI*2);
-      this.bee.update(0);
+      this.yBee= 3+Math.sin(timeSinceAppStart*Math.PI*2);
+      this.bee.update(timeSinceAppStart);
   }
 
   display() {
@@ -131,25 +131,7 @@ export class MyScene extends CGFscene {
     this.bee.display();
     this.popMatrix();
 
-    this.pushMatrix();
-    this.translate(2,0,0);
-    this.sphere.display();
-    this.popMatrix();
-
-    this.pushMatrix();
-    this.translate(-0.5,0,0);
-    this.sphere.display();
-    this.popMatrix();
-
-    this.pushMatrix();
-    this.translate(0,0,0.5);
-    this.sphere.display();
-    this.popMatrix();
-
-    this.pushMatrix();
-    this.translate(0,0,-0.5);
-    this.sphere.display();
-    this.popMatrix();
+    
     
     /*
     this.pushMatrix();

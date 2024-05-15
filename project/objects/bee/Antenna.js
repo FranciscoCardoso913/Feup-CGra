@@ -18,27 +18,27 @@ export class Antenna extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.pushMatrix();
-        this.scene.scale(0.05, 0.3, 0.05);
+        this.scene.scale(0.025, 0.15, 0.025);
         this.scene.translate(0,0,0);
         this.cylinder.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0.3,0);
+        this.scene.translate(0,0.15,0);
         this.scene.rotate(Math.PI/4, 0,0,1)
-        this.scene.scale(0.05, 0.7, 0.05);
+        this.scene.scale(0.025, 0.35, 0.025);
         this.cylinder.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0.3,0);
-        this.scene.scale(0.05, 0.05, 0.05);
+        this.scene.translate(0,0.15,0);
+        this.scene.scale(0.025, 0.025, 0.025);
         this.spere.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0.5,0.8,0);
-        this.scene.scale(0.05, 0.05, 0.05);
+        this.scene.translate(-0.25,0.4,0);
+        this.scene.scale(0.025, 0.025, 0.025);
         this.spere.display();
         this.scene.popMatrix();
 
