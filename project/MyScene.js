@@ -3,6 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MySphere } from "./objects/MySphere.js";
+import { MyBee } from "./objects/bee/MyBee.js";
 
 /**
  * MyScene
@@ -31,6 +32,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30,60, true);
+    this.bee = new MyBee(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -67,10 +69,13 @@ export class MyScene extends CGFscene {
     this.camera.fov = this.fov;
   }
   setDefaultAppearance() {
+    this.appearance.setTexture()
+    this.appearance.apply()
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
+  
   }
   display() {
     // ---- BEGIN Background, camera and axis setup
@@ -91,6 +96,9 @@ export class MyScene extends CGFscene {
 
     // this.scale(2,2,2);
     this.panorama.display()
+    this.setDefaultAppearance()
+
+    this.bee.display()
     
     // this.pushMatrix();
     // this.appearance.apply();
@@ -101,7 +109,7 @@ export class MyScene extends CGFscene {
     // this.popMatrix();
 
     //GARDEN
-    this.garden.display();
+    //this.garden.display();
 
     //this.sphere.enableNormalViz()
     // ---- END Primitive drawing section
