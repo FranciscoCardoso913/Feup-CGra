@@ -2,8 +2,9 @@ import {CGFobject} from '../../../lib/CGF.js';
 import { MySphere } from '../MySphere.js';
 
 export class MyBee extends CGFobject {
-	constructor(scene) {
+	constructor(scene, textures) {
 		super(scene);
+        this.textures = textures;
 		this.initBuffers();
 	}
 	initBuffers() {
@@ -14,21 +15,35 @@ export class MyBee extends CGFobject {
 
     displayHead(){
         this.scene.pushMatrix();
+        
+        this.scene.appearance.setTexture(this.textures[0]);
+        this.scene.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.scene.appearance.apply();
         this.spere.display();
         this.scene.popMatrix();
     }
     displayTorso(){
         this.scene.pushMatrix();
+        this.scene.rotate(Math.PI/2,0,0,1 )
+        this.scene.appearance.setTexture(this.textures[1]);
+        this.scene.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.scene.appearance.apply();
         this.spere.display();
         this.scene.popMatrix();
     }
     displayAbdomen(){
         this.scene.pushMatrix();
+        this.scene.appearance.setTexture(this.textures[1]);
+        this.scene.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.scene.appearance.apply();
         this.spere.display();
         this.scene.popMatrix();
     }
     displayEye(){
         this.scene.pushMatrix();
+        this.scene.appearance.setTexture(this.textures[2]);
+        this.scene.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.scene.appearance.apply();
         this.spere.display();
         this.scene.popMatrix();
     }
@@ -56,16 +71,19 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0.4,0.5,0.4)
-        this.scene.rotate(-Math.PI/6.0,0,0,1);
-        this.scene.scale(0.1,0.3,0.3);
+        this.scene.translate(-0.4,0.3,0.5);
+        this.scene.rotate(Math.PI/6.0,0,1,0);
+        this.scene.rotate(-Math.PI/6.0,1,0,1);
+        this.scene.scale(0.1,0.4,0.3);
         this.displayEye();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0.4,0.5,-0.4)
-        this.scene.rotate(-Math.PI/6.0,0,0,1);
-        this.scene.scale(0.1,0.3,0.3);
+        this.scene.translate(-0.4,0.3,-0.5)
+        this.scene.rotate(-Math.PI/6.0,0,1,0);
+        this.scene.rotate(-Math.PI/6.0,1,0,1);
+        this.scene.rotate(Math.PI/4,1,0,0);
+        this.scene.scale(0.1,0.4,0.3);
         this.displayEye();
         this.scene.popMatrix();
     }

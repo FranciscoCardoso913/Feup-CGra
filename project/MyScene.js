@@ -32,7 +32,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30,60, true);
-    this.bee = new MyBee(this);
+    
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -41,12 +41,16 @@ export class MyScene extends CGFscene {
     this.enableTextures(true);
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
+    this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
+    this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
+    this.beeEye = new CGFtexture(this, "images/bee_eyes.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.texture);
     this.fov=1.8;
 
+    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye]);
 
   }
   initLights() {
