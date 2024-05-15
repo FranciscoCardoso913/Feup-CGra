@@ -15,7 +15,7 @@ export class MyScene extends CGFscene {
   }
   init(application) {
     super.init(application);
-    
+
     this.initCameras();
     this.initLights();
 
@@ -27,14 +27,14 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.setUpdatePeriod(50); // **at least** 50 ms between animations
 
-    this.appStartTime=Date.now(); // current time in milisecs
+    this.appStartTime = Date.now(); // current time in milisecs
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
+    this.plane = new MyPlane(this, 30);
     this.garden = new MyGarden(this, 7, 7);
-    this.sphere = new MySphere(this, 30,60, true);
-    
+    this.sphere = new MySphere(this, 30, 60, true);
+
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -51,12 +51,12 @@ export class MyScene extends CGFscene {
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.beeWing = new CGFappearance(this);
-    this.beeWing.setAmbient(0.4,0.4,0.4,0.4);
-    this.beeWing.setDiffuse(0.6,0.6,0.6,0.5);
-    this.beeWing.setSpecular(0,0,0,0);
-    this.beeWing.setEmission(0,0,0,0);
+    this.beeWing.setAmbient(0.4, 0.4, 0.4, 0.4);
+    this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.5);
+    this.beeWing.setSpecular(0, 0, 0, 0);
+    this.beeWing.setEmission(0, 0, 0, 0);
     this.panorama = new MyPanorama(this, this.texture);
-    this.fov=1.8;
+    this.fov = 1.8;
 
     this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing]);
 
@@ -82,7 +82,7 @@ export class MyScene extends CGFscene {
       vec3.fromValues(0, 0, 0)
     );
   }
-  updateFov(){
+  updateFov() {
     this.camera.fov = this.fov;
   }
   setDefaultAppearance() {
@@ -92,17 +92,45 @@ export class MyScene extends CGFscene {
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
-  
+
   }
 
-  update(t)
-  {
-      //#region Ex.2 
-      // Continuous animation based on current time and app start time 
-      var timeSinceAppStart=(t-this.appStartTime)/1000.0;
-      
-      this.yBee= 3+Math.sin(timeSinceAppStart*Math.PI*2);
-      this.bee.update(timeSinceAppStart);
+  update(t) {
+    this.checkKeys()
+    //#region Ex.2 
+    // Continuous animation based on current time and app start time 
+    var timeSinceAppStart = (t - this.appStartTime) / 1000.0;
+
+    this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
+    this.bee.update(timeSinceAppStart);
+  }
+  checkKeys() {
+
+    var text = "Keys pressed: ";
+
+    var keysPressed = false;
+
+    // Check for key codes e.g. in https://keycode.info/
+
+    if (this.gui.isKeyPressed("KeyW")) {
+
+      text += " W ";
+
+      keysPressed = true;
+
+    }
+
+    if (this.gui.isKeyPressed("KeyS")) {
+
+      text += " S ";
+
+      keysPressed = true;
+
+    }
+
+    if (keysPressed)
+      console.log(text);
+
   }
 
   display() {
@@ -118,7 +146,7 @@ export class MyScene extends CGFscene {
     this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     // Draw axis
     if (this.displayAxis) this.axis.display();
-    
+
     // ---- BEGIN Primitive drawing section
 
 
@@ -131,8 +159,8 @@ export class MyScene extends CGFscene {
     this.bee.display();
     this.popMatrix();
 
-    
-    
+
+
     /*
     this.pushMatrix();
     this.appearance.apply();
