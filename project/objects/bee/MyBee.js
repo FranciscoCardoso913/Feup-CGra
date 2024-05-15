@@ -56,6 +56,14 @@ export class MyBee extends CGFobject {
         this.antenna.display();
         this.scene.popMatrix();
     }
+    displayWing(){
+        this.scene.pushMatrix();
+        this.textures[4].apply()
+        
+        this.scene.scale(0.4,0.05,0.8);
+        this.spere.display();
+        this.scene.popMatrix();
+    }
 
     display(){
         
@@ -148,6 +156,24 @@ export class MyBee extends CGFobject {
         this.scene.rotate(Math.PI, 0.1,0,1)
         this.displayAntenna();
         this.scene.popMatrix();
+
+        this.scene.pushMatrix()
+        this.scene.translate(1,0.6,1.3)
+        this.displayWing();
+        this.scene.popMatrix()
+        this.scene.pushMatrix()
+        this.scene.translate(1.2,0.6,0.8)
+        this.displayWing();
+        this.scene.popMatrix()
+
+        this.scene.pushMatrix()
+        this.scene.translate(1,0.6,-1.3)
+        this.displayWing();
+        this.scene.popMatrix()
+        this.scene.pushMatrix()
+        this.scene.translate(1.2,0.6,-0.8)
+        this.displayWing();
+        this.scene.popMatrix()
     }
 }
 

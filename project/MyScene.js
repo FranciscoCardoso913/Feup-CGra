@@ -25,7 +25,6 @@ export class MyScene extends CGFscene {
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
-    this.gl.depthFunc(this.gl.LEQUAL);
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
@@ -48,10 +47,20 @@ export class MyScene extends CGFscene {
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.beeWing = new CGFappearance(this);
+    this.beeWing.setAmbient(0.4,0.4,0.4,0.4);
+    this.beeWing.setDiffuse(0.6,0.6,0.6,0.5);
+    this.beeWing.setSpecular(0,0,0,0);
+    this.beeWing.setEmission(0,0,0,0);
     this.panorama = new MyPanorama(this, this.texture);
     this.fov=1.8;
 
-    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna]);
+    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing]);
+
+    this.gl.depthFunc(this.gl.LEQUAL);
+    this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+    this.gl.enable(this.gl.BLEND);
+
 
   }
   initLights() {
