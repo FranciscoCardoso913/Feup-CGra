@@ -44,13 +44,14 @@ export class MyScene extends CGFscene {
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
     this.beeEye = new CGFtexture(this, "images/bee_eyes.jpg");
+    this.beeAntenna = new CGFtexture(this, "images/fur.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.panorama = new MyPanorama(this, this.texture);
     this.fov=1.8;
 
-    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye]);
+    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna]);
 
   }
   initLights() {
@@ -91,7 +92,7 @@ export class MyScene extends CGFscene {
     this.loadIdentity();
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
-
+    this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     // Draw axis
     if (this.displayAxis) this.axis.display();
     

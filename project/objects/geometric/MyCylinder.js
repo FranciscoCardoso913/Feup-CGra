@@ -1,4 +1,4 @@
-import {CGFobject} from '../../lib/CGF.js';
+import {CGFobject} from '../../../lib/CGF.js';
 /**
 * MyPyramid
 * @constructor
@@ -19,44 +19,45 @@ export class MyCylinder extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
+        this.texCoords = [];
 
         var ang = 0;
         var alphaAng = 2*Math.PI/this.slices;
         let d = 1/this.stacks;
 
-        for(let j = 0; j< this.stacks;j++ ){
+        for(let j = 0; j<= this.stacks;j++ ){
 
-            for(var i = 0; i < this.slices; i++){
-                // All vertices have to be declared for a given face
-                // even if they are shared with others, as the normals 
-                // in each face will be different
+            for(var i = 0; i <= this.slices; i++){
+ 
 
                 var sa=Math.sin(ang);
                 var ca=Math.cos(ang);
 
-                this.vertices.push(ca, -sa, 0.5); // A
-                this.vertices.push(ca, -sa, 0.5-d*(j+1)); // C
+                //this.vertices.push(ca, -sa, 0.5); // A
+                this.vertices.push(ca, d*(j), sa ); // C
 
 
                 // triangle normal computed by cross product of two edges
                 var normal= [
                     ca,
-                    -sa,
-                    0
+                    0,
+                    sa
                 ];
 
                 this.normals.push(...normal);
-                this.normals.push(...normal);
-       
-                let s = j*2*this.slices ;
-                let m = this.slices * 2;
-                this.indices.push( (2*i)%m +s , (2*i+2)%m+s , (2*i+1)%m+s);
-                this.indices.push( (2*i+2)%m+s , (2*i+3)%m+s , (2*i+1)%m+s);
-
-
+                this.texCoords.push(i/this.slices, j/this.stacks);
                 ang+=alphaAng;
             }
         }
+
+        for(let j = 0; j< this.stacks;j++ ){
+
+            for(var i = 0; i < this.slices; i++){
+                this.indices.push(i+(this.slices+1)*(j+1),i+(this.slices+1)*j+1,i+(this.slices+1)*j);
+                this.indices.push(i+(this.slices+1)*(j+1)+1,i+(this.slices+1)*j+1,i+(this.slices+1)*(j+1));
+            }
+        }
+
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
@@ -66,8 +67,12 @@ export class MyCylinder extends CGFobject {
      * @param {integer} complexity - changes number of slices
      */
 
-    
-    
+        display(){
+        this.scene.pushMatrix()
+        //this.scene.rotate(Math.PI/2, 1, 0, 0);
+        super.display();
+        this.scene.popMatrix();
+    }
 
 }
 
