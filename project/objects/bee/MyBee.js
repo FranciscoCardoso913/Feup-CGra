@@ -42,15 +42,17 @@ export class MyBee extends CGFobject {
     }
 
     accelerate(x){
-        this.norm+=x*((Date.now()- this.lastUpdate)/ 1000.0);
-        if( this.norm > this.maxV) this.norm = this.maxV;
-        if(this.norm<0) this.norm= 0;
-        this.v[0] = this.norm* Math.cos(this.direction);
-        this.v[2] = -this.norm* Math.sin(this.direction);
+
+        if(x>0 && this.norm==0) this.norm=5;// Min velocity
+        this.norm+=x*((Date.now()- this.lastUpdate)/ 1000.0); // calc new velocity
+        if( this.norm > this.maxV) this.norm = this.maxV; // Max velocity
+        if(this.norm<0) this.norm= 0; //Do not go backwards
+        this.v[0] = this.norm* Math.cos(this.direction); // calc velocity in x
+        this.v[2] = -this.norm* Math.sin(this.direction); // calc velocity in z
     }
     turn(x){
         this.direction+=x;
-        this.accelerate(1);
+        this.accelerate(0);
     }
     calcPos(){
         this.x+= this.v[0]*((Date.now()- this.lastUpdate)/ 1000.0);
@@ -105,7 +107,7 @@ export class MyBee extends CGFobject {
 
     display(){
 
-
+        
         this.calcPos();
         
         this.scene.pushMatrix()
@@ -216,13 +218,13 @@ export class MyBee extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix()
-        this.scene.translate(0.5,0.3,0.4)
+        this.scene.translate(0.5,0.3,0.3)
         this.scene.rotate(ang, 1,0,0)
         this.wing.display()
         this.scene.popMatrix()
 
         this.scene.pushMatrix()
-        this.scene.translate(0.5,0.3,-0.4)
+        this.scene.translate(0.5,0.3,-0.3)
         this.scene.scale(1,1,-1)
         this.scene.rotate(ang, 1,0,0)
         this.wing.display()

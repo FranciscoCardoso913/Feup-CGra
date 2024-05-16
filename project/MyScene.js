@@ -4,6 +4,7 @@ import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MySphere } from "./objects/MySphere.js";
 import { MyBee } from "./objects/bee/MyBee.js";
+import { MyGrass } from "./objects/garden/MyGrass.js";
 
 /**
  * MyScene
@@ -34,6 +35,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this, 30);
     this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30, 60, true);
+    this.grass = new MyGrass(this, 40);
 
     this.speedFactor= 0.1;
     this.beeScaleFactor = 1;
@@ -154,17 +156,26 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-
-
+  
+    this.pushMatrix()
+    this.scale(1,2,0.1)
+    this.translate(1,2,0.1)
+    this.grass.display()
+    this.popMatrix()
+    
     // this.scale(2,2,2);
     this.panorama.display()
     this.setDefaultAppearance()
 
+ 
     this.pushMatrix();
     this.translate(0, this.yBee, 0);
     //this.bee.scaleBee(this.beeScaleFactor);
     this.bee.display();
     this.popMatrix();
+    
+
+    
 
 
 
