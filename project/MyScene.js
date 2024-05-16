@@ -47,6 +47,7 @@ export class MyScene extends CGFscene {
     this.enableTextures(true);
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
+    this.planeTexture = new CGFtexture(this, "images/plane.png");
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
     this.beeEye = new CGFtexture(this, "images/bee_eyes.jpg");
@@ -162,32 +163,37 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
   
 
-    
+    this.appearance.setTexture(this.planeTexture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance.apply()
+    this.pushMatrix();
+    this.appearance.apply();
+    this.translate(0,-10,0);
+    this.scale(400,400,400);
+    this.rotate(-Math.PI/2.0,1,0,0);
+    this.plane.display();
+    this.popMatrix();
     // this.scale(2,2,2);
     this.panorama.display()
     this.setDefaultAppearance()
+    this.pushMatrix()
+    this.translate(0,-10,0);
     this.garden.display()
+    this.popMatrix()
  
     this.pushMatrix();
     this.translate(0, this.yBee, 0);
     //this.bee.scaleBee(this.beeScaleFactor);
     this.bee.display();
     this.popMatrix();
+
+    //this.plane.enableNormalViz()
     
 
     
 
 
-
-    /*
-    this.pushMatrix();
-    this.appearance.apply();
-    this.translate(0,-100,0);
-    this.scale(400,400,400);
-    this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
-    this.popMatrix();
-    */
+    
 
     //GARDEN
     //this.garden.display();
