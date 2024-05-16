@@ -48,6 +48,11 @@ export class MyBee extends CGFobject {
         this.v[0] = this.norm* Math.cos(this.direction);
         this.v[2] = -this.norm* Math.sin(this.direction);
     }
+
+    descend(){
+        
+    }
+
     turn(x){
         this.direction+=x;
         this.accelerate(1);

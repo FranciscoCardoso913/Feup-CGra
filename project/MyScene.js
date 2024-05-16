@@ -51,7 +51,7 @@ export class MyScene extends CGFscene {
     this.pollen_texture = new CGFtexture(this, "images/pollen.jpg");
     this.leaf_texture = new CGFtexture(this, "images/leaf.jpg");
     this.hive_texture = new CGFtexture(this, "images/hive.jpg");
-    this.garden = new MyGarden(this, 7, 7, [this.stem_texture, this.petal_texture, this.receptacle_texture, this.pollen_texture, this.leaf_texture]);
+    this.garden = new MyGarden(this, 4, 4, [this.stem_texture, this.petal_texture, this.receptacle_texture, this.pollen_texture, this.leaf_texture]);
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
@@ -113,7 +113,7 @@ export class MyScene extends CGFscene {
     // Continuous animation based on current time and app start time 
     var timeSinceAppStart = (t - this.appStartTime) / 1000.0;
 
-    this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
+    this.yBee = 3 +  Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
   }
   checkKeys() {
@@ -148,6 +148,12 @@ export class MyScene extends CGFscene {
 
     }
 
+    if (this.gui.isKeyPressed("KeyF")){
+
+      
+
+    }
+
   }
 
   display() {
@@ -167,7 +173,9 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
     
     // ---- BEGIN Primitive drawing section
+    this.pushMatrix();
     this.garden.display();
+    this.popMatrix();
     this.setDefaultAppearance();
 
 
@@ -192,8 +200,11 @@ export class MyScene extends CGFscene {
     this.popMatrix();
     */
 
-    //GARDEN
 
+    this.pushMatrix();
+    this.translate(0, 0, 8);
+    this.scale(2,2,2);
+    this.rotate(Math.PI/2, 0, 1, 0);
     this.hive.display();
 
     //POLLEN

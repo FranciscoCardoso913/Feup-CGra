@@ -32,7 +32,7 @@ export class MyStem extends CGFobject {
     let texCoordVertical = false;
 
     for (let j = 0; j <= this.stacks; j++){
-      let random_angle_x = j != this.stacks ? Math.random() * (Math.PI / 2) : 0;
+      let random_angle_x = j != this.stacks ? Math.random() * (Math.PI / 2) : Math.PI / 2;
       let random_angle_z = j != this.stacks ? Math.random() * (Math.PI / 2) : 0;
       let max_x = -1000;
       let min_x = 1000;

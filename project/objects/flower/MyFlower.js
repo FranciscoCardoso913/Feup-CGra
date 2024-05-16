@@ -137,7 +137,7 @@ export class MyFlower extends CGFobject {
     //STEM
     this.scene.pushMatrix();
 
-    this.scene.translate(0, -this.stem_height, 0);
+    this.scene.translate(0, -this.stem_height - 0.16, 0);
     this.scene.scale(this.stem_radius, 1, this.stem_radius);
 
     this.scene.appearance.setTexture(this.textures[0]);
