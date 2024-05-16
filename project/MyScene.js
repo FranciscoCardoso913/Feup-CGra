@@ -5,6 +5,7 @@ import { MyPanorama } from "./objects/MyPanorama.js";
 import { MySphere } from "./objects/MySphere.js";
 import { MyBee } from "./objects/bee/MyBee.js";
 import { MyGrass } from "./objects/garden/MyGrass.js";
+import { GrassGarden } from "./objects/garden/GrassGarden.js";
 
 /**
  * MyScene
@@ -33,9 +34,9 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this, 30);
-    this.garden = new MyGarden(this, 7, 7);
+    //this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30, 60, true);
-    this.grass = new MyGrass(this, 40);
+   
 
     this.speedFactor= 0.1;
     this.beeScaleFactor = 1;
@@ -50,6 +51,7 @@ export class MyScene extends CGFscene {
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
     this.beeEye = new CGFtexture(this, "images/bee_eyes.jpg");
     this.beeAntenna = new CGFtexture(this, "images/fur.jpg");
+    this.grassTexture = new CGFtexture(this, "images/grass.png")
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -58,9 +60,11 @@ export class MyScene extends CGFscene {
     this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.5);
     this.beeWing.setSpecular(0, 0, 0, 0);
     this.beeWing.setEmission(0, 0, 0, 0);
+    
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
+    this.garden = new GrassGarden(this, 40,40,40, this.grassTexture);
     this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing]);
 
     this.gl.depthFunc(this.gl.LEQUAL);
@@ -157,16 +161,12 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
   
-    this.pushMatrix()
-    this.scale(1,2,0.1)
-    this.translate(1,2,0.1)
-    this.grass.display()
-    this.popMatrix()
+
     
     // this.scale(2,2,2);
     this.panorama.display()
     this.setDefaultAppearance()
-
+    this.garden.display()
  
     this.pushMatrix();
     this.translate(0, this.yBee, 0);

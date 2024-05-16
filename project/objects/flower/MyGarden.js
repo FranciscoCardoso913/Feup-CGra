@@ -29,7 +29,6 @@ export class MyGarden extends CGFobject {
         );
         toAppend.push(flower);
       }
-      console.log(toAppend);
       this.garden.push(toAppend);
     }
 

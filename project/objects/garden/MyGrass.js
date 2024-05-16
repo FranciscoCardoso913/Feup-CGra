@@ -16,8 +16,9 @@ export class MyGrass extends CGFobject {
         let d_h= 1/this.stacks;
 
         for(let i=0; i<= this.stacks;i++){
-            this.vertices.push(Math.pow(i*d_h/1.5,exp),i*d_h,1-i*d_h)
-            this.vertices.push(Math.pow(i*d_h/1.5,exp),i*d_h,-1+i*d_h)
+            let r = Math.pow(i*d_h/1.5,exp);
+            this.vertices.push(r,i*d_h,1-i*d_h)
+            this.vertices.push(r,i*d_h,-1+i*d_h)
 
             this.normals.push(r,i*d_h,1-i*d_h)
             this.normals.push(r,i*d_h,-1+i*d_h)
