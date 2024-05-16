@@ -20,7 +20,8 @@ export class MyFlower extends CGFobject {
     stem_color,
     petal_color,
     petal_angle_min,
-    petal_angle_max
+    petal_angle_max,
+    textures
   ) {
     super(scene);
     this.outer_radius = outer_radius;
@@ -33,6 +34,7 @@ export class MyFlower extends CGFobject {
     if (this.inner_radius == 0)
       this.inner_radius = (this.outer_radius * 1.0) / 5;
 
+    this.textures = textures;
     this.n_petals = n_petals;
     this.stem_radius = stem_radius;
     this.stem_height = stem_height;
@@ -41,28 +43,6 @@ export class MyFlower extends CGFobject {
     this.petal_color = petal_color;
     this.petal_angle_min = petal_angle_min;
     this.petal_angle_max = petal_angle_max;
-
-    this.stem_material = new CGFappearance(this.scene);
-    this.stem_texture = new CGFtexture(this.scene, "images/stem.jpg");
-    this.stem_material.setColor(
-      stem_color[0] / 255,
-      stem_color[1] / 255,
-      stem_color[2] / 255,
-      stem_color[3] / 255
-    );
-
-    this.petal_material = new CGFappearance(this.scene);
-    this.petal_texture = new CGFtexture(this.scene, "images/petal.jpg");
-    this.petal_material.setColor(
-      petal_color[0] / 255,
-      petal_color[1] / 255,
-      petal_color[2] / 255,
-      petal_color[3] / 255
-    );
-
-    this.receptacle_material = new CGFappearance(this.scene);
-    this.receptacle_texture = new CGFtexture(this.scene, "images/receptacle.png");
-    this.receptacle_material.setColor(1, 1, 1, 1);
 
     this.random_petal_rotations = new Array(this.n_petals);
     for (let i = 0; i < this.n_petals; i++)
@@ -81,8 +61,15 @@ export class MyFlower extends CGFobject {
 
     this.petal = new MyPetal(this.scene, 10);
     this.receptacle = new MyReceptacle(this.scene, 100);
-    this.stem = new MyStem(this.scene, this.stem_height, 30, this.stem_stacks, this.stem_radius);
-    this.pollen = new MyPollen(this.scene);
+    this.stem = new MyStem(
+      this.scene,
+      this.stem_height,
+      30,
+      this.stem_stacks,
+      this.stem_radius, 
+      this.textures[4]
+    );
+    this.pollen = new MyPollen(this.scene, this.textures[3]);
     //The defined indices (and corresponding vertices)
     //will be read in groups of three to draw triangles
     this.primitiveType = this.scene.gl.TRIANGLES;
@@ -104,9 +91,15 @@ export class MyFlower extends CGFobject {
       let outerScaleFactor = (this.outer_radius - this.inner_radius) / 2;
       this.scene.scale(outerScaleFactor, 1, outerScaleFactor / 1.4);
 
-      this.petal_material.setTexture(this.petal_texture);
-      this.petal_material.setTextureWrap("REPEAT", "REPEAT");
-      this.petal_material.apply();
+      this.scene.appearance.setTexture(this.textures[1]);
+      this.scene.appearance.setTextureWrap("REPEAT", "REPEAT");
+      this.scene.appearance.setColor(
+        this.petal_color[0] / 255,
+        this.petal_color[1] / 255,
+        this.petal_color[2] / 255,
+        this.petal_color[3] / 255
+      );
+      this.scene.appearance.apply();
       this.petal.display();
       this.scene.popMatrix();
     }
@@ -119,20 +112,20 @@ export class MyFlower extends CGFobject {
     this.scene.scale(this.inner_radius, 0.4, this.inner_radius);
     this.scene.rotate(Math.PI / 2, 0, 0, 1);
 
-    this.receptacle_material.setTexture(this.receptacle_texture);
-    this.receptacle_material.setTextureWrap("REPEAT", "REPEAT");
-    this.receptacle_material.apply();
+    this.scene.appearance.setTexture(this.textures[2]);
+    this.scene.appearance.setColor(1, 1, 1, 1);
+    this.scene.appearance.setTextureWrap("REPEAT", "REPEAT");
+    this.scene.appearance.apply();
     this.receptacle.display();
 
     this.scene.rotate(-Math.PI, 0, 0, 1);
     this.scene.scale(0.5, 1, 1);
 
-    this.receptacle_material.apply();
     this.receptacle.display();
     this.scene.popMatrix();
   }
 
-  draw_pollen(){
+  draw_pollen() {
     this.scene.pushMatrix();
     this.scene.translate(0, 0.4, 0);
     this.scene.rotate(this.pollen_angle, 0, 1, 0);
@@ -147,9 +140,15 @@ export class MyFlower extends CGFobject {
     this.scene.translate(0, -this.stem_height, 0);
     this.scene.scale(this.stem_radius, 1, this.stem_radius);
 
-    this.stem_material.setTexture(this.stem_texture);
-    this.stem_material.setTextureWrap("MIRROR", "MIRROR");
-    this.stem_material.apply();
+    this.scene.appearance.setTexture(this.textures[0]);
+    this.scene.appearance.setColor(
+      this.stem_color[0] / 255,
+      this.stem_color[1] / 255,
+      this.stem_color[2] / 255,
+      this.stem_color[3] / 255
+    );
+    this.scene.appearance.setTextureWrap("MIRROR", "MIRROR");
+    this.scene.appearance.apply();
 
     this.stem.display();
     this.scene.popMatrix();

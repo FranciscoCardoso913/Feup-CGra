@@ -8,7 +8,7 @@ import { MyLeaf } from "./MyLeaf.js";
  * @param stacks - number of divisions along the Y axis
  */
 export class MyStem extends CGFobject {
-  constructor(scene, height, smoothness, stacks, radius) {
+  constructor(scene, height, smoothness, stacks, radius, leaf_texture) {
     super(scene);
     this.height = height;
     this.smoothness = smoothness;
@@ -17,10 +17,7 @@ export class MyStem extends CGFobject {
     this.leaf_scale_factor = ((this.height * 1.0 / 2.0) * 0.8) / this.height;
     this.connection_points = [];
     this.leaf_angles = [];
-    this.leaf = new MyLeaf(scene, 1);
-    this.leaf_material = new CGFappearance(this.scene);
-    this.leaf_texture = new CGFtexture(this.scene, "images/leaf.jpg");
-    this.leaf_material.setColor(0.4, 1, 0, 1);
+    this.leaf = new MyLeaf(scene, 1, leaf_texture);
     this.initBuffers();
   }
 
@@ -95,10 +92,6 @@ export class MyStem extends CGFobject {
       this.scene.rotate(this.leaf_angles[i], 0, 1, 0);
       this.scene.rotate(Math.PI/7, 0, 0, 1);
       this.scene.scale(this.leaf_scale_factor, this.leaf_scale_factor, this.leaf_scale_factor);
-      
-      this.leaf_material.setTexture(this.leaf_texture);
-      this.leaf_material.setTextureWrap("REPEAT", "REPEAT");
-      this.leaf_material.apply();
 
       this.leaf.display();
       this.scene.popMatrix();

@@ -2,11 +2,12 @@ import { CGFobject } from "../../../lib/CGF.js";
 import { MyFlower } from "./MyFlower.js";
 
 export class MyGarden extends CGFobject {
-  constructor(scene, cols, rows) {
+  constructor(scene, cols, rows, textures) {
     super(scene);
     this.cols = cols;
     this.rows = rows;
     this.garden = [];
+    this.textures = textures;
     this.generateGarden();
   }
 
@@ -25,7 +26,8 @@ export class MyGarden extends CGFobject {
           [0, 255, 0, 255],
           [255, 0, 0, 255],
           0.05,
-          -0.1
+          -0.1,
+          this.textures
         );
         toAppend.push(flower);
       }

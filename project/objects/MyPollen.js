@@ -2,19 +2,15 @@ import {CGFappearance, CGFobject, CGFtexture} from '../../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 
 export class MyPollen extends CGFobject {
-	constructor(scene) {
+	constructor(scene, texture) {
         super(scene);
         this.scene = scene;
         this.sphere = new MySphere(scene, 10, 10, false, false);
+        this.texture = texture;
 
 		this.initBuffers();
 	}
 	initBuffers() {
-        this.texture = new CGFtexture(this.scene, "images/pollen.jpg");
-        this.appearance = new CGFappearance(this.scene);
-        this.appearance.setAmbient(0.5, 0.5, 0.5, 1);
-        this.appearance.setTexture(this.texture);
-        this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 	};
 
     display(){
@@ -22,7 +18,10 @@ export class MyPollen extends CGFobject {
         this.scene.rotate(Math.PI/2, 0, 0, 1);  
         this.scene.scale(1.0,1.5,1.0);
         this.scene.scale(0.1, 0.1, 0.1);
-        this.appearance.apply();
+        this.scene.appearance.setAmbient(0.5, 0.5, 0.5, 1);
+        this.scene.appearance.setTexture(this.texture);
+        this.scene.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.scene.appearance.apply();
         this.sphere.display();
         this.scene.popMatrix();
     }

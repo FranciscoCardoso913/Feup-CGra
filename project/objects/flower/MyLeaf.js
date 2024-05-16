@@ -6,10 +6,11 @@ import { CGFobject } from "../../../lib/CGF.js";
  * @param slices - number of divisions around the Y axis
  */
 export class MyLeaf extends CGFobject {
-  constructor(scene, height) {
+  constructor(scene, height, texture){
     super(scene);
     this.height = height;
     this.smoothness = 5;
+    this.texture = texture;
     this.initBuffers();
   }
 
@@ -78,6 +79,10 @@ export class MyLeaf extends CGFobject {
    */
 
   display() {
+    this.scene.appearance.setTexture(this.texture);
+    this.scene.appearance.setTextureWrap("REPEAT", "REPEAT");
+    this.scene.appearance.setColor(0.4, 1, 0, 1);
+    this.scene.appearance.apply();
     super.display();
   }
 }

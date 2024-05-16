@@ -1,11 +1,9 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
-import { MyFlower } from "./objects/flower/MyFlower.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MyPollen } from "./objects/MyPollen.js";
 import { MySphere } from "./objects/MySphere.js";
-import { MyLeaf } from "./objects/flower/MyLeaf.js";
 import { MyHive } from "./objects/MyHive.js";
 import { MyBee } from "./objects/bee/MyBee.js";
 
@@ -36,9 +34,7 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this, 30);
-    this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30, 60, true);
-    this.pollen = new MyPollen(this);
     this.hive = new MyHive(this);
 
     this.speedFactor= 0.1;
@@ -48,6 +44,14 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
 
     this.enableTextures(true);
+
+    this.stem_texture = new CGFtexture(this, "images/stem.jpg");
+    this.petal_texture = new CGFtexture(this, "images/petal.jpg");
+    this.receptacle_texture = new CGFtexture(this, "images/receptacle.png");
+    this.pollen_texture = new CGFtexture(this, "images/pollen.jpg");
+    this.leaf_texture = new CGFtexture(this, "images/leaf.jpg");
+    this.hive_texture = new CGFtexture(this, "images/hive.jpg");
+    this.garden = new MyGarden(this, 7, 7, [this.stem_texture, this.petal_texture, this.receptacle_texture, this.pollen_texture, this.leaf_texture]);
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
@@ -94,11 +98,12 @@ export class MyScene extends CGFscene {
   }
   setDefaultAppearance() {
     this.appearance.setTexture()
-    this.appearance.apply()
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
+    this.appearance.setColor(1, 1, 1, 1);
+    this.appearance.apply()
 
   }
 
@@ -147,6 +152,8 @@ export class MyScene extends CGFscene {
 
   display() {
     // ---- BEGIN Background, camera and axis setup
+    this.gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -158,13 +165,14 @@ export class MyScene extends CGFscene {
     this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     // Draw axis
     if (this.displayAxis) this.axis.display();
-
+    
     // ---- BEGIN Primitive drawing section
+    this.garden.display();
+    this.setDefaultAppearance();
 
 
     // this.scale(2,2,2);
     this.panorama.display()
-    this.setDefaultAppearance()
 
     this.pushMatrix();
     this.translate(0, this.yBee, 0);
@@ -185,7 +193,6 @@ export class MyScene extends CGFscene {
     */
 
     //GARDEN
-    ////this.garden.display();
 
     this.hive.display();
 
