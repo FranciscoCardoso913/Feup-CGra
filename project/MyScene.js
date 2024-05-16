@@ -6,6 +6,7 @@ import { MyPanorama } from "./objects/MyPanorama.js";
 import { MyPollen } from "./objects/MyPollen.js";
 import { MySphere } from "./objects/MySphere.js";
 import { MyLeaf } from "./objects/flower/MyLeaf.js";
+import { MyHive } from "./objects/MyHive.js";
 
 /**
  * MyScene
@@ -35,6 +36,7 @@ export class MyScene extends CGFscene {
     this.garden = new MyGarden(this, 7, 7);
     this.sphere = new MySphere(this, 30,60, true);
     this.pollen = new MyPollen(this);
+    this.hive = new MyHive(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -105,7 +107,9 @@ export class MyScene extends CGFscene {
     // this.popMatrix();
 
     //GARDEN
-    this.garden.display();
+    //this.garden.display();
+
+    this.hive.display();
 
     //POLLEN
     //this.pollen.display();
