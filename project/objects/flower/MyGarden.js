@@ -8,6 +8,8 @@ export class MyGarden extends CGFobject {
     this.rows = rows;
     this.garden = [];
     this.textures = textures;
+    this.pollen_coords= [];
+    this.single_run = true;
     this.generateGarden();
   }
 
@@ -47,9 +49,11 @@ export class MyGarden extends CGFobject {
       for (let j = 0; j < this.rows; j++) {
         this.scene.pushMatrix();
         this.scene.translate(i*6 - (this.cols * 6) / 2, 0, j*6 - (this.cols * 6) / 2);
+        if (this.single_run) this.pollen_coords.push([i*6 - (this.cols * 6) / 2, 0.4, j*6 - (this.cols * 6) / 2]);
         this.garden[i][j].display();
         this.scene.popMatrix();
       }
     }
+    this.single_run = false;
   }
 }

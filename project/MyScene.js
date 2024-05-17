@@ -69,12 +69,13 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
-    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing]);
+    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing], this.garden.pollen_coords);
 
     this.gl.depthFunc(this.gl.LEQUAL);
     this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
     this.gl.enable(this.gl.BLEND);
 
+    console.log(this.garden.flower_coords);
 
   }
   initLights() {
@@ -150,8 +151,13 @@ export class MyScene extends CGFscene {
 
     if (this.gui.isKeyPressed("KeyF")){
 
-      
+      this.bee.goToPollen();
 
+    }
+
+    if (this.gui.isKeyPressed("KeyP")) {
+
+      this.bee.descend(-10);
     }
 
   }
