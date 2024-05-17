@@ -56,8 +56,6 @@ export class MyBee extends CGFobject {
 
   update(time) {
     this.time = time;
-    this.x += this.v[0] * ((Date.now() - this.lastUpdate) / 1000.0);
-    this.z += this.v[2] * ((Date.now() - this.lastUpdate) / 1000.0);
   }
 
   accelerate(x) {
@@ -71,12 +69,9 @@ export class MyBee extends CGFobject {
   goToPollen() {
     this.sortPollen();
     let pollen = this.pollen_coords[0];
-
-    console.log(pollen[0], pollen[1], pollen[2]);
-
-    let angle = Math.atan2(pollen[2]- this.z, pollen[0]- this.x);
-    this.direction = angle;
-    this.accelerate(1);
+    // Calculate the angle to the pollen grain
+    this.direction = Math.atan2(-(pollen[2] - this.z), (pollen[0] - this.x)) % (2 * Math.PI);
+    this.accelerate(0.1);
   }
 
   turn(x) {

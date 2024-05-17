@@ -1,4 +1,11 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
+import {
+  CGFscene,
+  CGFcamera,
+  CGFaxis,
+  CGFappearance,
+  CGFshader,
+  CGFtexture,
+} from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
@@ -37,7 +44,7 @@ export class MyScene extends CGFscene {
     this.sphere = new MySphere(this, 30, 60, true);
     this.hive = new MyHive(this);
 
-    this.speedFactor= 0.1;
+    this.speedFactor = 0.1;
     this.beeScaleFactor = 1;
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -51,7 +58,13 @@ export class MyScene extends CGFscene {
     this.pollen_texture = new CGFtexture(this, "images/pollen.jpg");
     this.leaf_texture = new CGFtexture(this, "images/leaf.jpg");
     this.hive_texture = new CGFtexture(this, "images/hive.jpg");
-    this.garden = new MyGarden(this, 4, 4, [this.stem_texture, this.petal_texture, this.receptacle_texture, this.pollen_texture, this.leaf_texture]);
+    this.garden = new MyGarden(this, 4, 4, [
+      this.stem_texture,
+      this.petal_texture,
+      this.receptacle_texture,
+      this.pollen_texture,
+      this.leaf_texture,
+    ]);
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
@@ -60,7 +73,7 @@ export class MyScene extends CGFscene {
     this.beeAntenna = new CGFtexture(this, "images/fur.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance.setTextureWrap("REPEAT", "REPEAT");
     this.beeWing = new CGFappearance(this);
     this.beeWing.setAmbient(0.4, 0.4, 0.4, 0.4);
     this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.5);
@@ -69,14 +82,17 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
-    this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing], this.garden.pollen_coords);
+    this.bee = new MyBee(
+      this,
+      [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing],
+      this.garden.pollen_coords
+    );
 
     this.gl.depthFunc(this.gl.LEQUAL);
     this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
     this.gl.enable(this.gl.BLEND);
 
     console.log(this.garden.flower_coords);
-
   }
   initLights() {
     this.lights[0].setPosition(15, 5, 5, 1);
@@ -98,68 +114,48 @@ export class MyScene extends CGFscene {
     this.camera.fov = this.fov;
   }
   setDefaultAppearance() {
-    this.appearance.setTexture()
+    this.appearance.setTexture();
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
     this.appearance.setColor(1, 1, 1, 1);
-    this.appearance.apply()
-
+    this.appearance.apply();
   }
 
   update(t) {
-    this.checkKeys()
-    //#region Ex.2 
-    // Continuous animation based on current time and app start time 
+    this.checkKeys();
+    //#region Ex.2
+    // Continuous animation based on current time and app start time
     var timeSinceAppStart = (t - this.appStartTime) / 1000.0;
 
-    this.yBee = 3 +  Math.sin(timeSinceAppStart * Math.PI * 2);
+    this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
   }
   checkKeys() {
-
-    if (this.gui.isKeyPressed("KeyW")) {
-
-      this.bee.accelerate(100*this.speedFactor)
-
-    }
-
-    if (this.gui.isKeyPressed("KeyS")) {
-
-      this.bee.accelerate(-60)
-
-    }
-
-    if (this.gui.isKeyPressed("KeyA")) {
-
-      this.bee.turn(Math.PI/16)
-
-    }
-
-    if (this.gui.isKeyPressed("KeyD")) {
-
-      this.bee.turn(-Math.PI/16)
-
-    }
-
     if (this.gui.isKeyPressed("KeyR")) {
+      this.bee.reset();
+    } else {
+      if (this.gui.isKeyPressed("KeyF")) {
+        this.bee.goToPollen();
+      } else {
+        if (this.gui.isKeyPressed("KeyW")) {
+          this.bee.accelerate(100 * this.speedFactor);
+        }
 
-      this.bee.reset()
+        if (this.gui.isKeyPressed("KeyS")) {
+          this.bee.accelerate(-60);
+        }
 
+        if (this.gui.isKeyPressed("KeyA")) {
+          this.bee.turn(Math.PI / 16);
+        }
+
+        if (this.gui.isKeyPressed("KeyD")) {
+          this.bee.turn(-Math.PI / 16);
+        }
+      }
     }
-
-    if (this.gui.isKeyPressed("KeyF")){
-
-      this.bee.goToPollen();
-
-    }
-
-    if (this.gui.isKeyPressed("KeyP")) {
-
-      this.bee.descend(-10);
-    }
-
   }
 
   display() {
@@ -177,24 +173,21 @@ export class MyScene extends CGFscene {
     this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     // Draw axis
     if (this.displayAxis) this.axis.display();
-    
+
     // ---- BEGIN Primitive drawing section
     this.pushMatrix();
     this.garden.display();
     this.popMatrix();
     this.setDefaultAppearance();
 
-
     // this.scale(2,2,2);
-    this.panorama.display()
+    this.panorama.display();
 
     this.pushMatrix();
     this.translate(0, this.yBee, 0);
     //this.bee.scaleBee(this.beeScaleFactor);
     this.bee.display();
     this.popMatrix();
-
-
 
     /*
     this.pushMatrix();
@@ -206,11 +199,10 @@ export class MyScene extends CGFscene {
     this.popMatrix();
     */
 
-
     this.pushMatrix();
     this.translate(0, 0, 8);
-    this.scale(2,2,2);
-    this.rotate(Math.PI/2, 0, 1, 0);
+    this.scale(2, 2, 2);
+    this.rotate(Math.PI / 2, 0, 1, 0);
     this.hive.display();
 
     //POLLEN
