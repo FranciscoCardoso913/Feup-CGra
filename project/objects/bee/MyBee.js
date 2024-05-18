@@ -16,8 +16,13 @@ export class MyBee extends CGFobject {
     this.maxV = 60;
     this.norm = 0;
     this.v = [0, 0, 0]; //(x,y,z)
+    this.pollen = null;
     this.pollen_coords = pollen_coords;
     this.lastUpdate = Date.now();
+    this.isOnFlower = false;
+    this.blockAnimation = false;
+    this.blockMovement = false;
+    this.ascend = false;
     this.initBuffers();
   }
   initBuffers() {
@@ -44,6 +49,46 @@ export class MyBee extends CGFobject {
     });
   }
 
+  calcTrajectory(pollen, targetVY = 0, targetVX = 0, targetVZ = 0) {
+    const startTime = Date.now();
+    const endTime = startTime + 2 * 1000; // Convert descentTime to milliseconds
+    const targetX =
+      pollen[0] + Math.cos(this.direction) * 0.5 * this.scaleBeeFactor;
+    const targetY = pollen[1] + 0.5 * this.scaleBeeFactor;
+    const targetZ =
+      pollen[2] - Math.sin(this.direction) * 0.5 * this.scaleBeeFactor;
+
+    const update = () => {
+      const now = Date.now();
+      if (now >= endTime || (this.x == targetX && this.z == targetZ)) {
+        // We've reached the end of the descent
+        this.x = targetX;
+        this.y = targetY;
+        this.z = targetZ;
+        this.v = [0, 0, 0];
+        this.norm = 0;
+      } else {
+        // Calculate the percentage of the descent that has elapsed
+        const t = (now - startTime) / (endTime - startTime);
+
+        // Use lerp to calculate the current values
+        this.x = this.x + (t * (targetX - this.x)) / 7;
+        this.y = this.y + (t * (targetY - this.y)) / 7;
+        this.z = this.z + (t * (targetZ - this.z)) / 7;
+        this.v[0] = this.v[0] + (t * (targetVX - this.v[0])) / 6;
+        this.v[2] = this.v[2] + (t * (targetVZ - this.v[2])) / 6;
+      }
+
+      // If we haven't reached the end of the descent, update again on the next frame
+      if (now < endTime && !(this.x == targetX && this.z == targetZ)) {
+        requestAnimationFrame(update);
+      }
+    };
+
+    // Start the update loop
+    update();
+  }
+
   reset(x) {
     this.x = 0;
     this.y = 0;
@@ -52,13 +97,27 @@ export class MyBee extends CGFobject {
     this.lastUpdate = Date.now();
     this.direction = 0;
     this.norm = 0;
+    this.ascend = false;
+    this.isOnFlower = false;
+    this.blockAnimation = false;
+    this.blockMovement = false;
   }
 
   update(time) {
     this.time = time;
+    this.y = this.ascend ? this.y + 0.1 : this.y;
+
+    if (this.ascend && this.y >= 3 + Math.sin(time * Math.PI * 2)) {
+      this.ascend = false;
+      this.blockAnimation = false;
+      this.blockMovement = false;
+    }
+
+    this.y = this.blockAnimation ? this.y : 3 + Math.sin(time * Math.PI * 2);
   }
 
   accelerate(x) {
+    if (this.blockMovement) return;
     this.norm += x * ((Date.now() - this.lastUpdate) / 1000.0);
     if (this.norm > this.maxV) this.norm = this.maxV;
     if (this.norm < 0) this.norm = 0;
@@ -67,14 +126,35 @@ export class MyBee extends CGFobject {
   }
 
   goToPollen() {
+    this.isOnFlower = true;
+    this.blockAnimation = true;
+    this.blockMovement = true;
     this.sortPollen();
     let pollen = this.pollen_coords[0];
     // Calculate the angle to the pollen grain
-    this.direction = Math.atan2(-(pollen[2] - this.z), (pollen[0] - this.x)) % (2 * Math.PI);
-    this.accelerate(0.1);
+    this.direction =
+      Math.atan2(-(pollen[2] - this.z), pollen[0] - this.x) % (2 * Math.PI);
+    this.calcTrajectory(pollen);
+  }
+
+  pickUpPollen() {
+    this.sortPollen();
+    let localPollen = this.pollen_coords[0];
+    if (this.pollen == null) {
+      this.pollen =
+        this.scene.garden.garden[localPollen[3]][localPollen[4]].pollen; // Get the pollen grain
+
+      this.scene.garden.garden[localPollen[3]][localPollen[4]].pollen = null; // Remove the pollen grain from the flower
+    }
+
+    if (this.isOnFlower == false) return;
+
+    this.isOnFlower = false;
+    this.ascend = true;
   }
 
   turn(x) {
+    if (this.blockMovement) return;
     this.direction += x;
     this.accelerate(1);
   }
@@ -125,6 +205,16 @@ export class MyBee extends CGFobject {
     this.scene.appearance.apply();
     this.antenna.display();
     this.scene.popMatrix();
+  }
+
+  displayPollen(){
+    if (this.pollen != null) {
+      this.scene.pushMatrix();
+      this.scene.scale(2,2,2);
+      this.scene.translate(0.32, -0.3, 0);
+      this.pollen.display();
+      this.scene.popMatrix();
+    }
   }
 
   display() {
@@ -231,6 +321,8 @@ export class MyBee extends CGFobject {
     this.scene.rotate(Math.PI, 0.05, 0, 0.5);
     this.displayAntenna();
     this.scene.popMatrix();
+
+    this.displayPollen();
 
     this.scene.pushMatrix();
     this.scene.translate(1.75, -0.525, 0);

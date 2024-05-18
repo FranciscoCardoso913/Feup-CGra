@@ -129,7 +129,7 @@ export class MyScene extends CGFscene {
     // Continuous animation based on current time and app start time
     var timeSinceAppStart = (t - this.appStartTime) / 1000.0;
 
-    this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
+    //this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
   }
   checkKeys() {
@@ -138,7 +138,11 @@ export class MyScene extends CGFscene {
     } else {
       if (this.gui.isKeyPressed("KeyF")) {
         this.bee.goToPollen();
-      } else {
+      } 
+      if (this.gui.isKeyPressed("KeyP")) {
+        this.bee.pickUpPollen();
+      }
+      else {
         if (this.gui.isKeyPressed("KeyW")) {
           this.bee.accelerate(100 * this.speedFactor);
         }
@@ -184,7 +188,7 @@ export class MyScene extends CGFscene {
     this.panorama.display();
 
     this.pushMatrix();
-    this.translate(0, this.yBee, 0);
+    //this.translate(0, this.yBee, 0);
     //this.bee.scaleBee(this.beeScaleFactor);
     this.bee.display();
     this.popMatrix();
