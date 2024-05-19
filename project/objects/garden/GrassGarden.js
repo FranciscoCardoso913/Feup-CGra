@@ -2,13 +2,11 @@ import {CGFobject} from '../../../lib/CGF.js';
 import { MyGrass } from './MyGrass.js';
 
 export class GrassGarden extends CGFobject {
-	constructor(scene,x,y,number, texture, shader, density=1) {
+	constructor(scene,x,y, texture, density=1) {
 		super(scene);
         this.x = x;
         this.y = y;
-        this.number = number;
         this.texture= texture;
-        this.shader = shader;
         this.time=Date.now();
         this.density= density>5?5:density;
 		this.initBuffers();
@@ -50,8 +48,7 @@ export class GrassGarden extends CGFobject {
         this.scene.appearance.apply();
         this.scene.pushMatrix()
         this.scene.translate(this.x, 0, this.y)
-        this.scene.setActiveShader(this.shader);
-        this.shader.setUniformsValues({uRandomValue: 1, uTime: Math.PI/3*(Date.now()-this.time)/1000.0})
+
         let n=0;
         for(let j=0; j<50;j++)
             for(let i=0; i< 50;i++){
@@ -71,7 +68,7 @@ export class GrassGarden extends CGFobject {
         }
         //console.log(n)
         this.scene.popMatrix()
-        this.scene.setActiveShader(this.scene.defaultShader);
+
 
     }
 }

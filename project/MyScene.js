@@ -69,17 +69,18 @@ export class MyScene extends CGFscene {
     this.appearance.setTexture(this.groundTexture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.beeWing = new CGFappearance(this);
-    this.beeWing.setAmbient(0.4, 0.4, 0.4, 0.4);
-    this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.5);
+    this.beeWing.setAmbient(0.4, 0.4, 0.4, 0.1);
+    this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.1);
     this.beeWing.setSpecular(0, 0, 0, 0);
     this.beeWing.setEmission(0, 0, 0, 0);
-    this.grassShader = new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
+    this.grassShader = new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag");
+    this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.time)/1000.0});
 
     
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
-    this.garden = new GrassGarden(this, 0,0,40, this.grassTexture, this.grassShader, 3);
+    this.garden = new GrassGarden(this, 0,0, this.grassTexture, 3);
     this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing]);
 
     this.gl.depthFunc(this.gl.LEQUAL);
@@ -145,7 +146,7 @@ export class MyScene extends CGFscene {
 
     this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
-    //this.grassShader.setUniformsValues("uTime", this.appStartTime);
+    this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.time)/1000.0})
   }
   checkKeys() {
 
@@ -218,7 +219,9 @@ export class MyScene extends CGFscene {
     this.setDefaultAppearance()
     this.pushMatrix()
     this.translate(0,-10,0);
+    this.setActiveShader(this.grassShader);
     this.garden.display()
+    this.setActiveShader(this.defaultShader);
     this.popMatrix()
  
     this.pushMatrix();
