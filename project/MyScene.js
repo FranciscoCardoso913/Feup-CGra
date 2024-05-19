@@ -67,7 +67,7 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
-    this.garden = new GrassGarden(this, 40,40,40, this.grassTexture, this.grassShader);
+    this.garden = new GrassGarden(this, 40,40,40, this.grassTexture, this.grassShader, 3);
     this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing]);
 
     this.gl.depthFunc(this.gl.LEQUAL);
