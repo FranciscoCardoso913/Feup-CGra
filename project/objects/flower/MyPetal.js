@@ -5,17 +5,18 @@ import {CGFobject} from '../../../lib/CGF.js';
  * @param scene - Reference to MyScene object
  */
 export class MyPetal extends CGFobject {
-	constructor(scene) {
+	constructor(scene, curvature=0) {
 		super(scene);
+		this.curvature = curvature;
 		this.initBuffers();
 	}
 	
 	initBuffers() {
 		this.vertices = [
 			0,0,0,
-			0.866,0,0.5,
-			0.866,0,-0.5,
-			1.732,0,0,
+			0.866, 0, 0.5,
+			0.866, 0, -0.5,
+			1.732,Math.sin(this.curvature),0,
 		];
 
 		//Counter-clockwise reference of vertices
@@ -24,6 +25,13 @@ export class MyPetal extends CGFobject {
 			2,1,0,
 			2,3,1,
 			1,3,2
+		];
+
+		this.texCoords = [
+			0.5, 1,
+			0.75, 0.75,
+			0.25, 0.75,
+			0.5, 0.5
 		];
 
 		//The defined indices (and corresponding vertices)

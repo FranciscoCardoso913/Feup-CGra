@@ -34,9 +34,6 @@ export class MySphere extends CGFobject {
         }
 
 
-		
-        console.log(this.vertices);
-
 		// Generating indices
 		this.indices = [];
 
@@ -95,10 +92,6 @@ export class MySphere extends CGFobject {
 
 		}
 
-
-
-
-		console.log(this.indices);
 
 
 		this.primitiveType = this.scene.gl.TRIANGLES;

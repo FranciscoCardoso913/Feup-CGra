@@ -19,11 +19,12 @@ export class MyRockSet extends CGFobject {
 		bl_y = this.bl[1];
 		tr_x = this.tr[0];
 		tr_y = this.tr[1];
-		height = tr_y - bl_y;
-		width = tr_x -bl_x;
+		height = Math.abs(tr_y - bl_y);
+		width = Math.abs(tr_x -bl_x);
 		vw = (width/ (this.rocks_size)) /2;
+		console.log(vw)
 		vh = (height / (this.rocks_size))/2;
-		max_number = Math.floor(vw*vh);
+		max_number = (Math.floor(vw*vh));
 		this.nrocks = max_number< this.nrocks? max_number: this.nrocks;
 		let ocupied_spaces = [];
 		while (this.nrocks>0){
@@ -42,7 +43,10 @@ export class MyRockSet extends CGFobject {
 
 	display(){
 		let idx = 0;
+		let min_x = Math.min(this.bl[0],this.tr[0])
+		let min_y = Math.min(this.bl[1],this.tr[1])
 		this.scene.pushMatrix()
+		this.scene.translate(min_x, 0, min_y);
 		this.scene.scale(this.rocks_size, this.rocks_size, this.rocks_size);
 		this.positions.forEach((value)=> {
 			this.scene.pushMatrix();
