@@ -1,4 +1,4 @@
-import {CGFobject} from '../../lib/CGF.js';
+import {CGFobject} from '../../../lib/CGF.js';
 import { MyRock } from './MyRock.js';
 
 export class MyRockSet extends CGFobject {
@@ -12,7 +12,6 @@ export class MyRockSet extends CGFobject {
 		this.rocks = []
 		this.positions = [];
 		this.initBuffers();
-		console.log(this.positions)
 	}
 	initBuffers() {
 		let bl_x,bl_y, tr_x, tr_y,height, width, vw, vh, max_number;
@@ -39,9 +38,6 @@ export class MyRockSet extends CGFobject {
 			}
 		}
 
-
-		//this.primitiveType = this.scene.gl.TRIANGLES;
-		//this.initGLBuffers();
 	};
 
 	display(){
@@ -49,7 +45,6 @@ export class MyRockSet extends CGFobject {
 		this.scene.pushMatrix()
 		this.scene.scale(this.rocks_size, this.rocks_size, this.rocks_size);
 		this.positions.forEach((value)=> {
-			// console.log(value)
 			this.scene.pushMatrix();
 			this.scene.translate(...value);
 			this.rocks[idx].display();
@@ -60,7 +55,6 @@ export class MyRockSet extends CGFobject {
 		
 		
 	)
-	console.log(idx)
 	
 	this.scene.popMatrix()
 	}

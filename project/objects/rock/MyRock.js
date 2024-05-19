@@ -1,4 +1,4 @@
-import {CGFobject} from '../../lib/CGF.js';
+import {CGFobject} from '../../../lib/CGF.js';
 
 export class MyRock extends CGFobject {
 	constructor(scene, texture,flatness =Math.random() * 0.5 + 0.3 ) {
@@ -41,10 +41,6 @@ export class MyRock extends CGFobject {
     }
 
 
-
-		
-        console.log(this.vertices);
-
 		// Generating indices
 		this.indices = [];
 
@@ -73,11 +69,6 @@ export class MyRock extends CGFobject {
             this.indices.push((this.slices+1)*(this.stacks*2 -1) + j); // Top
 
 		}
-
-
-
-
-		console.log(this.indices);
 
 
 		this.primitiveType = this.scene.gl.TRIANGLES;

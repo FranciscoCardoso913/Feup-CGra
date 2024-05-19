@@ -3,8 +3,9 @@ import { MyPlane } from "./MyPlane.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MySphere } from "./objects/MySphere.js";
 import { MyFlower } from "./objects/flower/MyFlower.js";
-import { MyRock } from "./objects/MyRock.js";
-import { MyRockSet } from "./objects/MyRockSet.js";
+import { MyRock } from "./objects/rock/MyRock.js";
+import { MyRockPiramid } from "./objects/rock/MyRockPiramid.js";
+import { MyRockSet } from "./objects/rock/MyRockSet.js";
 /**
  * MyScene
  * @constructor
@@ -29,7 +30,7 @@ export class MyScene extends CGFscene {
 
     this.panorameTexture = new CGFtexture(this, "images/panorama4.jpg");
     this.groundTexture = new CGFtexture(this, "images/terrain.jpg");
-    this.rockTexture =  new CGFtexture(this, "images/rock-texture.png");
+    this.rockTexture =  new CGFtexture(this, "images/rock.jpg");
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
@@ -38,7 +39,8 @@ export class MyScene extends CGFscene {
     this.rock = new MyRock(this, this.rockTexture);
     this.sphere = new MySphere(this, 10, 10);
     this.panorama = new MyPanorama(this, this.panorameTexture);
-    this.rockSet = new MyRockSet(this,this.rockTexture,[0,0],[20,20],2);
+    this.rockSet = new MyRockSet(this,this.rockTexture,[0,0],[20,20],20);
+    this.rockPiramid= new MyRockPiramid(this, 5, this.rockTexture, [30,30])
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
@@ -75,9 +77,9 @@ export class MyScene extends CGFscene {
   setDefaultAppearance() {
     this.appearance.setTexture(this.groundTexture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-    this.setAmbient(0.2, 0.4, 0.8, 1.0);
-    this.setDiffuse(0.2, 0.4, 0.8, 1.0);
-    this.setSpecular(0.2, 0.4, 0.8, 1.0);
+    this.setAmbient(1, 1, 1, 1.0);
+    this.setDiffuse(1, 1, 1, 1.0);
+    this.setSpecular(1, 1, 1, 1.0);
     this.setShininess(10.0);
   }
   display() {
@@ -105,8 +107,9 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.panorama.display();
-
+    this.setDefaultAppearance();
     this.rockSet.display()
+    this.rockPiramid.display()
     //this.flower.display();
     
     //this.sphere.enableNormalViz()
