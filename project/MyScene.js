@@ -47,7 +47,7 @@ export class MyScene extends CGFscene {
     this.enableTextures(true);
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
-    this.planeTexture = new CGFtexture(this, "images/plane.png");
+    this.planeTexture = new CGFtexture(this, "images/dirt.jpg");
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
     this.beeEye = new CGFtexture(this, "images/bee_eyes.jpg");
@@ -61,11 +61,13 @@ export class MyScene extends CGFscene {
     this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.5);
     this.beeWing.setSpecular(0, 0, 0, 0);
     this.beeWing.setEmission(0, 0, 0, 0);
+    this.grassShader = new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag"),
+
     
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
-    this.garden = new GrassGarden(this, 40,40,40, this.grassTexture);
+    this.garden = new GrassGarden(this, 40,40,40, this.grassTexture, this.grassShader);
     this.bee = new MyBee(this, [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing]);
 
     this.gl.depthFunc(this.gl.LEQUAL);
@@ -111,6 +113,7 @@ export class MyScene extends CGFscene {
 
     this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
+    //this.grassShader.setUniformsValues("uTime", this.appStartTime);
   }
   checkKeys() {
 
@@ -171,7 +174,9 @@ export class MyScene extends CGFscene {
     this.translate(0,-10,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
+    //this.setActiveShader(this.bluShader);
     this.plane.display();
+    //this.setActiveShader(this.defaultShader);
     this.popMatrix();
     // this.scale(2,2,2);
     this.panorama.display()

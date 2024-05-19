@@ -4,19 +4,27 @@ export class MyGrass extends CGFobject {
 	constructor(scene,stacks) {
 		super(scene);
         this.stacks = stacks;
+        this.exp=1;
+        this.direction = Math.random()*Math.PI/4 - Math.PI/8;
 		this.initBuffers();
 	}
+    getExp(){
+        return this.exp;
+    }
+    getDirection(){
+        return this.direction;
+    }
 	initBuffers() {
 		// Generate vertices, normals, and texCoords
 		this.vertices = [];
         this.indices = []
 		this.normals = [];
 		this.texCoords = [];
-        let exp = 1+ Math.random()*2
+        this.exp =  2+ Math.random()*2
         let d_h= 1/this.stacks;
 
         for(let i=0; i<= this.stacks;i++){
-            let r = Math.pow(i*d_h/1.5,exp);
+            let r = Math.pow(i*d_h-0.2,this.exp);
             this.vertices.push(r,i*d_h,1-i*d_h)
             this.vertices.push(r,i*d_h,-1+i*d_h)
 
