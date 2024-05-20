@@ -85,7 +85,8 @@ export class MyScene extends CGFscene {
     this.bee = new MyBee(
       this,
       [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing],
-      this.garden.pollen_coords
+      this.garden.pollen_coords,
+      [0,-0.7,10]
     );
 
     this.gl.depthFunc(this.gl.LEQUAL);
@@ -141,6 +142,9 @@ export class MyScene extends CGFscene {
       } 
       if (this.gui.isKeyPressed("KeyP")) {
         this.bee.pickUpPollen();
+      }
+      if (this.gui.isKeyPressed("KeyO")) {
+        this.bee.dropInHive();
       }
       else {
         if (this.gui.isKeyPressed("KeyW")) {
@@ -203,10 +207,6 @@ export class MyScene extends CGFscene {
     this.popMatrix();
     */
 
-    this.pushMatrix();
-    this.translate(0, 0, 8);
-    this.scale(2, 2, 2);
-    this.rotate(Math.PI / 2, 0, 1, 0);
     this.hive.display();
 
     //POLLEN

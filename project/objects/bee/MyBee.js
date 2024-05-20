@@ -5,7 +5,7 @@ import { Antenna } from "./Antenna.js";
 import { Wing } from "./Wing.js";
 
 export class MyBee extends CGFobject {
-  constructor(scene, textures, pollen_coords) {
+  constructor(scene, textures, pollen_coords, hive_coords) {
     super(scene);
     this.scaleBeeFactor = 1;
     this.textures = textures;
@@ -18,11 +18,15 @@ export class MyBee extends CGFobject {
     this.v = [0, 0, 0]; //(x,y,z)
     this.pollen = null;
     this.pollen_coords = pollen_coords;
+    this.hive_coords = hive_coords;
     this.lastUpdate = Date.now();
+    
+    // State flags
     this.isOnFlower = false;
     this.blockAnimation = false;
     this.blockMovement = false;
     this.ascend = false;
+
     this.initBuffers();
   }
   initBuffers() {
@@ -33,6 +37,7 @@ export class MyBee extends CGFobject {
     this.time = 0;
   }
 
+  // Sorts the pollen grains by distance to the bee
   sortPollen() {
     this.pollen_coords.sort((a, b) => {
       const distanceA = Math.sqrt(
@@ -49,9 +54,11 @@ export class MyBee extends CGFobject {
     });
   }
 
+  // Calculates a trajectory to a target point
+  // Uses linear interpolation to animate the bee's movement
   calcTrajectory(pollen, targetVY = 0, targetVX = 0, targetVZ = 0) {
     const startTime = Date.now();
-    const endTime = startTime + 2 * 1000; // Convert descentTime to milliseconds
+    const endTime = startTime + 1200; // 1.2 seconds
     const targetX =
       pollen[0] + Math.cos(this.direction) * 0.5 * this.scaleBeeFactor;
     const targetY = pollen[1] + 0.5 * this.scaleBeeFactor;
@@ -60,18 +67,28 @@ export class MyBee extends CGFobject {
 
     const update = () => {
       const now = Date.now();
+      // If we've reached the end of the descent or the target position, update the values
       if (now >= endTime || (this.x == targetX && this.z == targetZ)) {
         // We've reached the end of the descent
         this.x = targetX;
         this.y = targetY;
         this.z = targetZ;
         this.v = [0, 0, 0];
-        this.norm = 0;
+        this.norm = 0; // Reset the velocity, makes the bee stop
+
+        // Distinguish descent to flower from descent to hive
+        if (this.pollen != null ){
+          if (this.isOnFlower) this.isOnFlower = false;
+          else this.pollen = null;
+          this.ascend = true;
+        }
+
       } else {
         // Calculate the percentage of the descent that has elapsed
         const t = (now - startTime) / (endTime - startTime);
 
         // Use lerp to calculate the current values
+        // The division by 7 and 6 is to make the movement smoother
         this.x = this.x + (t * (targetX - this.x)) / 7;
         this.y = this.y + (t * (targetY - this.y)) / 7;
         this.z = this.z + (t * (targetZ - this.z)) / 7;
@@ -89,6 +106,7 @@ export class MyBee extends CGFobject {
     update();
   }
 
+  // Resets the bee's position and state, along with its velocity
   reset(x) {
     this.x = 0;
     this.y = 0;
@@ -103,19 +121,24 @@ export class MyBee extends CGFobject {
     this.blockMovement = false;
   }
 
+  // Updates the bee's position
   update(time) {
     this.time = time;
-    this.y = this.ascend ? this.y + 0.1 : this.y;
+    this.y = this.ascend ? this.y + 0.2 : this.y; //Check if the bee is ascending, therefore not using the sinusoidal function
 
+    // If the bee has reached the top of the ascent, in a position corresponding to the sinusoidal function, reset the flags
     if (this.ascend && this.y >= 3 + Math.sin(time * Math.PI * 2)) {
       this.ascend = false;
+      this.isOnFlower = false;
       this.blockAnimation = false;
       this.blockMovement = false;
     }
 
+    // If the blockAnimation flag is set, don't update the bee's Y position
     this.y = this.blockAnimation ? this.y : 3 + Math.sin(time * Math.PI * 2);
   }
 
+  // Accelerates the bee in the direction it is facing, with a value of x
   accelerate(x) {
     if (this.blockMovement) return;
     this.norm += x * ((Date.now() - this.lastUpdate) / 1000.0);
@@ -125,39 +148,54 @@ export class MyBee extends CGFobject {
     this.v[2] = -this.norm * Math.sin(this.direction);
   }
 
+  // Moves the bee to the nearest pollen grain
   goToPollen() {
+    if (this.pollen != null) return;
     this.isOnFlower = true;
     this.blockAnimation = true;
     this.blockMovement = true;
-    this.sortPollen();
+    this.sortPollen(); // Sort the pollen grains by distance to the bee
     let pollen = this.pollen_coords[0];
     // Calculate the angle to the pollen grain
     this.direction =
       Math.atan2(-(pollen[2] - this.z), pollen[0] - this.x) % (2 * Math.PI);
-    this.calcTrajectory(pollen);
+    this.calcTrajectory(pollen); // Move the bee to the pollen grain
   }
 
+  // Picks up the pollen grain from the flower and starts ascending
   pickUpPollen() {
-    this.sortPollen();
+    this.sortPollen(); // Sort the pollen grains by distance to the bee
     let localPollen = this.pollen_coords[0];
+    if (!this.isOnFlower) return;
     if (this.pollen == null) {
       this.pollen =
-        this.scene.garden.garden[localPollen[3]][localPollen[4]].pollen; // Get the pollen grain
-
+      this.scene.garden.garden[localPollen[3]][localPollen[4]].pollen; // Get the pollen grain
+      
       this.scene.garden.garden[localPollen[3]][localPollen[4]].pollen = null; // Remove the pollen grain from the flower
     }
-
-    if (this.isOnFlower == false) return;
-
-    this.isOnFlower = false;
     this.ascend = true;
   }
 
+  // Drops the pollen grain in the hive
+  dropInHive() {
+    if (this.pollen == null) return;
+    this.blockAnimation = true;
+    this.blockMovement = true;
+    this.direction = // Calculate the angle to the hive
+      Math.atan2(-(this.hive_coords[2] - this.z), this.hive_coords[0] - this.x) %
+      (2 * Math.PI);
+    
+    this.calcTrajectory(this.hive_coords, 0, 0, 0); // Move the bee to the hive
+  }
+
+  // Rotates the bee by x radians 
   turn(x) {
     if (this.blockMovement) return;
     this.direction += x;
     this.accelerate(1);
   }
+
+  // Updates the bee's position based on its velocity
   calcPos() {
     this.x += this.v[0] * ((Date.now() - this.lastUpdate) / 1000.0);
     this.z += this.v[2] * ((Date.now() - this.lastUpdate) / 1000.0);
@@ -207,10 +245,10 @@ export class MyBee extends CGFobject {
     this.scene.popMatrix();
   }
 
-  displayPollen(){
+  displayPollen() {
     if (this.pollen != null) {
       this.scene.pushMatrix();
-      this.scene.scale(2,2,2);
+      this.scene.scale(2, 2, 2);
       this.scene.translate(0.32, -0.3, 0);
       this.pollen.display();
       this.scene.popMatrix();
