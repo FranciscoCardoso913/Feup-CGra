@@ -20,12 +20,14 @@ export class MyBee extends CGFobject {
     this.pollen_coords = pollen_coords;
     this.hive_coords = hive_coords;
     this.lastUpdate = Date.now();
+    this.height = 3;
     
     // State flags
     this.isOnFlower = false;
     this.blockAnimation = false;
     this.blockMovement = false;
     this.ascend = false;
+    this.descent = false;
 
     this.initBuffers();
   }
@@ -124,18 +126,38 @@ export class MyBee extends CGFobject {
   // Updates the bee's position
   update(time) {
     this.time = time;
-    this.y = this.ascend ? this.y + 0.2 : this.y; //Check if the bee is ascending, therefore not using the sinusoidal function
+    if (this.descent){
+        this.y -= 0.2;
+        if (this.y <= -4){
+            this.v = [0,0,0];
+            this.norm = 0;
+            this.descent = false;
+        }
+        if(this.checkFlowerCollision(1)){
+            this.x = this.pollen_coords[0][0];
+            this.y = this.pollen_coords[0][1] + 0.5;
+            this.z = this.pollen_coords[0][2];
+            this.v = [0,0,0];
+            this.norm = 0;
+            this.descent = false;
+            this.isOnFlower = true;
+        }
 
-    // If the bee has reached the top of the ascent, in a position corresponding to the sinusoidal function, reset the flags
-    if (this.ascend && this.y >= 3 + Math.sin(time * Math.PI * 2)) {
-      this.ascend = false;
-      this.isOnFlower = false;
-      this.blockAnimation = false;
-      this.blockMovement = false;
     }
-
-    // If the blockAnimation flag is set, don't update the bee's Y position
-    this.y = this.blockAnimation ? this.y : 3 + Math.sin(time * Math.PI * 2);
+    else{
+        this.y = this.ascend ? this.y + 0.2 : this.y; //Check if the bee is ascending, therefore not using the sinusoidal function
+    
+        // If the bee has reached the top of the ascent, in a position corresponding to the sinusoidal function, reset the flags
+        if (this.ascend && this.y >= this.height + Math.sin(time * Math.PI * 2)) {
+          this.ascend = false;
+          this.isOnFlower = false;
+          this.blockAnimation = false;
+          this.blockMovement = false;
+        }
+    
+        // If the blockAnimation flag is set, don't update the bee's Y position
+        this.y = this.blockAnimation ? this.y : this.height + Math.sin(time * Math.PI * 2);
+    }
   }
 
   // Accelerates the bee in the direction it is facing, with a value of x
@@ -146,6 +168,25 @@ export class MyBee extends CGFobject {
     if (this.norm < 0) this.norm = 0;
     this.v[0] = this.norm * Math.cos(this.direction);
     this.v[2] = -this.norm * Math.sin(this.direction);
+  }
+
+  descend(){
+    if (this.pollen != null) return;
+    this.blockAnimation = true;
+    this.blockMovement = true;
+    this.descent = true;
+  }
+
+  checkFlowerCollision(range) {
+    this.sortPollen();
+    let localPollen = this.pollen_coords[0];
+    let distance = Math.sqrt(
+      Math.pow(this.x - localPollen[0], 2) +
+        Math.pow(this.y - localPollen[1], 2) +
+        Math.pow(this.z - localPollen[2], 2)
+    );
+
+    return distance < range;
   }
 
   // Moves the bee to the nearest pollen grain
@@ -166,7 +207,10 @@ export class MyBee extends CGFobject {
   pickUpPollen() {
     this.sortPollen(); // Sort the pollen grains by distance to the bee
     let localPollen = this.pollen_coords[0];
-    if (!this.isOnFlower) return;
+    if (!this.isOnFlower) {
+        this.ascend = true;
+        return;
+    }
     if (this.pollen == null) {
       this.pollen =
       this.scene.garden.garden[localPollen[3]][localPollen[4]].pollen; // Get the pollen grain

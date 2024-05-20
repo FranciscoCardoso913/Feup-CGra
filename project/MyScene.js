@@ -9,7 +9,6 @@ import {
 import { MyPlane } from "./MyPlane.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
-import { MyPollen } from "./objects/MyPollen.js";
 import { MySphere } from "./objects/MySphere.js";
 import { MyHive } from "./objects/MyHive.js";
 import { MyBee } from "./objects/bee/MyBee.js";
@@ -138,6 +137,9 @@ export class MyScene extends CGFscene {
       this.bee.reset();
     } else {
       if (this.gui.isKeyPressed("KeyF")) {
+        this.bee.descend();
+      }
+      if (this.gui.isKeyPressed("KeyB")) {
         this.bee.goToPollen();
       } 
       if (this.gui.isKeyPressed("KeyP")) {
