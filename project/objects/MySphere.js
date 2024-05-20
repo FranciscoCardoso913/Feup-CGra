@@ -78,14 +78,14 @@ export class MySphere extends CGFobject {
 				this.indices.push((this.slices+1) + j+1); // Bottom Right
 			}
 
-			this.indices.push((this.slices+1)*this.stacks*2 -j); // Bottom left
+			this.indices.push((this.slices+1)*(this.stacks*2 +1) -j -1); // Bottom left
 
 			if(this.isInverted){
-				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j); // Top
-				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j+1); // Bottom Right
+				this.indices.push((this.slices+1)*(this.stacks*2 ) - j-1); // Bottom Right
+				this.indices.push((this.slices+1)*(this.stacks*2 ) - j); // Top
 			}else{
-				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j+1); // Bottom Right
-				this.indices.push((this.slices+1)*(this.stacks*2 -1) + j); // Top
+				this.indices.push((this.slices+1)*(this.stacks*2 ) - j); // Top
+				this.indices.push((this.slices+1)*(this.stacks*2 ) - j-1); // Bottom Right
 			}
 	
 
