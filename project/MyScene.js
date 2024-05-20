@@ -74,7 +74,7 @@ export class MyScene extends CGFscene {
     this.beeWing.setSpecular(0, 0, 0, 0);
     this.beeWing.setEmission(0, 0, 0, 0);
     this.grassShader = new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag");
-    this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.time)/1000.0});
+    //this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.garden.time)/1000.0});
 
     
     this.panorama = new MyPanorama(this, this.texture);
@@ -146,7 +146,7 @@ export class MyScene extends CGFscene {
 
     this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
-    this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.time)/1000.0})
+    this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.garden.time)/1000.0})
   }
   checkKeys() {
 
