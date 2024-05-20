@@ -31,6 +31,7 @@ export class MyFlower extends CGFobject {
 
     this.inner_radius = inner_radius;
 
+    // If inner_radius is not defined, it will be 1/5 of the outer_radius
     if (this.inner_radius == 0)
       this.inner_radius = (this.outer_radius * 1.0) / 5;
 
@@ -44,12 +45,14 @@ export class MyFlower extends CGFobject {
     this.petal_angle_min = petal_angle_min;
     this.petal_angle_max = petal_angle_max;
 
+    // This creates a predefined random angle of rotation for each petal between petal_angle_min and petal_angle_max
     this.random_petal_rotations = new Array(this.n_petals);
     for (let i = 0; i < this.n_petals; i++)
       this.random_petal_rotations[i] =
         Math.random() * (this.petal_angle_max - this.petal_angle_min) +
         this.petal_angle_min;
 
+    // This creates a random angle for the pollen
     this.pollen_angle = Math.random() * Math.PI;
 
     this.initBuffers();
@@ -78,16 +81,20 @@ export class MyFlower extends CGFobject {
   }
 
   draw_petals() {
-    // PETALS
+    // Divide the circle into n_petals parts to get each individual angle
     const angle = (2 * Math.PI) / this.n_petals;
 
     for (let i = 0; i < this.n_petals; i++) {
       this.scene.pushMatrix();
 
+      // Rotate the petal to the correct position
       this.scene.rotate(i * angle, 0, 1, 0);
       this.scene.rotate(this.random_petal_rotations[i], 0, 0, 1);
+
+      // Translate the petal to the correct position
       this.scene.translate(this.inner_radius, 0, 0);
 
+      // Scale the petal to meet the outer radius
       let outerScaleFactor = (this.outer_radius - this.inner_radius) / 2;
       this.scene.scale(outerScaleFactor, 1, outerScaleFactor / 1.4);
 
@@ -106,10 +113,12 @@ export class MyFlower extends CGFobject {
   }
 
   draw_receptacle() {
-    // RECEPTACLE
     this.scene.pushMatrix();
 
+    // Scale to meet the inner radius
     this.scene.scale(this.inner_radius, 0.4, this.inner_radius);
+
+    // Rotate into correct position
     this.scene.rotate(Math.PI / 2, 0, 0, 1);
 
     this.scene.appearance.setTexture(this.textures[2]);
@@ -118,7 +127,9 @@ export class MyFlower extends CGFobject {
     this.scene.appearance.apply();
     this.receptacle.display();
 
+    // Rotate to draw the bottom half of the receptacle
     this.scene.rotate(-Math.PI, 0, 0, 1);
+    // Flatten it
     this.scene.scale(0.5, 1, 1);
 
     this.receptacle.display();
@@ -127,17 +138,22 @@ export class MyFlower extends CGFobject {
 
   draw_pollen() {
     this.scene.pushMatrix();
+
+    // Translate to the top of the receptacle
     this.scene.translate(0, 0.4, 0);
+    // Rotate to the random angle
     this.scene.rotate(this.pollen_angle, 0, 1, 0);
+    // Check it isn't null before displaying (eg. if the bee has taken the pollen)
     if (this.pollen != null) this.pollen.display();
     this.scene.popMatrix();
   }
 
   draw_stem() {
-    //STEM
     this.scene.pushMatrix();
 
+    // Translate to meet at the bottom of the receptacle
     this.scene.translate(0, -this.stem_height - 0.16, 0);
+    // Scale to meet the stem radius
     this.scene.scale(this.stem_radius, 1, this.stem_radius);
 
     this.scene.appearance.setTexture(this.textures[0]);
@@ -154,7 +170,7 @@ export class MyFlower extends CGFobject {
     this.scene.popMatrix();
   }
 
-  //2.5 outer radius, n_petals, 0.5 inner radius, 0.2 cylinder radius, 1 cylinder, 1 cylinder height, default color
+  // Displays the flower by drawing all its components
   display() {
     this.draw_petals();
     this.draw_receptacle();

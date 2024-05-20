@@ -13,6 +13,7 @@ export class MyGarden extends CGFobject {
     this.generateGarden();
   }
 
+  // Generate a matrix of flowers with certain randomness
   generateGarden(){
     for (let i = 0; i < this.cols; i++) {
       let toAppend = [];
@@ -33,7 +34,6 @@ export class MyGarden extends CGFobject {
         );
         toAppend.push(flower);
       }
-      console.log(toAppend);
       this.garden.push(toAppend);
     }
 
@@ -44,12 +44,15 @@ export class MyGarden extends CGFobject {
    * @param {integer} complexity - changes number of slices
    */
 
+  // Display the garden
   display() {
     for (let i = 0; i < this.cols; i++) {
       for (let j = 0; j < this.rows; j++) {
         this.scene.pushMatrix();
         this.scene.translate(i*6 - (this.cols * 6) / 2, 0, j*6 - (this.cols * 6) / 2);
+        // Only add the pollen_coords if it's the first run
         if (this.single_run) this.pollen_coords.push([i*6 - (this.cols * 6) / 2, 0.4, j*6 - (this.cols * 6) / 2, i, j]);
+
         this.garden[i][j].display();
         this.scene.popMatrix();
       }
