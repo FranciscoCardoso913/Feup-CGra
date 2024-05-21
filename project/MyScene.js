@@ -53,9 +53,9 @@ export class MyScene extends CGFscene {
 
     this.hive_texture = new CGFtexture(this, "images/hive.jpg");
 
-    this.texture = new CGFtexture(this, "images/panorama4.jpg");
+    this.texture = new CGFtexture(this, "images/panorama2.jpg");
 
-    this.planeTexture = new CGFtexture(this, "images/grass.jpg");
+    this.planeTexture = new CGFtexture(this, "images/plane2.png");
 
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
@@ -112,7 +112,7 @@ export class MyScene extends CGFscene {
       this.garden.pollen_coords,
       [-0.5,-4,-40.7]
     );
-    this.grassGarden = new GrassGarden(this, 0,0, this.grassTexture, 1);
+    this.grassGarden = new GrassGarden(this, -31,0, this.grassTexture, 1);
     ////////////////////////////////////////////////////////////////////////////
     
     // OBJECT USED VARIABLES ////////////////////////////////////////////////// 
