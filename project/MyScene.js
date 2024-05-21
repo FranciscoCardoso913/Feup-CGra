@@ -11,7 +11,12 @@ import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
 import { MySphere } from "./objects/MySphere.js";
 import { MyHive } from "./objects/MyHive.js";
+import { MyFlower } from "./objects/flower/MyFlower.js";
+import { MyRock } from "./objects/rock/MyRock.js";
+import { MyRockPiramid } from "./objects/rock/MyRockPiramid.js";
+import { MyRockSet } from "./objects/rock/MyRockSet.js";
 import { MyBee } from "./objects/bee/MyBee.js";
+import { GrassGarden } from "./objects/garden/GrassGarden.js";
 
 /**
  * MyScene
@@ -37,13 +42,24 @@ export class MyScene extends CGFscene {
 
     this.appStartTime = Date.now(); // current time in milisecs
 
+    this.panorameTexture = new CGFtexture(this, "images/panorama4.jpg");
+    this.groundTexture = new CGFtexture(this, "images/terrain.jpg");
+    this.rockTexture =  new CGFtexture(this, "images/rock.jpg");
+
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this, 30);
-    this.sphere = new MySphere(this, 30, 60, true);
     this.hive = new MyHive(this);
+    this.plane = new MyPlane(this,100,0,10,0,10);
+    //this.flower = new MyFlower(this);
+    this.rock = new MyRock(this, this.rockTexture);
+    this.sphere = new MySphere(this, 10, 10);
+    this.panorama = new MyPanorama(this, this.panorameTexture);
+    this.rockSet = new MyRockSet(this,this.rockTexture,[-10,0],[60,-100],40);
+    this.rockPiramid= new MyRockPiramid(this, 5, this.rockTexture, [25,-50])
+    //this.garden = new MyGarden(this, 7, 7);
+   
 
-    this.speedFactor = 0.1;
+    this.speedFactor = 1;
     this.beeScaleFactor = 1;
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -73,18 +89,25 @@ export class MyScene extends CGFscene {
     );
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
+    this.planeTexture = new CGFtexture(this, "images/grass.jpg");
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
     this.beeEye = new CGFtexture(this, "images/bee_eyes.jpg");
     this.beeAntenna = new CGFtexture(this, "images/fur.jpg");
+    this.grassTexture = new CGFtexture(this, "images/grass.jpg");
+    this.cloudsTexture = new CGFtexture(this, "images/clouds_map.jpg")
     this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap("REPEAT", "REPEAT");
+
     this.beeWing = new CGFappearance(this);
-    this.beeWing.setAmbient(0.4, 0.4, 0.4, 0.4);
-    this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.5);
+    this.beeWing.setAmbient(0.4, 0.4, 0.4, 0.1);
+    this.beeWing.setDiffuse(0.6, 0.6, 0.6, 0.1);
     this.beeWing.setSpecular(0, 0, 0, 0);
     this.beeWing.setEmission(0, 0, 0, 0);
+    this.grassShader = new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag");
+    this.cloudShader = new CGFshader(this.gl, "shaders/clouds.vert", "shaders/clouds.frag");
+    this.cloudShader.setUniformsValues({ uSampler2: 1, timeFactor: 0 });
+    this.worldTexture = new CGFtexture(this, "images/earth.jpg")
+
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
@@ -95,19 +118,40 @@ export class MyScene extends CGFscene {
       [0, -0.7, 10]
     );
 
+    this.grassGarden = new GrassGarden(this, 0,0, this.grassTexture, 3);
+
     this.gl.depthFunc(this.gl.LEQUAL);
     this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
     this.gl.enable(this.gl.BLEND);
 
-    console.log(this.garden.flower_coords);
   }
   initLights() {
-    this.lights[0].setPosition(15, 5, 5, 1);
+    // Light 0
+    
+    this.lights[0].setPosition(15, 100, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-    this.lights[0].setAmbient(1.0, 1.0, 1.0, 1.0);
+    this.lights[0].setAmbient(0.5, 0.5, 0.5, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
+  
+    // Light 1
+    this.lights[1].setPosition(-15, 100, 5, 1);
+    this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[1].setAmbient(0.5, 0.5, 0.5, 1.0);
+    this.lights[1].enable();
+    this.lights[1].update();
+  
+    // Light 2
+    this.lights[2].setPosition(0, 100, -15, 1);
+    this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[2].setAmbient(0.5, 0.5, 0.5, 1.0);
+    this.lights[2].enable();
+    this.lights[2].update();
+  
+    // Add more lights if needed
+    // Ensure the array this.lights has been correctly sized and initialized
   }
+  
   initCameras() {
     this.camera = new CGFcamera(
       1.8,
@@ -121,10 +165,11 @@ export class MyScene extends CGFscene {
     this.camera.fov = this.fov;
   }
   setDefaultAppearance() {
-    this.appearance.setTexture();
-    this.setAmbient(0.2, 0.4, 0.8, 1.0);
-    this.setDiffuse(0.2, 0.4, 0.8, 1.0);
-    this.setSpecular(0.2, 0.4, 0.8, 1.0);
+    this.appearance.setTexture()
+    this.appearance.apply()
+    this.setAmbient(1.0, 1.0, 1.0, 1.0);
+    this.setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.setSpecular(1.0, 1.0, 1.0, 1.0);
     this.setShininess(10.0);
     this.appearance.setColor(1, 1, 1, 1);
     this.appearance.apply();
@@ -138,6 +183,8 @@ export class MyScene extends CGFscene {
 
     //this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
+    this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.grassGarden.time)/1000.0})
+    this.cloudShader.setUniformsValues({ uSampler2: 1, timeFactor: timeSinceAppStart });
   }
   checkKeys() {
     if (this.gui.isKeyPressed("KeyR")) {
@@ -156,11 +203,11 @@ export class MyScene extends CGFscene {
         this.bee.dropInHive();
       } else {
         if (this.gui.isKeyPressed("KeyW")) {
-          this.bee.accelerate(100 * this.speedFactor);
+          this.bee.accelerate(200 * this.speedFactor);
         }
 
         if (this.gui.isKeyPressed("KeyS")) {
-          this.bee.accelerate(-60);
+          this.bee.accelerate(-400 * this.speedFactor);
         }
 
         if (this.gui.isKeyPressed("KeyA")) {
@@ -184,6 +231,7 @@ export class MyScene extends CGFscene {
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
     this.loadIdentity();
+
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
     this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
@@ -191,31 +239,52 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.pushMatrix();
-    this.garden.display();
-    this.popMatrix();
-    this.setDefaultAppearance();
-
-    // this.scale(2,2,2);
-    this.panorama.display();
-
-    this.pushMatrix();
-    //this.translate(0, this.yBee, 0);
-    //this.bee.scaleBee(this.beeScaleFactor);
-    this.bee.display();
-    this.popMatrix();
-
-    /*
+    
+    this.appearance.setTexture(this.planeTexture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance.apply()
     this.pushMatrix();
     this.appearance.apply();
-    this.translate(0,-100,0);
+    this.translate(0,-10,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
-    */
-
+    this.garden.display()
+    this.setDefaultAppearance()
+    this.pushMatrix()
+    this.translate(0,-10,0);
+    this.rockSet.display()
+    this.rockPiramid.display()
+    this.popMatrix()
+    this.cloudsTexture.bind(1)
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance.apply();
+    this.setActiveShader(this.cloudShader);
+    this.panorama.display();
+    this.setDefaultAppearance();
+    
+    this.pushMatrix();
+    this.translate(0,-10,0);
+    this.setActiveShader(this.grassShader);
+    this.grassGarden.display();
+    this.setActiveShader(this.defaultShader);
+    this.popMatrix();
     this.hive.display();
+    this.pushMatrix();
+    //this.translate(0, this.yBee, 0);
+    this.bee.display();
+    this.popMatrix();
+    
+    //this.plane.enableNormalViz()
+
+    
+
+
+    
+
+ 
 
     //POLLEN
     //this.pollen.display();

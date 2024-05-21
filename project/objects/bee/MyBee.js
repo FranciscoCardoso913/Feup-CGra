@@ -13,7 +13,7 @@ export class MyBee extends CGFobject {
     this.y = 0;
     this.z = 0;
     this.direction = 0;
-    this.maxV = 60;
+    this.maxV = 600;
     this.norm = 0;
     this.v = [0, 0, 0]; //(x,y,z)
     this.pollen = null;
@@ -166,6 +166,7 @@ export class MyBee extends CGFobject {
   // Accelerates the bee in the direction it is facing, with a value of x
   accelerate(x) {
     if (this.blockMovement) return;
+    if(this.norm ==0 && x > 0) this.norm = 3;
     this.norm += x * ((Date.now() - this.lastUpdate) / 1000.0);
     if (this.norm > this.maxV) this.norm = this.maxV;
     if (this.norm < 0) this.norm = 0;
@@ -239,7 +240,7 @@ export class MyBee extends CGFobject {
   turn(x) {
     if (this.blockMovement) return;
     this.direction += x;
-    this.accelerate(1);
+    this.accelerate(0);
   }
 
   // Updates the bee's position based on its velocity
@@ -303,6 +304,7 @@ export class MyBee extends CGFobject {
   }
 
   display() {
+   
     this.calcPos();
 
     this.scene.pushMatrix();
