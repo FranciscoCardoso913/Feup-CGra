@@ -6,6 +6,8 @@ export class MyGarden extends CGFobject {
     scene,
     cols,
     rows,
+    spacing,
+    z_offset,
     petal_textures,
     receptacle_textures,
     stem_textures,
@@ -16,6 +18,8 @@ export class MyGarden extends CGFobject {
     this.cols = cols;
     this.rows = rows;
     this.garden = [];
+    this.spacing = spacing;
+    this.z_offset = z_offset;
     this.petal_textures = petal_textures;
     this.receptacle_textures = receptacle_textures;
     this.stem_textures = stem_textures;
@@ -66,16 +70,16 @@ export class MyGarden extends CGFobject {
       for (let j = 0; j < this.rows; j++) {
         this.scene.pushMatrix();
         this.scene.translate(
-          i * 6 - (this.cols * 6) / 2,
-          0,
-          j * 6 - (this.cols * 6) / 2
+          i * this.spacing - (this.cols * this.spacing) / 2,
+          -10 + this.garden[i][j].stem_height,
+          j * this.spacing - (this.cols * this.spacing) / 2 + this.z_offset
         );
         // Only add the pollen_coords if it's the first run
         if (this.single_run)
           this.pollen_coords.push([
-            i * 6 - (this.cols * 6) / 2,
-            0.4,
-            j * 6 - (this.cols * 6) / 2,
+            i * this.spacing - (this.cols * this.spacing) / 2,
+            -9.6 + this.garden[i][j].stem_height,
+            j * this.spacing - (this.cols * this.spacing) / 2 + this.z_offset,
             i,
             j,
           ]);

@@ -28,9 +28,8 @@ export class MyHive extends CGFobject {
   display() {
     // Setting the hive in the correct position
     this.scene.pushMatrix();
-    this.scene.translate(0, -1, 12);
     this.scene.scale(2, 2, 2);
-    this.scene.rotate(Math.PI / 2, 0, 1, 0);
+    this.scene.rotate(-Math.PI / 2, 0, 1, 0);
 
     // Displaying the top part of the hive with the texture
     this.scene.pushMatrix();
@@ -45,11 +44,10 @@ export class MyHive extends CGFobject {
     this.scene.rotate(Math.PI, 0, 0, 1);
     this.scene.scale(0.2, 1.0, 1.0);
     this.sphere.display();
-
     this.scene.popMatrix();
-    this.scene.pushMatrix();
 
     // Displaying the hole of the hive
+    this.scene.pushMatrix();
     this.scene.translate(0.965, 0.03, 0);
     this.scene.rotate(0.1, 0, 0, 1);
     this.scene.rotate(Math.PI / 2, 0, 0, 1);

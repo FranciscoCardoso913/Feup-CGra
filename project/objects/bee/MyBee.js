@@ -131,7 +131,7 @@ export class MyBee extends CGFobject {
     this.time = time;
     if (this.descent){
         this.y -= 0.2;
-        if (this.y <= -4){
+        if (this.y <= -9.5){
             this.v = [0,0,0];
             this.norm = 0;
             this.descent = false;
