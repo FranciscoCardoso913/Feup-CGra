@@ -98,7 +98,6 @@ export class MyStem extends CGFobject {
     }
 
     this.primitiveType = this.scene.gl.TRIANGLES;
-    console.log(this.connection_points);
     this.initGLBuffers();
   }
   /**

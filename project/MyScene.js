@@ -9,9 +9,7 @@ import {
 import { MyPlane } from "./MyPlane.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
-import { MySphere } from "./objects/MySphere.js";
 import { MyHive } from "./objects/MyHive.js";
-import { MyRock } from "./objects/rock/MyRock.js";
 import { MyRockPiramid } from "./objects/rock/MyRockPiramid.js";
 import { MyRockSet } from "./objects/rock/MyRockSet.js";
 import { MyBee } from "./objects/bee/MyBee.js";
@@ -53,9 +51,9 @@ export class MyScene extends CGFscene {
 
     this.hive_texture = new CGFtexture(this, "images/hive.jpg");
 
-    this.texture = new CGFtexture(this, "images/panorama2.jpg");
+    this.texture = new CGFtexture(this, "images/panorama.jpg");
 
-    this.planeTexture = new CGFtexture(this, "images/plane2.png");
+    this.planeTexture = new CGFtexture(this, "images/plane.png");
 
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
@@ -67,7 +65,7 @@ export class MyScene extends CGFscene {
     this.beeWing.setSpecular(0, 0, 0, 0);
     this.beeWing.setEmission(0, 0, 0, 0);
 
-    this.grassTexture = new CGFtexture(this, "images/grass.jpg");
+    this.grassTexture = new CGFtexture(this, "images/grass.png");
 
     this.cloudsTexture = new CGFtexture(this, "images/clouds_map.jpg")
 
@@ -291,8 +289,14 @@ export class MyScene extends CGFscene {
     // HIVE //////////////////////////////////////////////////////////////////////////////////////
     this.pushMatrix();
     this.translate(-0.5,-5.3,-42.7);
+    this.appearance.setTexture(this.hive_texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance.setAmbient(0.5, 0.5, 0.5, 1);
+    this.appearance.apply();
     this.hive.display();
     this.popMatrix();
+
+    this.setDefaultAppearance();
     //////////////////////////////////////////////////////////////////////////////////////////////
 
     // BEE ///////////////////////////////////////////////////////////////////////////////////////
