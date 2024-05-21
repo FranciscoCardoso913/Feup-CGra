@@ -10,15 +10,19 @@ uniform float uTime;
 varying highp vec2 vTextureCoord;
 varying highp vec3 vLighting;
 varying vec4 vVertexPosition;
+
 void main(void) {
+
+    // Calculate the variation of the grass curvature depending on the time
     float expVarying =  ( sin(uTime ));
 
-
+    // Calculate the new position
     vec3 newPosition = aVertexPosition;
     newPosition.x = newPosition.x*expVarying;
 
     vTextureCoord = aTextureCoord;
 
+    // Recalculate the normals and the light
     highp vec3 ambientLight = vec3(0.3, 0.3, 0.3);
     highp vec3 directionalLightColor = vec3(1, 1, 1);
     highp vec3 directionalVector = normalize(vec3(0.85, 0.8, 0.75));
