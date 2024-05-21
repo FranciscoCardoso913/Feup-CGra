@@ -51,19 +51,26 @@ export class MyScene extends CGFscene {
 
     this.enableTextures(true);
 
-    this.stem_texture = new CGFtexture(this, "images/stem.jpg");
-    this.petal_texture = new CGFtexture(this, "images/petal.jpg");
-    this.receptacle_texture = new CGFtexture(this, "images/receptacle.png");
+    this.stem_texture_1 = new CGFtexture(this, "images/stem.jpg");
+    this.stem_texture_2 = new CGFtexture(this, "images/stem2.png");
+    this.petal_texture_1 = new CGFtexture(this, "images/petal.jpg");
+    this.petal_texture_2 = new CGFtexture(this, "images/petal2.png");
+    this.receptacle_texture_1 = new CGFtexture(this, "images/receptacle.png");
+    this.receptacle_texture_2 = new CGFtexture(this, "images/receptacle2.png");
     this.pollen_texture = new CGFtexture(this, "images/pollen.jpg");
-    this.leaf_texture = new CGFtexture(this, "images/leaf.jpg");
+    this.leaf_texture_1 = new CGFtexture(this, "images/leaf.jpg");
+    this.leaf_texture_2 = new CGFtexture(this, "images/leaf2.png");
     this.hive_texture = new CGFtexture(this, "images/hive.jpg");
-    this.garden = new MyGarden(this, 4, 4, [
-      this.stem_texture,
-      this.petal_texture,
-      this.receptacle_texture,
-      this.pollen_texture,
-      this.leaf_texture,
-    ]);
+    this.garden = new MyGarden(
+      this,
+      4,
+      4,
+      [this.petal_texture_1, this.petal_texture_2],
+      [this.receptacle_texture_1, this.receptacle_texture_2],
+      [this.stem_texture_1, this.stem_texture_2],
+      [this.leaf_texture_1, this.leaf_texture_2],
+      this.pollen_texture
+    );
 
     this.texture = new CGFtexture(this, "images/panorama4.jpg");
     this.beeHead = new CGFtexture(this, "images/head_fur.jpg");
@@ -85,7 +92,7 @@ export class MyScene extends CGFscene {
       this,
       [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing],
       this.garden.pollen_coords,
-      [0,-0.7,10]
+      [0, -0.7, 10]
     );
 
     this.gl.depthFunc(this.gl.LEQUAL);
@@ -141,14 +148,13 @@ export class MyScene extends CGFscene {
       }
       if (this.gui.isKeyPressed("KeyB")) {
         this.bee.goToPollen();
-      } 
+      }
       if (this.gui.isKeyPressed("KeyP")) {
         this.bee.pickUpPollen();
       }
       if (this.gui.isKeyPressed("KeyO")) {
         this.bee.dropInHive();
-      }
-      else {
+      } else {
         if (this.gui.isKeyPressed("KeyW")) {
           this.bee.accelerate(100 * this.speedFactor);
         }

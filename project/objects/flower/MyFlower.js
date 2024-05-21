@@ -21,7 +21,11 @@ export class MyFlower extends CGFobject {
     petal_color,
     petal_angle_min,
     petal_angle_max,
-    textures
+    petal_textures,
+    receptacle_textures,
+    stem_textures,
+    leaf_textures,
+    pollen_texture
   ) {
     super(scene);
     this.outer_radius = outer_radius;
@@ -35,7 +39,15 @@ export class MyFlower extends CGFobject {
     if (this.inner_radius == 0)
       this.inner_radius = (this.outer_radius * 1.0) / 5;
 
-    this.textures = textures;
+    this.petal_textures = petal_textures;
+    this.petal_texture_index = Math.floor(Math.random() * this.petal_textures.length);
+    this.receptacle_textures = receptacle_textures;
+    this.receptacle_texture_index = Math.floor(Math.random() * this.receptacle_textures.length);
+    this.stem_textures = stem_textures;
+    this.stem_texture_index = Math.floor(Math.random() * this.stem_textures.length);
+    this.leaf_textures = leaf_textures;
+    this.leaf_texture_index = Math.floor(Math.random() * this.leaf_textures.length);
+    this.pollen_texture = pollen_texture;
     this.n_petals = n_petals;
     this.stem_radius = stem_radius;
     this.stem_height = stem_height;
@@ -70,9 +82,9 @@ export class MyFlower extends CGFobject {
       30,
       this.stem_stacks,
       this.stem_radius, 
-      this.textures[4]
+      this.leaf_textures[this.leaf_texture_index]
     );
-    this.pollen = new MyPollen(this.scene, this.textures[3]);
+    this.pollen = new MyPollen(this.scene, this.pollen_texture);
     //The defined indices (and corresponding vertices)
     //will be read in groups of three to draw triangles
     this.primitiveType = this.scene.gl.TRIANGLES;
@@ -98,7 +110,7 @@ export class MyFlower extends CGFobject {
       let outerScaleFactor = (this.outer_radius - this.inner_radius) / 2;
       this.scene.scale(outerScaleFactor, 1, outerScaleFactor / 1.4);
 
-      this.scene.appearance.setTexture(this.textures[1]);
+      this.scene.appearance.setTexture(this.petal_textures[this.petal_texture_index]);
       this.scene.appearance.setTextureWrap("REPEAT", "REPEAT");
       this.scene.appearance.setColor(
         this.petal_color[0] / 255,
@@ -121,7 +133,7 @@ export class MyFlower extends CGFobject {
     // Rotate into correct position
     this.scene.rotate(Math.PI / 2, 0, 0, 1);
 
-    this.scene.appearance.setTexture(this.textures[2]);
+    this.scene.appearance.setTexture(this.receptacle_textures[this.receptacle_texture_index]);
     this.scene.appearance.setColor(1, 1, 1, 1);
     this.scene.appearance.setTextureWrap("REPEAT", "REPEAT");
     this.scene.appearance.apply();
@@ -156,7 +168,7 @@ export class MyFlower extends CGFobject {
     // Scale to meet the stem radius
     this.scene.scale(this.stem_radius, 1, this.stem_radius);
 
-    this.scene.appearance.setTexture(this.textures[0]);
+    this.scene.appearance.setTexture(this.stem_textures[this.stem_texture_index]);
     this.scene.appearance.setColor(
       this.stem_color[0] / 255,
       this.stem_color[1] / 255,
