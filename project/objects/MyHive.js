@@ -6,6 +6,8 @@ export class MyHive extends CGFobject {
     super(scene);
     this.scene = scene;
     this.sphere = new MySphere(scene, 10, 10, true, false);
+    this.pollens = [];
+    this.ang = Math.PI / 8;
 
     this.initBuffers();
   }
@@ -56,6 +58,17 @@ export class MyHive extends CGFobject {
     this.hole.apply();
     this.sphere.display();
     this.scene.popMatrix();
+
+
+    for (let i = 0; i < this.pollens.length; i++) {
+      if (i > 4) break;
+      this.scene.pushMatrix();
+      this.scene.rotate(Math.PI / 7 - (i - 1) * Math.PI / 7,0,1,0);
+      this.scene.translate(1.25,0.2,0);
+      this.scene.scale(1.5,1.5,1.5);
+      this.pollens[i].display();
+      this.scene.popMatrix();
+    }
 
     this.scene.popMatrix();
   }

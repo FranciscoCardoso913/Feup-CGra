@@ -81,7 +81,10 @@ export class MyBee extends CGFobject {
         // Distinguish descent to flower from descent to hive
         if (this.pollen != null ){
           if (this.isOnFlower) this.isOnFlower = false;
-          else this.pollen = null;
+          else{
+            this.scene.hive.pollens.push(this.pollen);
+            this.pollen = null;
+          }
           this.ascend = true;
         }
 
