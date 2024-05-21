@@ -189,6 +189,7 @@ export class MyScene extends CGFscene {
       [this.leaf_texture_1, this.leaf_texture_2],
       this.pollen_texture
     );
+    this.bee.pollen_coords = this.garden.pollen_coords;
   }
 
   update(t) {
