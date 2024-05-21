@@ -18,13 +18,14 @@ export class MySphere extends CGFobject {
 		const beta = this.isSemiSphere? (Math.PI )/this.slices : (Math.PI*2 ) / this.slices ; 
         const alfa = (Math.PI/2) / this.stacks;
 
-        for (let i=0; i <= this.stacks *2;i++){
+        for (let i=0.0; i <= this.stacks *2;i++){
 
-            for(let j =0; j<= this.slices; j++){
+            for(let j =0.0; j<= this.slices; j++){
 				let ang = j*beta;
 				let ang2 =  i*alfa;
                 this.vertices.push(Math.sin(ang)*Math.sin(ang2),Math.cos(ang2),Math.cos(ang)*Math.sin(ang2));
-				this.texCoords.push( j/(this.slices  ), i/(this.stacks*2 ));
+				this.texCoords.push( j/(this.slices ), i/(this.stacks*2 ));
+				//console.log("Mate",j/(this.slices ),i/(this.stacks*2 ))
 				if(this.isInverted)
 					this.normals.push(-Math.sin(ang)*Math.sin(ang2),-Math.cos(ang2),-Math.cos(ang)*Math.sin(ang2));
 				else

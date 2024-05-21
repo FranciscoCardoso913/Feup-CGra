@@ -64,7 +64,8 @@ export class MyScene extends CGFscene {
     this.beeBody = new CGFtexture(this, "images/bee_fur.jpg");
     this.beeEye = new CGFtexture(this, "images/bee_eyes.jpg");
     this.beeAntenna = new CGFtexture(this, "images/fur.jpg");
-    this.grassTexture = new CGFtexture(this, "images/grass.jpg")
+    this.grassTexture = new CGFtexture(this, "images/grass.jpg");
+    this.cloudsTexture = new CGFtexture(this, "images/clouds_map.jpg")
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.groundTexture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -74,7 +75,8 @@ export class MyScene extends CGFscene {
     this.beeWing.setSpecular(0, 0, 0, 0);
     this.beeWing.setEmission(0, 0, 0, 0);
     this.grassShader = new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag");
-    //this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.garden.time)/1000.0});
+    this.cloudShader = new CGFshader(this.gl, "shaders/clouds.vert", "shaders/clouds.frag");
+    this.cloudShader.setUniformsValues({ uSampler2: 1, timeFactor: 0 });
 
     
     this.panorama = new MyPanorama(this, this.texture);
@@ -147,6 +149,7 @@ export class MyScene extends CGFscene {
     this.yBee = 3 + Math.sin(timeSinceAppStart * Math.PI * 2);
     this.bee.update(timeSinceAppStart);
     this.grassShader.setUniformsValues({ uTime: Math.PI/3*(Date.now()-this.garden.time)/1000.0})
+    this.cloudShader.setUniformsValues({ uSampler2: 1, timeFactor: timeSinceAppStart });
   }
   checkKeys() {
 
@@ -215,14 +218,19 @@ export class MyScene extends CGFscene {
     this.rockSet.display()
     this.rockPiramid.display()
     this.popMatrix()
-    this.panorama.display()
-    this.setDefaultAppearance()
-    this.pushMatrix()
+    this.cloudsTexture.bind(1)
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+    this.appearance.apply();
+    this.setActiveShader(this.cloudShader);
+    this.panorama.display();
+    this.setDefaultAppearance();
+    this.pushMatrix();
     this.translate(0,-10,0);
     this.setActiveShader(this.grassShader);
-    this.garden.display()
+    this.garden.display();
     this.setActiveShader(this.defaultShader);
-    this.popMatrix()
+    this.popMatrix();
  
     this.pushMatrix();
     this.translate(0, this.yBee, 0);
