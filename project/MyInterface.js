@@ -29,6 +29,9 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'speedFactor', 1, 3).name('Speed Factor');
 
+        this.gui.add(this.scene, 'gardenRows', 1, 10).name('Garden Rows').onChange(this.scene.updateGarden.bind(this.scene));
+        this.gui.add(this.scene, 'gardenCols', 1, 10).name('Garden Cols').onChange(this.scene.updateGarden.bind(this.scene));
+
 
         this.initKeys()
         return true;

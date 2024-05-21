@@ -9,9 +9,7 @@ import {
 import { MyPlane } from "./MyPlane.js";
 import { MyGarden } from "./objects/flower/MyGarden.js";
 import { MyPanorama } from "./objects/MyPanorama.js";
-import { MySphere } from "./objects/MySphere.js";
 import { MyHive } from "./objects/MyHive.js";
-import { MyRock } from "./objects/rock/MyRock.js";
 import { MyRockPiramid } from "./objects/rock/MyRockPiramid.js";
 import { MyRockSet } from "./objects/rock/MyRockSet.js";
 import { MyBee } from "./objects/bee/MyBee.js";
@@ -112,7 +110,7 @@ export class MyScene extends CGFscene {
       this.garden.pollen_coords,
       [-0.5,-4,-40.7]
     );
-    this.grassGarden = new GrassGarden(this, -31,0, this.grassTexture, 1);
+    this.grassGarden = new GrassGarden(this, -31,0, this.grassTexture, 10);
     ////////////////////////////////////////////////////////////////////////////
     
     // OBJECT USED VARIABLES ////////////////////////////////////////////////// 
@@ -124,27 +122,30 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.fov = 1.8;
+
+    this.gardenCols = 4;
+    this.gardenRows = 4;
     ////////////////////////////////////////////////////////////////////////////
   }
   initLights() {
     // Light 0
     
     this.lights[0].setPosition(15, 100, 5, 1);
-    this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[0].setDiffuse(0.5, 0.5, 0.5, 1.0);
     this.lights[0].setAmbient(0.5, 0.5, 0.5, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
   
     // Light 1
     this.lights[1].setPosition(-15, 100, 5, 1);
-    this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[1].setDiffuse(0.5, 0.5, 0.5, 1.0);
     this.lights[1].setAmbient(0.5, 0.5, 0.5, 1.0);
     this.lights[1].enable();
     this.lights[1].update();
   
     // Light 2
     this.lights[2].setPosition(0, 100, -15, 1);
-    this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
+    this.lights[2].setDiffuse(0.5, 0.5, 0.5, 1.0);
     this.lights[2].setAmbient(0.5, 0.5, 0.5, 1.0);
     this.lights[2].enable();
     this.lights[2].update();
@@ -174,6 +175,20 @@ export class MyScene extends CGFscene {
     this.setShininess(10.0);
     this.appearance.setColor(1, 1, 1, 1);
     this.appearance.apply();
+  }
+  updateGarden(){
+    this.garden = new MyGarden(
+      this,
+      this.gardenCols,
+      this.gardenRows,
+      10,
+      30,
+      [this.petal_texture_1, this.petal_texture_2],
+      [this.receptacle_texture_1, this.receptacle_texture_2],
+      [this.stem_texture_1, this.stem_texture_2],
+      [this.leaf_texture_1, this.leaf_texture_2],
+      this.pollen_texture
+    );
   }
 
   update(t) {

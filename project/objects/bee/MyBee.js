@@ -259,7 +259,7 @@ export class MyBee extends CGFobject {
     this.spere.display();
     this.scene.popMatrix();
   }
-  displayTorso() {
+  displayAbdomen() {
     this.scene.pushMatrix();
     this.scene.rotate(Math.PI / 2, 0, 0, 1);
     this.scene.appearance.setTexture(this.textures[1]);
@@ -268,7 +268,7 @@ export class MyBee extends CGFobject {
     this.spere.display();
     this.scene.popMatrix();
   }
-  displayAbdomen() {
+  displayThorax() {
     this.scene.pushMatrix();
     this.scene.appearance.setTexture(this.textures[0]);
     this.scene.appearance.setTextureWrap("REPEAT", "REPEAT");
@@ -331,7 +331,7 @@ export class MyBee extends CGFobject {
     this.scene.pushMatrix();
     this.scene.translate(0.6, 0, 0);
     this.scene.scale(0.45, 0.45, 0.5);
-    this.displayAbdomen();
+    this.displayThorax();
     this.scene.popMatrix();
 
     //Bee torso
@@ -339,7 +339,7 @@ export class MyBee extends CGFobject {
     this.scene.translate(1.25, -0.25, 0);
     this.scene.rotate(-Math.PI / 6.0, 0, 0, 1);
     this.scene.scale(0.65, 0.4, 0.4);
-    this.displayTorso();
+    this.displayAbdomen();
     this.scene.popMatrix();
 
     // Bee left eye
