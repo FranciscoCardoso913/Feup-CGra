@@ -180,7 +180,7 @@ export class MyBee extends CGFobject {
     this.blockMovement = true;
     this.descent = true;
   }
-
+  
   checkFlowerCollision(range) {
     this.sortPollen();
     let localPollen = this.pollen_coords[0];
@@ -305,42 +305,42 @@ export class MyBee extends CGFobject {
 
   display() {
    
+    // Calculate bee position and direction
     this.calcPos();
-
     this.scene.pushMatrix();
     this.scene.translate(this.x, this.y, this.z);
     this.scene.rotate(this.direction, 0, 1, 0);
-
     this.scene.rotate(Math.PI, 0, 1, 0);
-
     this.scene.scale(
       this.scene.beeScaleFactor,
       this.scene.beeScaleFactor,
       this.scene.beeScaleFactor
     );
-
     let ang = (Math.PI / 4) * Math.sin(this.time * Math.PI * 8);
 
+    // Bee head
     this.scene.pushMatrix();
     this.scene.rotate(-Math.PI / 6.0, 0, 0, 1);
     this.scene.scale(0.35, 0.5, 0.5);
     this.displayHead();
     this.scene.popMatrix();
 
+    //Bee abdomen
     this.scene.pushMatrix();
     this.scene.translate(0.6, 0, 0);
     this.scene.scale(0.45, 0.45, 0.5);
     this.displayAbdomen();
     this.scene.popMatrix();
 
+    //Bee torso
     this.scene.pushMatrix();
     this.scene.translate(1.25, -0.25, 0);
     this.scene.rotate(-Math.PI / 6.0, 0, 0, 1);
-
     this.scene.scale(0.65, 0.4, 0.4);
     this.displayTorso();
     this.scene.popMatrix();
 
+    // Bee left eye
     this.scene.pushMatrix();
     this.scene.translate(-0.2, 0.15, 0.35);
     this.scene.rotate(Math.PI / 6, 0, 1, 0);
@@ -350,22 +350,24 @@ export class MyBee extends CGFobject {
     this.displayEye();
     this.scene.popMatrix();
 
+      // Bee Right eye
     this.scene.pushMatrix();
     this.scene.translate(-0.2, 0.15, -0.35);
     this.scene.rotate(-Math.PI / 6, 0, 1, 0);
     this.scene.rotate(-Math.PI / 6.0, 1, 0, 0);
     this.scene.rotate(-Math.PI / 6.0, 0, 0, 1);
-
     this.scene.scale(0.05, 0.2, 0.15);
     this.displayEye();
     this.scene.popMatrix();
 
+    // Bee left antena
     this.scene.pushMatrix();
     this.scene.translate(-0, 0.4, 0.2);
     this.scene.rotate(Math.PI / 4, 0, 1, 1);
     this.displayAntenna();
     this.scene.popMatrix();
 
+    // Bee right antena
     this.scene.pushMatrix();
     this.scene.translate(-0, 0.4, -0.2);
     this.scene.rotate(Math.PI / 4, 0, 0, 1);
@@ -373,6 +375,7 @@ export class MyBee extends CGFobject {
     this.displayAntenna();
     this.scene.popMatrix();
 
+    // Bees legs
     this.scene.pushMatrix();
     this.scene.translate(0.6, -0.4, 0.2);
     this.scene.rotate(Math.PI, -0.05, 0, 0.5);
@@ -409,8 +412,7 @@ export class MyBee extends CGFobject {
     this.displayAntenna();
     this.scene.popMatrix();
 
-    this.displayPollen();
-
+    // Bee sting
     this.scene.pushMatrix();
     this.scene.translate(1.75, -0.525, 0);
     this.scene.rotate((-4 * Math.PI) / 6.0, 0, 0, 1);
@@ -418,12 +420,14 @@ export class MyBee extends CGFobject {
     this.cone.display();
     this.scene.popMatrix();
 
+    // bee left wing
     this.scene.pushMatrix();
     this.scene.translate(0.5, 0.3, 0.4);
     this.scene.rotate(ang, 1, 0, 0);
     this.wing.display();
     this.scene.popMatrix();
 
+    // Bee right wing
     this.scene.pushMatrix();
     this.scene.translate(0.5, 0.3, -0.4);
     this.scene.scale(1, 1, -1);
@@ -432,5 +436,8 @@ export class MyBee extends CGFobject {
     this.scene.popMatrix();
 
     this.scene.popMatrix();
+
+    // Pollen the bee is carring 
+    this.displayPollen();
   }
 }

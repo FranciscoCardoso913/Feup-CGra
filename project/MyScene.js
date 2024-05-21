@@ -42,7 +42,7 @@ export class MyScene extends CGFscene {
 
     this.appStartTime = Date.now(); // current time in milisecs
 
-    this.panorameTexture = new CGFtexture(this, "images/panorama4.jpg");
+    this.panorameTexture = new CGFtexture(this, "images/panorama.jpg");
     this.groundTexture = new CGFtexture(this, "images/terrain.jpg");
     this.rockTexture =  new CGFtexture(this, "images/rock.jpg");
 

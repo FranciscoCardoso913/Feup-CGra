@@ -10,11 +10,7 @@ export class Wing extends CGFobject {
 	}
 	initBuffers() {
 		this.spere = new MySphere(this.scene, 20,20);
-        
-
 	};
-
-   
     display(){
         this.scene.pushMatrix()
         this.texture.apply()
