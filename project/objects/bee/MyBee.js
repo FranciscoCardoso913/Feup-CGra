@@ -60,7 +60,7 @@ export class MyBee extends CGFobject {
   // Uses linear interpolation to animate the bee's movement
   calcTrajectory(pollen, targetVY = 0, targetVX = 0, targetVZ = 0) {
     const startTime = Date.now();
-    const endTime = startTime + 1200; // 1.2 seconds
+    const endTime = startTime + 2000; // 1.2 seconds
     const targetX =
       pollen[0] + Math.cos(this.direction) * 0.5 * this.scaleBeeFactor;
     const targetY = pollen[1] + 0.5 * this.scaleBeeFactor;
@@ -296,10 +296,8 @@ export class MyBee extends CGFobject {
   displayPollen() {
     if (this.pollen != null) {
       this.scene.pushMatrix();
-      this.scene.translate(this.x, this.y,this.z)
       this.scene.scale(2, 2, 2);
-      this.scene.translate(0.0, -0.30, -0.30);
-      
+      this.scene.translate(0.32, -0.3, 0);
       this.pollen.display();
       this.scene.popMatrix();
     }
@@ -414,6 +412,9 @@ export class MyBee extends CGFobject {
     this.displayAntenna();
     this.scene.popMatrix();
 
+    // Pollen the bee is carring 
+    this.displayPollen();
+
     // Bee sting
     this.scene.pushMatrix();
     this.scene.translate(1.75, -0.525, 0);
@@ -439,7 +440,5 @@ export class MyBee extends CGFobject {
 
     this.scene.popMatrix();
 
-    // Pollen the bee is carring 
-    this.displayPollen();
   }
 }
