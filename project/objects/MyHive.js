@@ -12,12 +12,6 @@ export class MyHive extends CGFobject {
     this.initBuffers();
   }
   initBuffers() {
-    this.texture = new CGFtexture(this.scene, "images/hive.jpg");
-    this.appearance = new CGFappearance(this.scene);
-    this.appearance.setAmbient(0.5, 0.5, 0.5, 1);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap("REPEAT", "REPEAT");
-
     // This is the black material for the hole
     this.hole = new CGFappearance(this.scene);
     this.hole.setAmbient(0, 0, 0, 1);
@@ -36,7 +30,6 @@ export class MyHive extends CGFobject {
     this.scene.rotate(Math.PI / 4, 0, 1, 0);
     this.scene.rotate(Math.PI / 2, 0, 0, 1);
     this.scene.scale(1.5, 1.0, 1.0);
-    this.appearance.apply();
     this.sphere.display();
 
     // Displaying the bottom part of the hive with the texture
