@@ -54,8 +54,8 @@ export class MyScene extends CGFscene {
     this.rock = new MyRock(this, this.rockTexture);
     this.sphere = new MySphere(this, 10, 10);
     this.panorama = new MyPanorama(this, this.panorameTexture);
-    this.rockSet = new MyRockSet(this,this.rockTexture,[-10,0],[60,-100],40);
-    this.rockPiramid= new MyRockPiramid(this, 5, this.rockTexture, [25,-50])
+    this.rockSet = new MyRockSet(this,this.rockTexture,[-43,0],[60,-100],40);
+    this.rockPiramid= new MyRockPiramid(this, 5, this.rockTexture, [-8,-50])
     //this.garden = new MyGarden(this, 7, 7);
    
 
@@ -81,6 +81,8 @@ export class MyScene extends CGFscene {
       this,
       4,
       4,
+      10,
+      30,
       [this.petal_texture_1, this.petal_texture_2],
       [this.receptacle_texture_1, this.receptacle_texture_2],
       [this.stem_texture_1, this.stem_texture_2],
@@ -115,7 +117,7 @@ export class MyScene extends CGFscene {
       this,
       [this.beeHead, this.beeBody, this.beeEye, this.beeAntenna, this.beeWing],
       this.garden.pollen_coords,
-      [0, -0.7, 10]
+      [-0.5,-4,-40.7]
     );
 
     this.grassGarden = new GrassGarden(this, 0,0, this.grassTexture, 3);
@@ -123,6 +125,7 @@ export class MyScene extends CGFscene {
     this.gl.depthFunc(this.gl.LEQUAL);
     this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
     this.gl.enable(this.gl.BLEND);
+    console.log(this.garden.pollen_coords);
 
   }
   initLights() {
@@ -250,6 +253,7 @@ export class MyScene extends CGFscene {
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
+
     this.garden.display()
     this.setDefaultAppearance()
     this.pushMatrix()
@@ -268,14 +272,15 @@ export class MyScene extends CGFscene {
     this.pushMatrix();
     this.translate(0,-10,0);
     this.setActiveShader(this.grassShader);
-    this.grassGarden.display();
+    //this.grassGarden.display();
     this.setActiveShader(this.defaultShader);
     this.popMatrix();
-    this.hive.display();
     this.pushMatrix();
+    this.translate(-0.5,-5.3,-42.7);
+    this.hive.display();
+    this.popMatrix();
     //this.translate(0, this.yBee, 0);
     this.bee.display();
-    this.popMatrix();
     
     //this.plane.enableNormalViz()
 
