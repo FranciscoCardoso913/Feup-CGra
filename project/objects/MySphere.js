@@ -38,7 +38,7 @@ export class MySphere extends CGFobject {
 		// Generating indices
 		this.indices = [];
 
-		for (let i=1; i < this.stacks*2 -1;i++){
+		for (let i=1; i <= this.stacks*2 -1;i++){
 
 			for (let j=0; j < this.slices;j++){
 				this.indices.push(i*(this.slices+1) + j); // Bottom left

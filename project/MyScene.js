@@ -77,8 +77,8 @@ export class MyScene extends CGFscene {
     this.grassShader = new CGFshader(this.gl, "shaders/grass.vert", "shaders/grass.frag");
     this.cloudShader = new CGFshader(this.gl, "shaders/clouds.vert", "shaders/clouds.frag");
     this.cloudShader.setUniformsValues({ uSampler2: 1, timeFactor: 0 });
+    this.worldTexture = new CGFtexture(this, "images/earth.jpg")
 
-    
     this.panorama = new MyPanorama(this, this.texture);
     this.fov = 1.8;
 
@@ -201,8 +201,6 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-  
- 
     this.appearance.setTexture(this.planeTexture);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     this.appearance.apply()
@@ -225,20 +223,20 @@ export class MyScene extends CGFscene {
     this.setActiveShader(this.cloudShader);
     this.panorama.display();
     this.setDefaultAppearance();
+    
     this.pushMatrix();
     this.translate(0,-10,0);
     this.setActiveShader(this.grassShader);
     this.garden.display();
     this.setActiveShader(this.defaultShader);
     this.popMatrix();
- 
+   
     this.pushMatrix();
     this.translate(0, this.yBee, 0);
     this.bee.display();
     this.popMatrix();
-
-    //this.plane.enableNormalViz()
     
+    //this.plane.enableNormalViz()
 
     
 
