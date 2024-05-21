@@ -180,7 +180,7 @@ export class MyBee extends CGFobject {
     this.blockMovement = true;
     this.descent = true;
   }
-  
+
   checkFlowerCollision(range) {
     this.sortPollen();
     let localPollen = this.pollen_coords[0];
@@ -296,8 +296,10 @@ export class MyBee extends CGFobject {
   displayPollen() {
     if (this.pollen != null) {
       this.scene.pushMatrix();
+      this.scene.translate(this.x, this.y,this.z)
       this.scene.scale(2, 2, 2);
-      this.scene.translate(0.32, -0.3, 0);
+      this.scene.translate(0.0, -0.30, -0.30);
+      
       this.pollen.display();
       this.scene.popMatrix();
     }
